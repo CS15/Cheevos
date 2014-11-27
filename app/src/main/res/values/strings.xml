@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cheevos</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- API's Keys -->
+    <string name="parse_app_id">CSvImUmlTzE75oxhXCseP2Au8pcSjEkzmm08QuRz</string>
+    <string name="parse_secret_id">4anBWvIMSu9k36nb2D6vIc0uc8oBwNwRUQDxAgHT</string>
+
+    <!-- misc -->
+    <string name="login">Login</string>
+    <string name="sign_up"><u>Sign Up for Cheevos</u></string>
+    <string name="register">Register</string>
+
+</resources>
