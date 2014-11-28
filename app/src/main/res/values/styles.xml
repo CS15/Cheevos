@@ -1,14 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:editTextStyle">@style/EditTextAppTheme</item>
-    </style>
+    <style name="AppTheme" parent="AppTheme.Base" />
 
-    <style name="EditTextAppTheme" parent="android:Widget.EditText">
-        <item name="android:background">@drawable/apptheme_edit_text_holo_light</item>
-        <item name="android:textColor">@android:color/white</item>
+    <style name="AppTheme.Base" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="colorAccent">@color/primary_accent_color</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
-
 </resources>

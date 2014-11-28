@@ -1,14 +1,15 @@
 package org.relos.cheevos.app;
 
-import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,36 +19,26 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.relos.cheevos.R;
+import org.relos.cheevos.misc.HelperClass;
 
 /**
  * Login page
- *
+ * <p/>
  * Created by Christian (ReloS) Soler on 11/26/2014.
  */
-public class Login extends Activity {
+public class Login extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_login);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // fragment layout
+        View view = inflater.inflate(R.layout.frag_login, container, false);
 
-        final EditText etEmail = (EditText) findViewById(R.id.et_email);
-        final EditText etPassword = (EditText) findViewById(R.id.et_password);
-        final Button btLogin = (Button) findViewById(R.id.bt_login);
+        // set title
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Login");
 
-        // animation
-        ObjectAnimator.ofFloat(etEmail, "alpha", 0, 1).setDuration(1500).start();
-        ObjectAnimator.ofFloat(etPassword, "alpha", 0, 1).setDuration(1500).start();
-        ObjectAnimator.ofFloat(btLogin, "alpha", 0, 1).setDuration(1500).start();
-
-        if (isLoggedIn()){
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-
-            finish();
-        }
+        final EditText etEmail = (EditText) view.findViewById(R.id.et_email);
+        final EditText etPassword = (EditText) view.findViewById(R.id.et_password);
+        final Button btLogin = (Button) view.findViewById(R.id.bt_login);
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,10 +46,10 @@ public class Login extends Activity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 
-                if(!email.isEmpty() && !password.isEmpty() && password.length() > 5){
+                if (!email.isEmpty() && !password.isEmpty() && password.length() > 5) {
                     login(email, password);
                 } else {
-                    new AlertDialog.Builder(Login.this)
+                    new AlertDialog.Builder(getActivity())
                             .setTitle("Error")
                             .setMessage("Fields cannot be empty and password most be longer than 6 characters.")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -71,32 +62,36 @@ public class Login extends Activity {
             }
         });
 
-        findViewById(R.id.tv_sign_up).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.tv_sign_up).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Register.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                Register frag = new Register();
+
+                FragmentTransaction fragTrans = getActivity().getSupportFragmentManager().beginTransaction();
+                fragTrans.setCustomAnimations(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left, R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                fragTrans.addToBackStack(null);
+                fragTrans.replace(R.id.container, frag);
+                fragTrans.commit();
             }
         });
+
+        // return view
+        return view;
     }
 
     private void login(String email, String password) {
         ParseUser.logInInBackground(email, password, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
 
-                    finish();
+                    Toast.makeText(getActivity(), "Successfully logged in", Toast.LENGTH_LONG).show();
+
+                    HelperClass.reloadActivity(getActivity());
                 } else {
                     // log error
-                    Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
-    }
-
-    private boolean isLoggedIn(){
-        return (ParseUser.getCurrentUser() != null);
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_level_3">
+
+    <org.relos.cheevos.views.MavenProLightBoldTextView
+        android:id="@+id/tv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_level_2"
+        android:gravity="center_vertical"
+        android:text="@string/logout"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/tv_level_4"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/v_first"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@android:color/white"
+        android:visibility="gone" />
+
+</LinearLayout>

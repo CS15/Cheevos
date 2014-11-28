@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="drawer_titles">
+        <item>My Favorites</item>
+        <item>Latest Achievements</item>
+        <item>Games</item>
+        <item>Settings</item>
+    </string-array>
+</resources>

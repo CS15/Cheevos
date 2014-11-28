@@ -1,21 +1,19 @@
 package org.relos.cheevos.app;
 
-import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -27,27 +25,20 @@ import org.relos.cheevos.misc.HelperClass;
  * <p/>
  * Created by Christian (ReloS) Soler on 11/26/2014.
  */
-public class Register extends Activity {
+public class Register extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_register);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.frag_register, container, false);
 
-        final EditText etEmail = (EditText) findViewById(R.id.et_email);
-        final EditText etPassword = (EditText) findViewById(R.id.et_password);
-        final EditText etPasswordConfirm = (EditText) findViewById(R.id.et_confirm_password);
-        final EditText etGamertag = (EditText) findViewById(R.id.et_gamertag);
-        final Button btRegister = (Button) findViewById(R.id.bt_register);
+        // set title
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Register");
 
-        // animation
-        ObjectAnimator.ofFloat(etEmail, "alpha", 0, 1).setDuration(1500).start();
-        ObjectAnimator.ofFloat(etPassword, "alpha", 0, 1).setDuration(1500).start();
-        ObjectAnimator.ofFloat(etPasswordConfirm, "alpha", 0, 1).setDuration(1500).start();
-        ObjectAnimator.ofFloat(etGamertag, "alpha", 0, 1).setDuration(1500).start();
-        ObjectAnimator.ofFloat(btRegister, "alpha", 0, 1).setDuration(1500).start();
+        final EditText etEmail = (EditText) view.findViewById(R.id.et_email);
+        final EditText etPassword = (EditText) view.findViewById(R.id.et_password);
+        final EditText etPasswordConfirm = (EditText) view.findViewById(R.id.et_confirm_password);
+        final EditText etGamertag = (EditText) view.findViewById(R.id.et_gamertag);
+        final Button btRegister = (Button) view.findViewById(R.id.bt_register);
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +51,7 @@ public class Register extends Activity {
                 if (password.equals(passwordConfirm) && password.length() > 5) {
                     registerUser(email, password, gamertag);
                 } else {
-                    new AlertDialog.Builder(Register.this)
+                    new AlertDialog.Builder(getActivity())
                             .setTitle("Error")
                             .setMessage("Password did not matched or was less than 6 characters in length.")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -72,6 +63,8 @@ public class Register extends Activity {
                 }
             }
         });
+
+        return view;
     }
 
     private void registerUser(String email, String password, String gamertag) {
@@ -85,13 +78,12 @@ public class Register extends Activity {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    Intent intent = new Intent(Register.this, MainActivity.class);
-                    startActivity(intent);
+                    Toast.makeText(getActivity(), "Successfully register and logged in", Toast.LENGTH_LONG).show();
 
-                    finish();
+                    HelperClass.reloadActivity(getActivity());
                 } else {
                     // log error
-                    Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });

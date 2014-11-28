@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_level_3"
+        android:paddingRight="@dimen/padding_level_3">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="@dimen/margin_level_4"
+            android:src="@drawable/logo" />
+
+        <org.relos.cheevos.views.MavenProLightBoldTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_5"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/tv_level_1" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/tv_level_5" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/tv_level_5" />
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:background="@drawable/login_button_selector"
+            android:text="@string/login"
+            android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:id="@+id/ll_or"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/divider"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_weight="1"
+                android:background="@android:color/white" />
+
+            <org.relos.cheevos.views.MavenProLightBoldTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="or"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/tv_level_4" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/divider"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_weight="1"
+                android:background="@android:color/white" />
+
+        </LinearLayout>
+
+        <org.relos.cheevos.views.MavenProLightBoldTextView
+            android:id="@+id/tv_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:gravity="center"
+            android:text="@string/sign_up"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/tv_level_4" />
+
+    </LinearLayout>
+
+</RelativeLayout>
