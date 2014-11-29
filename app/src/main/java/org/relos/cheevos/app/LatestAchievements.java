@@ -11,6 +11,8 @@ import android.widget.ListView;
 import org.relos.cheevos.R;
 
 /**
+ * Latest Achievements fragments
+ *
  * Created by Christian Soler on 9/22/2014.
  */
 public class LatestAchievements extends Fragment {

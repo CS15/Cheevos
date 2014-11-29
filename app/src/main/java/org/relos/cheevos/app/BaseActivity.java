@@ -100,6 +100,7 @@ public class BaseActivity extends ActionBarActivity {
         // switch fragment with animation
         FragmentTransaction fragTrans = this.getSupportFragmentManager().beginTransaction();
         fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        fragTrans.addToBackStack(null);
         fragTrans.replace(R.id.container, mFrag);
         fragTrans.commit();
 
@@ -119,28 +120,36 @@ public class BaseActivity extends ActionBarActivity {
         inflater.inflate(R.menu.main, menu);
 
         menu.findItem(R.id.menu_login).setVisible(ParseUser.getCurrentUser() == null);
+        menu.findItem(R.id.menu_profile).setVisible(ParseUser.getCurrentUser() != null);
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment frag = null;
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
         switch (item.getItemId()) {
             case R.id.menu_login:
-                Login frag = new Login();
+                frag = new Login();
+                break;
 
-                // switch fragment with animation
-                FragmentTransaction fragTrans = this.getSupportFragmentManager().beginTransaction();
-                fragTrans.setCustomAnimations(R.anim.anim_slide_in_bottom, R.anim.anim_null, R.anim.anim_null, R.anim.anim_slide_out_bottom);
-                fragTrans.addToBackStack(null);
-                fragTrans.replace(R.id.container, frag);
-                fragTrans.commit();
+            case R.id.menu_profile:
+                frag = new Profile();
                 break;
         }
+
+
+        // switch fragment with animation
+        FragmentTransaction fragTrans = this.getSupportFragmentManager().beginTransaction();
+        fragTrans.setCustomAnimations(R.anim.anim_slide_in_bottom, R.anim.anim_null, R.anim.anim_null, R.anim.anim_slide_out_bottom);
+        fragTrans.addToBackStack(null);
+        fragTrans.replace(R.id.container, frag);
+        fragTrans.commit();
 
         return super.onOptionsItemSelected(item);
     }

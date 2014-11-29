@@ -23,60 +23,52 @@
             android:layout_gravity="center_horizontal"
             android:background="@color/primary_color">
 
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
             <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:orientation="vertical">
 
                 <org.relos.cheevos.views.MavenProLightBoldTextView
-                    android:id="@+id/tv_section_title"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_profile_gamertag"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/padding_level_2"
-                    android:text="@string/la_title"
+                    android:gravity="end"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/tv_level_2" />
+                    android:textSize="@dimen/tv_level_4" />
 
-                <View
+                <org.relos.cheevos.views.MavenProLightBoldTextView
+                    android:id="@+id/tv_profile_gamerscore"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider"
-                    android:background="@android:color/white" />
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/tv_level_5" />
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/linearLayout"
-                android:layout_toStartOf="@+id/linearLayout"
-                android:padding="@dimen/padding_level_2"
-                android:src="@drawable/ic_action_ach_logo" />
-
-            <ProgressBar
-                android:id="@+id/pb_main_activity"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pb_height"
-                android:layout_alignEnd="@+id/linearLayout"
+                android:layout_height="@dimen/divider"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/linearLayout"
-                android:visibility="gone" />
+                android:background="@android:color/white" />
 
         </RelativeLayout>
 
         <org.relos.cheevos.views.ListViewScrollable
-            android:id="@+id/lv_la_content"
+            android:id="@+id/lv_profile_games"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null" />

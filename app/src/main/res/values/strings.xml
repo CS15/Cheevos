@@ -21,5 +21,7 @@
     <string name="logout">Logout</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="profile">Profile</string>
+    <string name="la_title">Latest Achievements</string>
 
 </resources>
