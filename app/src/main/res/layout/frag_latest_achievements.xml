@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <View
@@ -52,7 +53,8 @@
             android:id="@+id/lv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null" />
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="@dimen/divider"/>
 
     </LinearLayout>
 
