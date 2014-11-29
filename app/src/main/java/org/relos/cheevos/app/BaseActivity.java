@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -47,6 +49,8 @@ public class BaseActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().getThemedContext();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mUserLearnedDrawer = prefs.getBoolean(PREF_USER_LEARNED_DRAWER, false);
@@ -100,7 +104,6 @@ public class BaseActivity extends ActionBarActivity {
         // switch fragment with animation
         FragmentTransaction fragTrans = this.getSupportFragmentManager().beginTransaction();
         fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        fragTrans.addToBackStack(null);
         fragTrans.replace(R.id.container, mFrag);
         fragTrans.commit();
 

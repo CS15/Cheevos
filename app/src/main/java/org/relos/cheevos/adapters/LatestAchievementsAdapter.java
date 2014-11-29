@@ -10,17 +10,20 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.parse.ParseObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.relos.cheevos.R;
 import org.relos.cheevos.misc.SingletonVolley;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class LatestAchievementsAdapater extends BaseAdapter {
+public class LatestAchievementsAdapter extends BaseAdapter {
     // instance variables
     private Context mContext;
-    private List<ParseObject> mData;
+    private ArrayList<JSONObject> mData;
 
-    public LatestAchievementsAdapater(Context context, List<ParseObject> data) {
+    public LatestAchievementsAdapter(Context context, ArrayList<JSONObject> data) {
         this.mContext = context;
         this.mData = data;
     }
@@ -54,11 +57,9 @@ public class LatestAchievementsAdapater extends BaseAdapter {
             // view holder
             mViewHolder = new ViewHolder();
             assert view != null;
-            mViewHolder.mIvCover = (NetworkImageView) view.findViewById(R.id.iv_new_ach_image);
-            mViewHolder.mTvTitle = (TextView) view.findViewById(R.id.tv_new_ach_title);
-            mViewHolder.mTvAchAmount = (TextView) view.findViewById(R.id.tv_new_ach_ach_amount);
-            mViewHolder.mTvAuthor = (TextView) view.findViewById(R.id.tv_new_ach_author);
-            mViewHolder.mTvCommentAmount = (TextView) view.findViewById(R.id.tv_new_ach_comments);
+            mViewHolder.mIvCover = (NetworkImageView) view.findViewById(R.id.iv_cover);
+            mViewHolder.mTvTitle = (TextView) view.findViewById(R.id.tv_game_title);
+            mViewHolder.mTvAchAmount = (TextView) view.findViewById(R.id.tv_game_ach_amount);
 
             // set tag
             view.setTag(mViewHolder);
@@ -66,11 +67,13 @@ public class LatestAchievementsAdapater extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        // set cover image
-        mViewHolder.mIvCover.setImageUrl(mData.get(position).getString("CoverImage"), SingletonVolley.getImageLoader());
-
-        // set titles
-        mViewHolder.mTvTitle.setText(mData.get(position).getString("Title"));
+        try {
+            mViewHolder.mIvCover.setImageUrl(mData.get(position).getString("cover"), SingletonVolley.getImageLoader());
+            mViewHolder.mTvTitle.setText(mData.get(position).getString("title"));
+            mViewHolder.mTvAchAmount.setText(mData.get(position).getString("achsAmount"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // return view
         return view;
@@ -81,7 +84,5 @@ public class LatestAchievementsAdapater extends BaseAdapter {
         NetworkImageView mIvCover;
         TextView mTvTitle;
         TextView mTvAchAmount;
-        TextView mTvAuthor;
-        TextView mTvCommentAmount;
     }
 }
