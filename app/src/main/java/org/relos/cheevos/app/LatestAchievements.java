@@ -1,9 +1,7 @@
 package org.relos.cheevos.app;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -23,27 +21,26 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.relos.cheevos.R;
 import org.relos.cheevos.adapters.LatestAchievementsAdapter;
 import org.relos.cheevos.loaders.LatestAchievementsLoader;
 import org.relos.cheevos.misc.SingletonVolley;
+import org.relos.cheevos.objects.Game;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Latest Achievements fragments
- *
+ * <p/>
  * Created by Christian Soler on 9/22/2014.
  */
-public class LatestAchievements extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<JSONObject>>{
+public class LatestAchievements extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
     // instance variables
     private ListView mLvContent;
     private NetworkImageView mIvBanner;
     private TextView mTvTitle;
-    private ArrayList<JSONObject> mGameList;
+    private ArrayList<Game> mGameList;
     private LatestAchievementsAdapter mAdapter;
     private final String BASE_URL = "http://www.xboxachievements.com/archive/achievements/1/";
 
@@ -53,7 +50,7 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
 
         View view = inflater.inflate(R.layout.frag_latest_achievements, container, false);
 
-        mGameList = new ArrayList<JSONObject>();
+        mGameList = new ArrayList<Game>();
         mAdapter = new LatestAchievementsAdapter(getActivity(), mGameList);
         mIvBanner = (NetworkImageView) view.findViewById(R.id.iv_latest_image);
         mTvTitle = (TextView) view.findViewById(R.id.tv_latest_image_title);
@@ -65,11 +62,9 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
         mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                try {
-                    Toast.makeText(getActivity(), mGameList.get(position).getString("achsUrl"), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
+                Toast.makeText(getActivity(), mGameList.get(position).getAchievementsPageUrl(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -84,18 +79,18 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
     }
 
     @Override
-    public Loader<ArrayList<JSONObject>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<ArrayList<Game>> onCreateLoader(int i, Bundle bundle) {
         return new LatestAchievementsLoader(getActivity(), mGameList, BASE_URL);
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<JSONObject>> arrayListLoader, ArrayList<JSONObject> list) {
+    public void onLoadFinished(Loader<ArrayList<Game>> arrayListLoader, ArrayList<Game> list) {
         mGameList = list;
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<JSONObject>> arrayListLoader) {
+    public void onLoaderReset(Loader<ArrayList<Game>> arrayListLoader) {
 
     }
 
@@ -118,4 +113,18 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
         });
     }
 
+    private void getLatestAchs(String className) {
+        // get data from database
+        ParseQuery<ParseObject> parseObject = ParseQuery.getQuery(className);
+        parseObject.orderByDescending("createdAt");
+        parseObject.findInBackground(new FindCallback<ParseObject>() {
+            public void done(final List<ParseObject> data, ParseException e) {
+                if (e == null) {
+
+                } else {
+                    Log.e("ParseObject", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
 }

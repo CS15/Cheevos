@@ -81,28 +81,27 @@ public class BaseActivity extends ActionBarActivity {
     }
 
     private void selectItem(int position) {
+        // switch fragment with animation
+        FragmentTransaction fragTrans = this.getSupportFragmentManager().beginTransaction();
+
         // navigation menu item click
         switch (position) {
             case 0:
-                // start FavoritesFrag Fragment
                 mFrag = new LatestAchievements();
                 break;
             case 1:
-                // start FavoritesFrag Fragment
                 mFrag = new LatestAchievements();
                 break;
             case 2:
-                // start FavoritesFrag Fragment
-                mFrag = new LatestAchievements();
+                mFrag = new GameList();
+                fragTrans.addToBackStack(null);
                 break;
             case 3:
-                // start FavoritesFrag Fragment
                 mFrag = new Settings();
                 break;
         }
 
-        // switch fragment with animation
-        FragmentTransaction fragTrans = this.getSupportFragmentManager().beginTransaction();
+        // replace fragment
         fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         fragTrans.replace(R.id.container, mFrag);
         fragTrans.commit();
@@ -123,7 +122,6 @@ public class BaseActivity extends ActionBarActivity {
         inflater.inflate(R.menu.main, menu);
 
         menu.findItem(R.id.menu_login).setVisible(ParseUser.getCurrentUser() == null);
-        menu.findItem(R.id.menu_profile).setVisible(ParseUser.getCurrentUser() != null);
 
         return true;
     }
@@ -139,10 +137,6 @@ public class BaseActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.menu_login:
                 frag = new Login();
-                break;
-
-            case R.id.menu_profile:
-                frag = new Profile();
                 break;
         }
 

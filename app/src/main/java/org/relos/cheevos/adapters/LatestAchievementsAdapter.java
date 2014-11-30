@@ -8,22 +8,19 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.parse.ParseObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.relos.cheevos.R;
 import org.relos.cheevos.misc.SingletonVolley;
+import org.relos.cheevos.objects.Game;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LatestAchievementsAdapter extends BaseAdapter {
     // instance variables
     private Context mContext;
-    private ArrayList<JSONObject> mData;
+    private ArrayList<Game> mData;
 
-    public LatestAchievementsAdapter(Context context, ArrayList<JSONObject> data) {
+    public LatestAchievementsAdapter(Context context, ArrayList<Game> data) {
         this.mContext = context;
         this.mData = data;
     }
@@ -67,13 +64,9 @@ public class LatestAchievementsAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        try {
-            mViewHolder.mIvCover.setImageUrl(mData.get(position).getString("cover"), SingletonVolley.getImageLoader());
-            mViewHolder.mTvTitle.setText(mData.get(position).getString("title"));
-            mViewHolder.mTvAchAmount.setText(mData.get(position).getString("achsAmount"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        mViewHolder.mIvCover.setImageUrl(mData.get(position).getCoverUrl(), SingletonVolley.getImageLoader());
+        mViewHolder.mTvTitle.setText(mData.get(position).getTitle());
+        mViewHolder.mTvAchAmount.setText(mData.get(position).getAchievementsAmount());
 
         // return view
         return view;

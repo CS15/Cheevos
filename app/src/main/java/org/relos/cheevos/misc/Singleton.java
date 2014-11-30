@@ -1,6 +1,7 @@
 package org.relos.cheevos.misc;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import com.parse.Parse;
 
@@ -22,6 +23,5 @@ public class Singleton extends Application{
 
         // instantiate parse sdk
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_secret_id));
-
     }
 }

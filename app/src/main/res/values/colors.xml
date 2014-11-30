@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- colors -->
-    <color name="primary_color">#4CAF50</color>
-    <color name="primary_color_dark">#1B5E20</color>
-    <color name="primary_accent_color">#81C784</color>
-    <color name="drawer_background">#E65100</color>
-    <color name="drawer_background_pressed">#FF9800</color>
+    <color name="primary_color">#009688</color>
+    <color name="primary_color_dark">#00796B</color>
+    <color name="primary_accent_color">#80CBC4</color>
+    <color name="drawer_background">#00796B</color>
+    <color name="drawer_background_pressed">#80CBC4</color>
 
 </resources>

@@ -23,5 +23,7 @@
     <string name="email">Email</string>
     <string name="profile">Profile</string>
     <string name="la_title">Latest Achievements</string>
+    <string name="ab_title_game_list">Xbox Games</string>
+    <string name="browse">Browse</string>
 
 </resources>

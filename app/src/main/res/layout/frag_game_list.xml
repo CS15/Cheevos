@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <android.support.v4.widget.SlidingPaneLayout
+            android:id="@+id/slp_game_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+            <!-- behind content -->
+            <ListView
+                android:id="@+id/lv_alphabet_content"
+                android:layout_width="@dimen/spl_offset"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                android:background="@color/drawer_background" />
+
+            <!-- front content -->
+            <ListView
+                android:id="@+id/lv_gl_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:background="@android:color/white" />
+
+        </android.support.v4.widget.SlidingPaneLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

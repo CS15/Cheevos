@@ -2,18 +2,12 @@ package org.relos.cheevos.loaders;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.relos.cheevos.R;
-import org.relos.cheevos.app.MainActivity;
+import org.relos.cheevos.objects.Game;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,14 +17,14 @@ import java.util.ArrayList;
  * <p/>
  * Created by Christian Soler on 11/28/14.
  */
-public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<JSONObject>> {
+public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<Game>> {
     // instance
     private Context mContext;
-    private ArrayList<JSONObject> mList;
+    private ArrayList<Game> mList;
     private final String BASE_URL;
     private String mExMessage;
 
-    public LatestAchievementsLoader(Context context, ArrayList<JSONObject> list, String url) {
+    public LatestAchievementsLoader(Context context, ArrayList<Game> list, String url) {
         super(context);
         mContext = context;
         mList = list;
@@ -49,7 +43,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<JSONObje
     }
 
     @Override
-    public ArrayList<JSONObject> loadInBackground() {
+    public ArrayList<Game> loadInBackground() {
         try {
             // local variables
             int counter = 0;
@@ -83,20 +77,13 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<JSONObje
                     // increase item page url counter
                     counter += 2;
 
-                    try {
-                        // create json object and add it to json array
-                        JSONObject jsonObj = new JSONObject();
-                        jsonObj.put("cover", imageUrl);
-                        jsonObj.put("title", title);
-                        jsonObj.put("achsAmount", achAmount);
-                        jsonObj.put("achsUrl", itemPageUrl);
-                        mList.add(jsonObj);
-
-                    } catch (JSONException ex) {
-                        Log.e("LatestAchievementsLoader, loadInBackground(): JSONException", ex.getMessage());
-                        mExMessage = ex.getMessage();
-                        return null;
-                    }
+                    // create json object and add it to json array
+                    Game game = new Game();
+                    game.setCoverUrl(imageUrl);
+                    game.setTitle(title);
+                    game.setAchievementsAmount(achAmount);
+                    game.setAchievementsPageUrl(itemPageUrl);
+                    mList.add(game);
                 }
             }
 
@@ -110,7 +97,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<JSONObje
     }
 
     @Override
-    public void deliverResult(ArrayList<JSONObject> data) {
+    public void deliverResult(ArrayList<Game> data) {
 
         if (isStarted() && data != null) {
             super.deliverResult(data);

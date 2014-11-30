@@ -57,4 +57,5 @@
     <dimen name="margin_level_7">64dp</dimen>
     <dimen name="margin_level_8">72dp</dimen>
     <dimen name="margin_level_9">80dp</dimen>
+    <dimen name="spl_offset">100dp</dimen>
 </resources>
