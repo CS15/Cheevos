@@ -127,8 +127,6 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
                 }
             }
 
-            Log.v("Game List", mList.toString());
-
         } catch (Exception e){
             Log.e("Error at Game List: ", e.getMessage());
             mExMessage = e.getMessage();
