@@ -152,6 +152,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
         // show/close browse menu
         if (!mSlidingPane.isOpen()) {
             super.onBackPressed();
+            overridePendingTransition(R.anim.anim_null, R.anim.anim_slide_out_right);
         } else {
             mSlidingPane.closePane();
         }

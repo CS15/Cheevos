@@ -100,6 +100,7 @@ public class BaseActivity extends ActionBarActivity {
             case 2:
                 Intent intent = new Intent(BaseActivity.this, GameList.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
                 break;
             case 3:
                 mFrag = new Settings();
