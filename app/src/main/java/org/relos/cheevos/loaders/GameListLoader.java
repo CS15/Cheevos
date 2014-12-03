@@ -132,12 +132,12 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
             mExMessage = e.getMessage();
         }
 
-        return null;
+        return mList;
     }
 
     @Override
     public void deliverResult(List<Game> data) {
-        super.deliverResult(data);
+        Toast.makeText(mContext, "Game list: " + data.size(), Toast.LENGTH_LONG).show();
 
         if (isStarted() && data != null) {
             super.deliverResult(data);

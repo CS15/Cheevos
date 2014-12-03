@@ -117,7 +117,6 @@ public class GameList extends Fragment implements LoaderManager.LoaderCallbacks<
         // option item click listener
         switch (item.getItemId()) {
             case R.id.menu_browse:
-                Toast.makeText(getActivity(), "Browse Click", Toast.LENGTH_SHORT).show();
                 break;
         }
 
