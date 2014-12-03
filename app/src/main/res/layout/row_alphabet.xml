@@ -21,7 +21,7 @@
         <org.relos.cheevos.views.MavenProLightBoldTextView
             android:id="@+id/tv_navi_alphabet_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/tv_level_2"
             android:gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="-15dp"
             android:singleLine="true"

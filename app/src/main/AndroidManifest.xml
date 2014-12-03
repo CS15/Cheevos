@@ -24,6 +24,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".app.GameList"
+            android:label="@string/ab_title_game_list"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".app.GAMELIST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

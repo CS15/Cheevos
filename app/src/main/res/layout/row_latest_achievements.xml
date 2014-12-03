@@ -3,12 +3,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/row_padding">
+    android:padding="@dimen/padding_level_1">
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/iv_cover"
-        android:layout_width="@dimen/latest_ach_image"
-        android:layout_height="@dimen/latest_ach_image"
+        android:layout_width="@dimen/iv_avatar"
+        android:layout_height="@dimen/iv_avatar"
         android:scaleType="centerCrop" />
 
     <org.relos.cheevos.views.MavenProLightBoldTextView

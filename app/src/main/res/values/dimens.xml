@@ -15,7 +15,6 @@
 
     <!-- Mics -->
     <dimen name="selected_item">8dp</dimen>
-    <dimen name="latest_ach_image">120dp</dimen>
     <dimen name="pb_height">50dp</dimen>
 
     <!-- Action Bar -->
@@ -24,6 +23,7 @@
 
     <!-- Image Sizes -->
     <dimen name="iv_avatar">96dp</dimen>
+    <dimen name="iv_game_list">72dp</dimen>
 
     <!-- TextView Sizes -->
     <dimen name="tv_level_1">45sp</dimen>

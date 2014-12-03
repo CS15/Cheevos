@@ -1,5 +1,6 @@
 package org.relos.cheevos.app;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -88,23 +87,27 @@ public class BaseActivity extends ActionBarActivity {
         switch (position) {
             case 0:
                 mFrag = new LatestAchievements();
+                fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragTrans.replace(R.id.container, mFrag);
+                fragTrans.commit();
                 break;
             case 1:
                 mFrag = new LatestAchievements();
+                fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragTrans.replace(R.id.container, mFrag);
+                fragTrans.commit();
                 break;
             case 2:
-                mFrag = new GameList();
-                fragTrans.addToBackStack(null);
+                Intent intent = new Intent(BaseActivity.this, GameList.class);
+                startActivity(intent);
                 break;
             case 3:
                 mFrag = new Settings();
+                fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragTrans.replace(R.id.container, mFrag);
+                fragTrans.commit();
                 break;
         }
-
-        // replace fragment
-        fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        fragTrans.replace(R.id.container, mFrag);
-        fragTrans.commit();
 
         // update selected item
         mLvDrawer.setItemChecked(position, true);
@@ -139,7 +142,6 @@ public class BaseActivity extends ActionBarActivity {
                 frag = new Login();
                 break;
         }
-
 
         // switch fragment with animation
         FragmentTransaction fragTrans = this.getSupportFragmentManager().beginTransaction();

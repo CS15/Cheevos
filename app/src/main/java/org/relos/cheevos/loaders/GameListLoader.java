@@ -73,14 +73,21 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
                     if (i < oddRows.size()){
 
                         // extract element details
-                        String cover = JsoupHelper.getCoverUrl(evenRows.select("td a img").get(i).attr("abs:src"));
                         String ico = oddRows.select("td a img").get(i).attr("abs:src");
                         String title = oddRows.select("strong").get(i).text();
                         String achsAmount = oddRows.select("td[align]").get(achsAmountCounter).text();
                         String gamerscore = oddRows.select("td[align]").get(gamerscoreCounter).text();
                         String achsUrl = oddRows.select("td a").get(pageCounter).attr("abs:href");
 
-                        int gameId = JsoupHelper.getGameId(cover);
+                        String id = ico.replace("http://www.xboxachievements.com/images/achievements/", "");
+
+                        int index = id.indexOf("/");
+
+                        int gameId = Integer.parseInt(id.substring(0, index));
+
+                        String fileType = ico.substring(ico.lastIndexOf("."), ico.length());
+
+                        String cover = "http://www.xboxachievements.com/images/achievements/" + gameId + "/cover" + fileType;
 
                         // create object
                         Game game = new Game();
@@ -98,14 +105,21 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
                     if (i < evenRows.size()){
 
                         // extract element details
-                        String cover = JsoupHelper.getCoverUrl(evenRows.select("td a img").get(i).attr("abs:src"));
                         String ico = evenRows.select("td a img").get(i).attr("abs:src");
                         String title = evenRows.select("strong").get(i).text();
                         String achsAmount = evenRows.select("td[align]").get(achsAmountCounter).text();
                         String gamerscore = evenRows.select("td[align]").get(gamerscoreCounter).text();
                         String achsUrl = evenRows.select("td a").get(pageCounter).attr("abs:href");
 
-                        int gameId = JsoupHelper.getGameId(cover);
+                        String id = ico.replace("http://www.xboxachievements.com/images/achievements/", "");
+
+                        int index = id.indexOf("/");
+
+                        int gameId = Integer.parseInt(id.substring(0, index));
+
+                        String fileType = ico.substring(ico.lastIndexOf("."), ico.length());
+
+                        String cover = "http://www.xboxachievements.com/images/achievements/" + gameId + "/cover" + fileType;
 
                         // create object
                         Game game = new Game();
@@ -137,7 +151,6 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
 
     @Override
     public void deliverResult(List<Game> data) {
-        Toast.makeText(mContext, "Game list: " + data.size(), Toast.LENGTH_LONG).show();
 
         if (isStarted() && data != null) {
             super.deliverResult(data);

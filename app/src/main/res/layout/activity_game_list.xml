@@ -13,6 +13,7 @@
             android:id="@+id/slp_game_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
             android:background="@android:color/white">
 
             <!-- behind content -->
@@ -20,18 +21,21 @@
                 android:id="@+id/lv_alphabet_content"
                 android:layout_width="@dimen/spl_offset"
                 android:layout_height="match_parent"
-                android:choiceMode="singleChoice"
-                android:background="@color/drawer_background" />
+                android:background="@color/drawer_background"
+                android:choiceMode="singleChoice" />
 
             <!-- front content -->
             <ListView
-                android:id="@+id/lv_gl_content"
+                android:id="@+id/lv_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@null"
-                android:background="@android:color/white" />
+                android:background="@android:color/white"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="@dimen/divider" />
 
         </android.support.v4.widget.SlidingPaneLayout>
+
+        <include layout="@layout/toolbar" />
 
     </RelativeLayout>
 </RelativeLayout>
