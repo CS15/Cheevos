@@ -11,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,7 +30,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
     private List<Game> mList;
     private ListView mAlphabetMenu;
     private SlidingPaneLayout mSlidingPane;
-    private ListView mLvContent;
+    private GridView mLvContent;
     private GameListAdapter mAdapter;
     private String url = "http://www.xboxachievements.com/games/xbox-one/";
 
@@ -56,7 +58,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
 
         mAdapter = new GameListAdapter(mList, this);
 
-        mLvContent = (ListView) findViewById(R.id.lv_content);
+        mLvContent = (GridView) findViewById(R.id.lv_content);
         mLvContent.setAdapter(mAdapter);
         mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

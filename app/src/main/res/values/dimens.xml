@@ -23,7 +23,7 @@
 
     <!-- Image Sizes -->
     <dimen name="iv_avatar">96dp</dimen>
-    <dimen name="iv_game_list">72dp</dimen>
+    <dimen name="iv_game_list">150dp</dimen>
 
     <!-- TextView Sizes -->
     <dimen name="tv_level_1">45sp</dimen>

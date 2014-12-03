@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import org.relos.cheevos.R;
 import org.relos.cheevos.misc.SingletonVolley;
 import org.relos.cheevos.objects.Game;
@@ -44,14 +46,14 @@ public class GameListAdapter extends BaseAdapter {
         ViewHolder mViewHolder;
 
         // check if view is null
-        if (view == null){
+        if (view == null) {
             // inflate layout
             LayoutInflater viewInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = viewInflater.inflate(R.layout.row_game_list, null);
 
             // view holder
             mViewHolder = new ViewHolder();
-            mViewHolder.mIvCover = (RoundedImageLoader) view.findViewById(R.id.iv_game_cover);
+            mViewHolder.mIvCover = (NetworkImageView) view.findViewById(R.id.iv_game_cover);
             mViewHolder.mTvTitle = (TextView) view.findViewById(R.id.tv_game_title);
             mViewHolder.mTvSubTitle = (TextView) view.findViewById(R.id.tv_game_subtitle);
 
@@ -72,7 +74,7 @@ public class GameListAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        RoundedImageLoader mIvCover;
+        NetworkImageView mIvCover;
         TextView mTvTitle;
         TextView mTvSubTitle;
     }

@@ -8,7 +8,7 @@ import com.android.volley.toolbox.Volley;
 
 /**
  * Singleton Volley
- *
+ * <p/>
  * Created by Christian (ReloS) Soler on 11/26/2014.
  */
 public class SingletonVolley {
@@ -17,27 +17,28 @@ public class SingletonVolley {
     private static ImageLoader mImageLoader;
     private static BitmapLruCache mBitmapLruCache;
 
-    private SingletonVolley(){}
+    private SingletonVolley() {
+    }
 
-    static void instantiate(Context context){
+    static void instantiate(Context context) {
         mBitmapLruCache = new BitmapLruCache();
         mRequestQueque = Volley.newRequestQueue(context);
         mImageLoader = new ImageLoader(mRequestQueque, mBitmapLruCache);
     }
 
-    public static ImageLoader getImageLoader(){
+    public static ImageLoader getImageLoader() {
         if (mImageLoader != null) return mImageLoader;
 
         throw new IllegalStateException("ImageLoader not instantiated");
     }
 
-    public static RequestQueue getRequestQueque(){
+    public static RequestQueue getRequestQueque() {
         if (mRequestQueque != null) return mRequestQueque;
 
         throw new IllegalStateException("RequestQueue not instantiated");
     }
 
-    public static BitmapLruCache getBitmapLruCache(){
+    public static BitmapLruCache getBitmapLruCache() {
         if (mBitmapLruCache != null) return mBitmapLruCache;
 
         throw new IllegalStateException("BitmapLruCache not instantiated");

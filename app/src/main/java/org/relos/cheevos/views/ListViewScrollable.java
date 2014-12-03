@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 /**
  * List view that works with a scroll viewer
- *
+ * <p/>
  * Created by Christian Soler on 7/13/2014.
  */
 public class ListViewScrollable extends ListView {

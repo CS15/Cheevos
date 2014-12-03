@@ -9,7 +9,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.relos.cheevos.misc.JsoupHelper;
 import org.relos.cheevos.objects.Game;
 
 import java.net.URL;
@@ -50,7 +49,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
             // root element
             Element root = doc.getElementsByClass("divText").first();
 
-            if (!root.toString().equals("")){
+            if (!root.toString().equals("")) {
                 // local variables
                 Elements oddRows = root.getElementsByClass("trA1");
                 Elements evenRows = root.getElementsByClass("trA2");
@@ -65,12 +64,12 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
 
                 }
 
-                if (pagination.size() > 0){
+                if (pagination.size() > 0) {
 
                 }
 
                 for (int i = 0; i < oddRows.size(); i++) {
-                    if (i < oddRows.size()){
+                    if (i < oddRows.size()) {
 
                         // extract element details
                         String ico = oddRows.select("td a img").get(i).attr("abs:src");
@@ -102,7 +101,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
                         mList.add(game);
                     }
 
-                    if (i < evenRows.size()){
+                    if (i < evenRows.size()) {
 
                         // extract element details
                         String ico = evenRows.select("td a img").get(i).attr("abs:src");
@@ -141,7 +140,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
                 }
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e("Error at Game List: ", e.getMessage());
             mExMessage = e.getMessage();
         }

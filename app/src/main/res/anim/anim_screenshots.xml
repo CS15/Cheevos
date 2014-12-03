@@ -4,6 +4,5 @@
         android:fromYDelta="100%"
         android:toYDelta="0%"
         android:duration="1000"
-        android:zAdjustment="top">
-    </translate>
+        android:zAdjustment="top"></translate>
 </set>

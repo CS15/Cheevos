@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +19,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-import org.json.JSONObject;
 import org.relos.cheevos.R;
 import org.relos.cheevos.misc.HelperClass;
 import org.relos.cheevos.misc.SingletonVolley;
@@ -86,13 +82,13 @@ public class Register extends Fragment {
         getXboxId(email, password, gamertag);
     }
 
-    private void getXboxId(final String email, final String password, final String gamertag){
+    private void getXboxId(final String email, final String password, final String gamertag) {
 
         String url = "https://xboxapi.com/v2/xuid/" + gamertag;
 
         RequestQueue queue = SingletonVolley.getRequestQueque();
 
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -122,7 +118,7 @@ public class Register extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();

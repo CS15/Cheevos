@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
 
 /**
  * Created by Christian Soler on 9/22/2014.
- *
+ * <p/>
  * Helper Class
  */
 public class HelperClass {
@@ -29,7 +29,7 @@ public class HelperClass {
      *
      * @param context The activity context.
      */
-    public static void forceOverFlowMenu(Context context){
+    public static void forceOverFlowMenu(Context context) {
         try {
             ViewConfiguration config = ViewConfiguration.get(context);
             Field menuKeyFields = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
@@ -39,7 +39,7 @@ public class HelperClass {
                 menuKeyFields.setBoolean(config, false);
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -56,13 +56,12 @@ public class HelperClass {
     /**
      * Create circle image.
      *
-     * @param bitmap Bitmap to be cropped
-     * @param resColor Resource color
+     * @param bitmap      Bitmap to be cropped
+     * @param resColor    Resource color
      * @param strokeWidth Thickness of stroke
-     *
      * @return Returns the circle image with border
      */
-    public static Bitmap getCircleImage(Bitmap bitmap, int resColor, int strokeWidth){
+    public static Bitmap getCircleImage(Bitmap bitmap, int resColor, int strokeWidth) {
         // create Bitmap to draw
         Bitmap mBitmap = Bitmap.createBitmap(bitmap.getWidth() + 8, bitmap.getHeight() + 8, Bitmap.Config.ARGB_8888);
 
@@ -113,11 +112,10 @@ public class HelperClass {
     /**
      * Set action bar background
      *
-     * @param activity The activity to set ActionBar background to.
+     * @param activity   The activity to set ActionBar background to.
      * @param resColorId The Drawable color to set the ActionBar to.
-     *
      */
-    public static void setActionBarBackground(Activity activity, int resColorId){
+    public static void setActionBarBackground(Activity activity, int resColorId) {
         // change action bar color
         activity.getActionBar().setBackgroundDrawable(new ColorDrawable(activity.getResources().getInteger(resColorId)));
         activity.getActionBar().setDisplayShowTitleEnabled(false);
@@ -128,9 +126,9 @@ public class HelperClass {
      * Set action bar to custom font
      *
      * @param activity The activity to set ActionBar title to.
-     * @param title The title to display.
+     * @param title    The title to display.
      * @param fontName The name of the font with extension file.
-     * font must be in the assets/fonts directory
+     *                 font must be in the assets/fonts directory
      */
     public static SpannableString setActionbarTitle(Activity activity, String title, String fontName) {
         // create custom font for action bar

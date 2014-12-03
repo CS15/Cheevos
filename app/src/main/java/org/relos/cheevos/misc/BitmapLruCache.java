@@ -1,8 +1,9 @@
 package org.relos.cheevos.misc;
 
-import android.graphics.*;
-import android.support.v4.util.*;
-import com.android.volley.toolbox.*;
+import android.graphics.Bitmap;
+import android.support.v4.util.LruCache;
+
+import com.android.volley.toolbox.ImageLoader;
 
 /**
  * Class to handle image caching

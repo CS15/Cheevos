@@ -22,7 +22,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
      * Constructor.
      *
      * @param context Activity context.
-     * @param titles Array on titles.
+     * @param titles  Array on titles.
      */
     public NavigationDrawerAdapter(Context context, String[] titles) {
         this.mContext = context;

@@ -12,7 +12,7 @@ public class JsoupHelper {
         return ("http://www.xboxachievements.com/images/achievements/" + gameId + "/cover" + fileType);
     }
 
-    public static int getGameId(String url){
+    public static int getGameId(String url) {
         String id = url.replace("http://www.xboxachievements.com/images/achievements/", "");
 
         int index = id.indexOf("/");

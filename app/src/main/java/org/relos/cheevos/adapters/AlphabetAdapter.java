@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import org.relos.cheevos.R;
 
-public class AlphabetAdapter  extends BaseAdapter {
+public class AlphabetAdapter extends BaseAdapter {
     // instance variables
     private Context mContext;
     private String[] mTitles;

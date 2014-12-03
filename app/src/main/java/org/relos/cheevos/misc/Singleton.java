@@ -1,7 +1,6 @@
 package org.relos.cheevos.misc;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import com.parse.Parse;
 
@@ -9,10 +8,10 @@ import org.relos.cheevos.R;
 
 /**
  * Instantiate all singleton classes
- *
+ * <p/>
  * Created by Christian (ReloS) Soler on 11/26/2014.
  */
-public class Singleton extends Application{
+public class Singleton extends Application {
 
     @Override
     public void onCreate() {

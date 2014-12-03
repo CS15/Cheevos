@@ -15,7 +15,7 @@ import org.relos.cheevos.misc.HelperClass;
 
 /**
  * Fragment for settings
- *
+ * <p/>
  * Created by Christian Soler on 11/28/14.
  */
 public class Settings extends Fragment {
@@ -24,7 +24,7 @@ public class Settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_settings, container, false);
 
-        if(ParseUser.getCurrentUser() != null) {
+        if (ParseUser.getCurrentUser() != null) {
             view.findViewById(R.id.v_first).setVisibility(View.VISIBLE);
             TextView tvLogout = (TextView) view.findViewById(R.id.tv_logout);
             tvLogout.setVisibility(View.VISIBLE);

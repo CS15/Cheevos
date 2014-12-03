@@ -7,7 +7,7 @@ import android.widget.ScrollView;
 
 /**
  * Scroll viewer that works with a list view
- *
+ * <p/>
  * Created by Twenty on 7/13/2014.
  */
 public class ScrollviewForList extends ScrollView {
@@ -28,7 +28,7 @@ public class ScrollviewForList extends ScrollView {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         onTouchEvent(ev);
-        if(ev.getAction() == MotionEvent.ACTION_DOWN){
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             startY = ev.getY();
         }
         return (ev.getAction() == MotionEvent.ACTION_MOVE) && (Math.abs(startY - ev.getY()) > 50);

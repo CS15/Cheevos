@@ -1,7 +1,6 @@
 package org.relos.cheevos.objects;
 
 /**
- *
  * Created by Christian Soler on 11/30/14.
  */
 public class Game {

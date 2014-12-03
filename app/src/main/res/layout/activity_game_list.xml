@@ -24,14 +24,17 @@
                 android:background="@color/drawer_background"
                 android:choiceMode="singleChoice" />
 
-            <!-- front content -->
-            <ListView
+            <GridView
                 android:id="@+id/lv_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="@dimen/divider" />
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/padding_level_1"
+                android:numColumns="2"
+                android:padding="@dimen/padding_level_1"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/padding_level_1" />
 
         </android.support.v4.widget.SlidingPaneLayout>
 

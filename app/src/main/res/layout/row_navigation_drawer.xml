@@ -10,7 +10,7 @@
         android:id="@+id/iv_selected_item"
         android:layout_width="@dimen/selected_item"
         android:layout_height="match_parent" />
-        <!--android:background="@drawable/activated_background" />-->
+    <!--android:background="@drawable/activated_background" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
