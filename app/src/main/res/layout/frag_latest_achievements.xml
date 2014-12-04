@@ -3,7 +3,7 @@
 <org.relos.cheevos.views.ScrollviewForList xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_color">
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"

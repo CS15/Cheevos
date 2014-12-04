@@ -49,7 +49,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
             // root element
             Element root = doc.getElementsByClass("divText").first();
 
-            if (!root.toString().equals("")) {
+            if (root != null) {
                 // local variables
                 Elements oddRows = root.getElementsByClass("trA1");
                 Elements evenRows = root.getElementsByClass("trA2");

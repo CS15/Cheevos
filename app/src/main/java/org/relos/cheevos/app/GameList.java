@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -32,7 +31,8 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
     private SlidingPaneLayout mSlidingPane;
     private GridView mLvContent;
     private GameListAdapter mAdapter;
-    private String url = "http://www.xboxachievements.com/games/xbox-one/";
+    private String mUrl = "http://www.xboxachievements.com/browsegames/xbox-one/a/";
+    private boolean isAnAdmin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,22 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
 
         mAlphabetMenu = (ListView) findViewById(R.id.lv_alphabet_content);
         mAlphabetMenu.setAdapter(new AlphabetAdapter(this, mAlphabetTitles));
+        mAlphabetMenu.setItemChecked(1, true);
+        mAlphabetMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
+
+                if (isAnAdmin) {
+                    String alphabetCode = (mAlphabetTitles[position].equals("0-9")) ? "-" : mAlphabetTitles[position].toLowerCase();
+                    mUrl = "http://www.xboxachievements.com/browsegames/xbox-one/" + alphabetCode + "/";
+                    mAlphabetMenu.setItemChecked(position, true);
+                    mSlidingPane.closePane();
+                    startLoader();
+                }
+            }
+        });
 
         mList = new ArrayList<Game>();
 
@@ -63,14 +79,20 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
         mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(GameList.this, mList.get(i).getCoverUrl(), Toast.LENGTH_LONG).show();
+
             }
         });
 
-        boolean isAnAdmin = true;
-
         if (isAnAdmin) {
+            startLoader();
+        }
+    }
+
+    private void startLoader() {
+        if (this.getSupportLoaderManager().getLoader(0) == null) {
             this.getSupportLoaderManager().initLoader(0, null, this);
+        } else {
+            this.getSupportLoaderManager().restartLoader(0, null, this);
         }
     }
 
@@ -101,15 +123,13 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
 
     @Override
     public Loader<List<Game>> onCreateLoader(int i, Bundle bundle) {
-        return new GameListLoader(this, mList, url);
+        return new GameListLoader(this, mList, mUrl);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Game>> listLoader, List<Game> games) {
         mList = games;
         mAdapter.notifyDataSetChanged();
-
-        Toast.makeText(this, "Game list: " + games.size(), Toast.LENGTH_LONG).show();
     }
 
     @Override
