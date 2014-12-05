@@ -60,4 +60,5 @@
 
     <!-- misc -->
     <dimen name="spl_offset">100dp</dimen>
+    <dimen name="iv_ach_image">200dp</dimen>
 </resources>

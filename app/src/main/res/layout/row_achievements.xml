@@ -8,12 +8,13 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/iv_ach_cover"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/iv_ach_image"
+        android:background="@color/primary_color"
         android:scaleType="centerCrop" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/iv_game_list"
+        android:layout_height="@dimen/iv_ach_image"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

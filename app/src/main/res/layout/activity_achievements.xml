@@ -19,7 +19,7 @@
             <!-- behind content -->
             <ListView
                 android:id="@+id/lv_alphabet_content"
-                android:layout_width="@dimen/spl_offset"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/drawer_background"
                 android:choiceMode="singleChoice" />
@@ -30,10 +30,9 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:gravity="center"
-                android:horizontalSpacing="0dp"
+                android:horizontalSpacing="@dimen/padding_level_1"
                 android:numColumns="1"
-                android:paddingTop="@dimen/padding_level_1"
-                android:paddingBottom="@dimen/padding_level_1"
+                android:padding="@dimen/padding_level_1"
                 android:stretchMode="columnWidth"
                 android:scrollbars="none"
                 android:verticalSpacing="@dimen/padding_level_1" />
