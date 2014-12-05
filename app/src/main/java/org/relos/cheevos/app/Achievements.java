@@ -14,30 +14,32 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.relos.cheevos.R;
-import org.relos.cheevos.adapters.AlphabetAdapter;
+import org.relos.cheevos.adapters.AchievementsAdapter;
 import org.relos.cheevos.adapters.GameListAdapter;
+import org.relos.cheevos.loaders.AchievementsLoader;
 import org.relos.cheevos.loaders.GameListLoader;
 import org.relos.cheevos.objects.Game;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameList extends ActionBarActivity implements LoaderManager.LoaderCallbacks<List<Game>> {
-    // field
+public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<List<Game>> {
     private List<Game> mList;
-    private ListView mAlphabetMenu;
     private SlidingPaneLayout mSlidingPane;
+    private AchievementsAdapter mAdapter;
     private GridView mLvContent;
-    private GameListAdapter mAdapter;
-    private String mUrl = "http://www.xboxachievements.com/browsegames/xbox-one/a/";
+    private String mTitle;
+    private String mUrl;
+    private int mGameId;
     private boolean isAnAdmin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_list);
+        setContentView(R.layout.activity_achievements);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,51 +48,31 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // browsing menu titles
-        final String[] mAlphabetTitles = getResources().getStringArray(R.array.slide_menu_alphabet);
+        onGameDetails();
 
-        onBrowsingMenu();
+        if (getIntent().getExtras() != null) {
+            mTitle = getIntent().getExtras().getString("title");
+            mUrl = getIntent().getExtras().getString("url");
+            mGameId = getIntent().getExtras().getInt("gameId");
 
-        mAlphabetMenu = (ListView) findViewById(R.id.lv_alphabet_content);
-        mAlphabetMenu.setAdapter(new AlphabetAdapter(this, mAlphabetTitles));
-        mAlphabetMenu.setItemChecked(1, true);
-        mAlphabetMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
+            getSupportActionBar().setTitle(mTitle);
 
-                if (isAnAdmin) {
-                    String alphabetCode = (mAlphabetTitles[position].equals("0-9")) ? "-" : mAlphabetTitles[position].toLowerCase();
-                    mUrl = "http://www.xboxachievements.com/browsegames/xbox-one/" + alphabetCode + "/";
-                    mAlphabetMenu.setItemChecked(position, true);
-                    mSlidingPane.closePane();
-                    startLoader();
+            mList = new ArrayList<Game>();
+
+            mAdapter = new AchievementsAdapter(mList, this);
+
+            mLvContent = (GridView) findViewById(R.id.lv_content);
+            mLvContent.setAdapter(mAdapter);
+            mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 }
+            });
+
+            if (isAnAdmin) {
+                startLoader();
             }
-        });
-
-        mList = new ArrayList<Game>();
-
-        mAdapter = new GameListAdapter(mList, this);
-
-        mLvContent = (GridView) findViewById(R.id.lv_content);
-        mLvContent.setAdapter(mAdapter);
-        mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(GameList.this, Achievements.class);
-                intent.putExtra("title", mList.get(i).getTitle());
-                intent.putExtra("url", mList.get(i).getAchievementsPageUrl());
-                intent.putExtra("gameId", mList.get(i).getId());
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
-            }
-        });
-
-        if (isAnAdmin) {
-            startLoader();
         }
     }
 
@@ -102,10 +84,9 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
         }
     }
 
-    private void onBrowsingMenu() {
-        // instantiate browsing menu
+    private void onGameDetails() {
         mSlidingPane = new SlidingPaneLayout(this);
-        mSlidingPane = (SlidingPaneLayout) findViewById(R.id.slp_game_list);
+        mSlidingPane = (SlidingPaneLayout) findViewById(R.id.slp_achievements);
         mSlidingPane.setParallaxDistance(30);
         mSlidingPane.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
@@ -116,20 +97,20 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
             @Override
             public void onPanelOpened(View view) {
                 // set actionbar title
-                getSupportActionBar().setTitle(R.string.ab_title_browse);
+                getSupportActionBar().setTitle(R.string.ab_game_details);
             }
 
             @Override
             public void onPanelClosed(View view) {
                 // set actionbar title
-                getSupportActionBar().setTitle(R.string.ab_title_game_list);
+                getSupportActionBar().setTitle(mTitle);
             }
         });
     }
 
     @Override
     public Loader<List<Game>> onCreateLoader(int i, Bundle bundle) {
-        return new GameListLoader(this, mList, mUrl);
+        return new AchievementsLoader(this, mList, mUrl, mGameId);
     }
 
     @Override
@@ -146,7 +127,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = new MenuInflater(this);
-        inflater.inflate(R.menu.menu_game_list, menu);
+        inflater.inflate(R.menu.menu_achievements, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -159,7 +140,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
                 onBackPressed();
                 break;
 
-            case R.id.menu_browse:
+            case R.id.menu_game_details:
                 // show/close browse menu
                 if (!mSlidingPane.isOpen()) {
                     mSlidingPane.openPane();

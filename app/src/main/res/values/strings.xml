@@ -5,6 +5,8 @@
     <string name="app_name">Cheevos</string>
     <string name="ab_title_game_list">Xbox Games</string>
     <string name="ab_title_browse">Browse</string>
+    <string name="ab_game_details">Game Details</string>
+
 
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
@@ -25,5 +27,6 @@
     <string name="profile">Profile</string>
     <string name="la_title">Latest Achievements</string>
     <string name="browse">Browse</string>
+    <string name="game_details">Game Details</string>
 
 </resources>
