@@ -25,7 +25,7 @@ import org.relos.cheevos.R;
 import org.relos.cheevos.adapters.LatestAchievementsAdapter;
 import org.relos.cheevos.loaders.LatestAchievementsLoader;
 import org.relos.cheevos.misc.SingletonVolley;
-import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +35,12 @@ import java.util.List;
  * <p/>
  * Created by Christian Soler on 9/22/2014.
  */
-public class LatestAchievements extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
+public class LatestAchievements extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<GameDetails>> {
     // instance variables
     private ListView mLvContent;
     private NetworkImageView mIvBanner;
     private TextView mTvTitle;
-    private ArrayList<Game> mGameList;
+    private ArrayList<GameDetails> mGameList;
     private LatestAchievementsAdapter mAdapter;
     private final String BASE_URL = "http://www.xboxachievements.com/archive/achievements/1/";
 
@@ -50,7 +50,7 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
 
         View view = inflater.inflate(R.layout.frag_latest_achievements, container, false);
 
-        mGameList = new ArrayList<Game>();
+        mGameList = new ArrayList<GameDetails>();
         mAdapter = new LatestAchievementsAdapter(getActivity(), mGameList);
         mIvBanner = (NetworkImageView) view.findViewById(R.id.iv_latest_image);
         mTvTitle = (TextView) view.findViewById(R.id.tv_latest_image_title);
@@ -79,18 +79,18 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
     }
 
     @Override
-    public Loader<ArrayList<Game>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<ArrayList<GameDetails>> onCreateLoader(int i, Bundle bundle) {
         return new LatestAchievementsLoader(getActivity(), mGameList, BASE_URL);
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<Game>> arrayListLoader, ArrayList<Game> list) {
+    public void onLoadFinished(Loader<ArrayList<GameDetails>> arrayListLoader, ArrayList<GameDetails> list) {
         mGameList = list;
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Game>> arrayListLoader) {
+    public void onLoaderReset(Loader<ArrayList<GameDetails>> arrayListLoader) {
 
     }
 

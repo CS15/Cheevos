@@ -11,16 +11,15 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import org.relos.cheevos.R;
 import org.relos.cheevos.misc.SingletonVolley;
-import org.relos.cheevos.objects.Game;
-import org.relos.cheevos.views.RoundedImageLoader;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.util.List;
 
 public class GameListAdapter extends BaseAdapter {
     private Context mContext;
-    private List<Game> mList;
+    private List<GameDetails> mList;
 
-    public GameListAdapter(List<Game> data, Context context) {
+    public GameListAdapter(List<GameDetails> data, Context context) {
         mContext = context;
         mList = data;
     }

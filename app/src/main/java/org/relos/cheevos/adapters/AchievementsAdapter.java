@@ -5,15 +5,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.Achievement;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.util.List;
 
 public class AchievementsAdapter extends BaseAdapter {
-    private List<Game> mList;
+    private List<Achievement> mList;
     private Context mContext;
 
-    public AchievementsAdapter(List<Game> data, Context context) {
+    public AchievementsAdapter(List<Achievement> data, Context context) {
         mList = data;
         mContext = context;
     }

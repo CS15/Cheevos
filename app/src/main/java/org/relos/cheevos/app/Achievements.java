@@ -1,6 +1,5 @@
 package org.relos.cheevos.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -13,21 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import org.relos.cheevos.R;
 import org.relos.cheevos.adapters.AchievementsAdapter;
-import org.relos.cheevos.adapters.GameListAdapter;
 import org.relos.cheevos.loaders.AchievementsLoader;
-import org.relos.cheevos.loaders.GameListLoader;
+import org.relos.cheevos.objects.Achievement;
 import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<List<Game>> {
-    private List<Game> mList;
+public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
+    private List<Achievement> mList;
+    private Game mGame;
     private SlidingPaneLayout mSlidingPane;
     private AchievementsAdapter mAdapter;
     private GridView mLvContent;
@@ -57,7 +55,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
             getSupportActionBar().setTitle(mTitle);
 
-            mList = new ArrayList<Game>();
+            mList = new ArrayList<Achievement>();
 
             mAdapter = new AchievementsAdapter(mList, this);
 
@@ -109,18 +107,18 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<Game>> onCreateLoader(int i, Bundle bundle) {
-        return new AchievementsLoader(this, mList, mUrl, mGameId);
+    public Loader<Game> onCreateLoader(int i, Bundle bundle) {
+        return new AchievementsLoader(this, mGame, mUrl, mGameId);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Game>> listLoader, List<Game> games) {
-        mList = games;
+    public void onLoadFinished(Loader<Game> listLoader, Game games) {
+        mList = games.getAchievements();
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Game>> listLoader) {
+    public void onLoaderReset(Loader<Game> listLoader) {
 
     }
 

@@ -19,14 +19,14 @@ import org.relos.cheevos.R;
 import org.relos.cheevos.adapters.AlphabetAdapter;
 import org.relos.cheevos.adapters.GameListAdapter;
 import org.relos.cheevos.loaders.GameListLoader;
-import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameList extends ActionBarActivity implements LoaderManager.LoaderCallbacks<List<Game>> {
+public class GameList extends ActionBarActivity implements LoaderManager.LoaderCallbacks<List<GameDetails>> {
     // field
-    private List<Game> mList;
+    private List<GameDetails> mList;
     private ListView mAlphabetMenu;
     private SlidingPaneLayout mSlidingPane;
     private GridView mLvContent;
@@ -70,7 +70,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
             }
         });
 
-        mList = new ArrayList<Game>();
+        mList = new ArrayList<GameDetails>();
 
         mAdapter = new GameListAdapter(mList, this);
 
@@ -128,18 +128,18 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
     }
 
     @Override
-    public Loader<List<Game>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<GameDetails>> onCreateLoader(int i, Bundle bundle) {
         return new GameListLoader(this, mList, mUrl);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Game>> listLoader, List<Game> games) {
+    public void onLoadFinished(Loader<List<GameDetails>> listLoader, List<GameDetails> games) {
         mList = games;
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Game>> listLoader) {
+    public void onLoaderReset(Loader<List<GameDetails>> listLoader) {
 
     }
 

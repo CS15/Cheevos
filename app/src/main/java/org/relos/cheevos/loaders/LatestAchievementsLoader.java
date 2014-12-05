@@ -7,7 +7,7 @@ import android.widget.Toast;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,14 +17,14 @@ import java.util.ArrayList;
  * <p/>
  * Created by Christian Soler on 11/28/14.
  */
-public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<Game>> {
+public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<GameDetails>> {
     // instance
     private Context mContext;
-    private ArrayList<Game> mList;
+    private ArrayList<GameDetails> mList;
     private final String BASE_URL;
     private String mExMessage;
 
-    public LatestAchievementsLoader(Context context, ArrayList<Game> list, String url) {
+    public LatestAchievementsLoader(Context context, ArrayList<GameDetails> list, String url) {
         super(context);
         mContext = context;
         mList = list;
@@ -43,7 +43,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<Game>> {
     }
 
     @Override
-    public ArrayList<Game> loadInBackground() {
+    public ArrayList<GameDetails> loadInBackground() {
         try {
             // local variables
             int counter = 0;
@@ -78,7 +78,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<Game>> {
                     counter += 2;
 
                     // create json object and add it to json array
-                    Game game = new Game();
+                    GameDetails game = new GameDetails();
                     game.setCoverUrl(imageUrl);
                     game.setTitle(title);
                     game.setAchievementsAmount(achAmount);
@@ -97,7 +97,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<Game>> {
     }
 
     @Override
-    public void deliverResult(ArrayList<Game> data) {
+    public void deliverResult(ArrayList<GameDetails> data) {
 
         if (isStarted() && data != null) {
             super.deliverResult(data);

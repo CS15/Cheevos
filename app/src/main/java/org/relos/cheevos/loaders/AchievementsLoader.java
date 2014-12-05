@@ -8,24 +8,26 @@ import android.widget.Toast;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.relos.cheevos.objects.Achievement;
 import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.net.URL;
 import java.util.List;
 
-public class AchievementsLoader extends AsyncTaskLoader<List<Game>> {
+public class AchievementsLoader extends AsyncTaskLoader<Game> {
     // fields
     private Context mContext;
-    private List<Game> mList;
+    private Game mGame;
     private String mExMessage;
     private final String BASE_URL;
     private final int GAME_ID;
 
-    public AchievementsLoader(Context context, List<Game> list, String url, int gameId) {
+    public AchievementsLoader(Context context, Game game, String url, int gameId) {
         super(context);
 
         mContext = context;
-        mList = list;
+        mGame = game;
         BASE_URL = url;
         GAME_ID = gameId;
     }
@@ -34,77 +36,64 @@ public class AchievementsLoader extends AsyncTaskLoader<List<Game>> {
     protected void onStartLoading() {
         super.onStartLoading();
 
-        if (mList.size() == 0) {
+        if (mGame == null) {
             forceLoad();
         } else {
-            deliverResult(mList);
+            deliverResult(mGame);
         }
     }
 
     @Override
-    public List<Game> loadInBackground() {
+    public Game loadInBackground() {
         // get data in the background
         try {
-            // get html data
+            mGame = new Game();
+            mGame.setGameDetails(new GameDetails());
+
             Document doc = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
-            // get root elements
             Elements root = doc.getElementsByClass("divtext");
             Elements gameInfoData = doc.getElementsByClass("men_h_content");
-            Elements naviBar = doc.getElementsByClass("navbar");
-
-            // get game title
-            String mGameTitle = doc.getElementsByClass("tt").first().text();
 
             // get achievement list
-            if (!root.toString().equals("")) {
+            if (root != null) {
 
                 int mAchDescCounter = 0;
-
-                // get element sizes to be use with if statement
                 int mSize = root.select("td.ac2").size();
                 int mAchDescSize = root.select("td.ac1 a.link_ach").size();
-                int mNaviSize = naviBar.select("div.pt3 a.link_w2").size();
 
                 // extract elements info
                 for (int i = 0; i < mSize; i++) {
-
 
                     // extract elements details
                     String title = root.select("td.ac2 b").get(i).text();
                     String gamerScore = root.select("td.ac4 strong").get(i).text();
                     String image = "";
-                    String mdesc = "";
+                    String description = "";
                     String itemPageUrl = "";
 
                     // check for secret achievement list
                     if (i < mAchDescSize) {
                         image = root.select("td.ac1 a img").get(i).attr("abs:src");
-                        mdesc = root.select("td.ac3").get(mAchDescCounter).text();
+                        description = root.select("td.ac3").get(mAchDescCounter).text();
                         itemPageUrl = root.select("td.ac1 a.link_ach").get(i).attr("abs:href");
                     } else if (title.equals("Secret Achievement")) {
                         image = root.select("td.ac1 img").get(i).attr("abs:src");
-                        mdesc = "Continue playing to unlock this secret achievement.";
+                        description = "Continue playing to unlock this secret achievement.";
                     }
+
+                    image = image.replace("lo", "hi");
 
                     // increase counter
                     mAchDescCounter += 2;
 
                     // create objects and add it to list
-                    Game game = new Game();
-                }
-
-                // get game guide url
-                String mGameGuide = "";
-                String mScreensPageUrl = "";
-                for (int i = 0; i < mNaviSize; i++) {
-                    if (naviBar.select("div.pt3 a.link_w2").get(i).text().equals("Achievement Guide")) {
-                        mGameGuide = naviBar.select("div.pt3 a.link_w2").get(i).attr("abs:href");
-                    }
-
-                    if (naviBar.select("div.pt3 a.link_w2").get(i).text().equals("Screens")) {
-                        mScreensPageUrl = naviBar.select("div.pt3 a.link_w2").get(i).attr("abs:href");
-                    }
+                    Achievement ach = new Achievement();
+                    ach.setCoverUrl(image);
+                    ach.setTitle(title);
+                    ach.setDescription(description);
+                    ach.setGamerscore(Integer.parseInt(gamerScore));
+                    mGame.getAchievements().add(ach);
                 }
 
                 // get game cover url
@@ -145,11 +134,11 @@ public class AchievementsLoader extends AsyncTaskLoader<List<Game>> {
             mExMessage = e.getMessage();
         }
 
-        return mList;
+        return mGame;
     }
 
     @Override
-    public void deliverResult(List<Game> data) {
+    public void deliverResult(Game data) {
 
         if (isStarted() && data != null) {
             super.deliverResult(data);

@@ -9,19 +9,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.net.URL;
 import java.util.List;
 
-public class GameListLoader extends AsyncTaskLoader<List<Game>> {
+public class GameListLoader extends AsyncTaskLoader<List<GameDetails>> {
     // fields
     private Context mContext;
-    private List<Game> mList;
+    private List<GameDetails> mList;
     private String mExMessage;
     private final String BASE_URL;
 
-    public GameListLoader(Context context, List<Game> list, String url) {
+    public GameListLoader(Context context, List<GameDetails> list, String url) {
         super(context);
 
         mContext = context;
@@ -41,7 +41,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
     }
 
     @Override
-    public List<Game> loadInBackground() {
+    public List<GameDetails> loadInBackground() {
         try {
             // get html
             Document doc = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
@@ -89,7 +89,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
                         String cover = "http://www.xboxachievements.com/images/achievements/" + gameId + "/cover" + fileType;
 
                         // create object
-                        Game game = new Game();
+                        GameDetails game = new GameDetails();
                         game.setId(gameId);
                         game.setCoverUrl(cover);
                         game.setIcoUrl(ico);
@@ -121,7 +121,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
                         String cover = "http://www.xboxachievements.com/images/achievements/" + gameId + "/cover" + fileType;
 
                         // create object
-                        Game game = new Game();
+                        GameDetails game = new GameDetails();
                         game.setId(gameId);
                         game.setCoverUrl(cover);
                         game.setIcoUrl(ico);
@@ -149,7 +149,7 @@ public class GameListLoader extends AsyncTaskLoader<List<Game>> {
     }
 
     @Override
-    public void deliverResult(List<Game> data) {
+    public void deliverResult(List<GameDetails> data) {
 
         if (isStarted() && data != null) {
             super.deliverResult(data);

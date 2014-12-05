@@ -11,16 +11,16 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import org.relos.cheevos.R;
 import org.relos.cheevos.misc.SingletonVolley;
-import org.relos.cheevos.objects.Game;
+import org.relos.cheevos.objects.GameDetails;
 
 import java.util.ArrayList;
 
 public class LatestAchievementsAdapter extends BaseAdapter {
     // instance variables
     private Context mContext;
-    private ArrayList<Game> mData;
+    private ArrayList<GameDetails> mData;
 
-    public LatestAchievementsAdapter(Context context, ArrayList<Game> data) {
+    public LatestAchievementsAdapter(Context context, ArrayList<GameDetails> data) {
         this.mContext = context;
         this.mData = data;
     }
