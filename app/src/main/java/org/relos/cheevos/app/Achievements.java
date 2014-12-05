@@ -25,6 +25,7 @@ import java.util.List;
 
 public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
     private List<Achievement> mList;
+    private GameDetails mGameDetails;
     private Game mGame;
     private SlidingPaneLayout mSlidingPane;
     private AchievementsAdapter mAdapter;
@@ -56,6 +57,11 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             getSupportActionBar().setTitle(mTitle);
 
             mList = new ArrayList<Achievement>();
+            mGameDetails = new GameDetails();
+
+            mGame = new Game();
+            mGame.setGameDetails(mGameDetails);
+            mGame.setAchievements(mList);
 
             mAdapter = new AchievementsAdapter(mList, this);
 
@@ -114,6 +120,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Game> listLoader, Game games) {
         mList = games.getAchievements();
+        mGameDetails = games.getGameDetails();
         mAdapter.notifyDataSetChanged();
     }
 

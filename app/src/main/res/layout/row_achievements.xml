@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/iv_ach_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/iv_game_list"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/primary_gradient_bottom" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_level_1"
+        android:paddingLeft="@dimen/padding_level_1"
+        android:paddingRight="@dimen/padding_level_1">
+
+        <org.relos.cheevos.views.MavenProLightBoldTextView
+            android:id="@+id/tv_ach_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/tv_level_5" />
+
+        <org.relos.cheevos.views.MavenProLightBoldTextView
+            android:id="@+id/tv_ach_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/tv_level_6" />
+
+    </LinearLayout>
+
+</RelativeLayout>

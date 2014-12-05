@@ -54,7 +54,7 @@ public class LatestAchievementsAdapter extends BaseAdapter {
             // view holder
             mViewHolder = new ViewHolder();
             assert view != null;
-            mViewHolder.mIvCover = (NetworkImageView) view.findViewById(R.id.iv_cover);
+            mViewHolder.mIvCover = (NetworkImageView) view.findViewById(R.id.iv_ach_cover);
             mViewHolder.mTvTitle = (TextView) view.findViewById(R.id.tv_game_title);
             mViewHolder.mTvAchAmount = (TextView) view.findViewById(R.id.tv_game_ach_amount);
 

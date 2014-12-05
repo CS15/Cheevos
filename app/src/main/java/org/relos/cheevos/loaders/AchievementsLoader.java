@@ -36,7 +36,7 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
     protected void onStartLoading() {
         super.onStartLoading();
 
-        if (mGame == null) {
+        if (mGame.getAchievements().size() == 0) {
             forceLoad();
         } else {
             deliverResult(mGame);
@@ -47,7 +47,6 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
     public Game loadInBackground() {
         // get data in the background
         try {
-            mGame = new Game();
             mGame.setGameDetails(new GameDetails());
 
             Document doc = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
@@ -89,6 +88,7 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
 
                     // create objects and add it to list
                     Achievement ach = new Achievement();
+                    ach.setGameId(GAME_ID);
                     ach.setCoverUrl(image);
                     ach.setTitle(title);
                     ach.setDescription(description);

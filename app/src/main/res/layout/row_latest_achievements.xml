@@ -7,7 +7,7 @@
     android:padding="@dimen/padding_level_1">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/iv_cover"
+        android:id="@+id/iv_ach_cover"
         android:layout_width="@dimen/iv_avatar"
         android:layout_height="@dimen/iv_avatar"
         android:scaleType="centerCrop" />
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_level_1"
         android:layout_marginRight="@dimen/margin_level_1"
-        android:layout_toRightOf="@+id/iv_cover"
+        android:layout_toRightOf="@+id/iv_ach_cover"
         android:textColor="@android:color/black"
         android:textSize="@dimen/tv_level_4" />
 
@@ -28,7 +28,7 @@
         android:layout_height="@dimen/divider"
         android:layout_below="@+id/tv_game_title"
         android:layout_margin="@dimen/margin_level_1"
-        android:layout_toRightOf="@+id/iv_cover"
+        android:layout_toRightOf="@+id/iv_ach_cover"
         android:background="@android:color/darker_gray" />
 
     <org.relos.cheevos.views.MavenProLightBoldTextView
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_level_1"
         android:layout_marginRight="@dimen/margin_level_1"
-        android:layout_toRightOf="@+id/iv_cover"
+        android:layout_toRightOf="@+id/iv_ach_cover"
         android:layout_below="@+id/v_divider"
         android:textColor="@android:color/black"
         android:textSize="@dimen/tv_level_5" />
