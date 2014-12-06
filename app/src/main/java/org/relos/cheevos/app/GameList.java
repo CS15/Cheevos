@@ -82,6 +82,9 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
                 Intent intent = new Intent(GameList.this, Achievements.class);
                 intent.putExtra("title", mList.get(i).getTitle());
                 intent.putExtra("url", mList.get(i).getAchievementsPageUrl());
+                intent.putExtra("coverUrl", mList.get(i).getCoverUrl());
+                intent.putExtra("achsAmount", mList.get(i).getAchievementsAmount());
+                intent.putExtra("gamerscore", mList.get(i).getGamerscore());
                 intent.putExtra("gameId", mList.get(i).getId());
                 startActivity(intent);
 

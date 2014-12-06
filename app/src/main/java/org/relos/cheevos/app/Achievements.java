@@ -32,6 +32,9 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private GridView mLvContent;
     private String mTitle;
     private String mUrl;
+    private String mCoverUrl;
+    private int mAchsAmount;
+    private int mGamerscore;
     private int mGameId;
     private boolean isAnAdmin = true;
 
@@ -50,14 +53,22 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         onGameDetails();
 
         if (getIntent().getExtras() != null) {
+            mGameId = getIntent().getExtras().getInt("gameId");
             mTitle = getIntent().getExtras().getString("title");
             mUrl = getIntent().getExtras().getString("url");
-            mGameId = getIntent().getExtras().getInt("gameId");
+            mCoverUrl = getIntent().getExtras().getString("coverUrl");
+            mAchsAmount = getIntent().getExtras().getInt("achsAmount");
+            mGamerscore = getIntent().getExtras().getInt("gamerscore");
 
             getSupportActionBar().setTitle(mTitle);
 
             mList = new ArrayList<Achievement>();
             mGameDetails = new GameDetails();
+            mGameDetails.setTitle(mTitle);
+            mGameDetails.setCoverUrl(mCoverUrl);
+            mGameDetails.setGamerscore(mGamerscore);
+            mGameDetails.setId(mGameId);
+            mGameDetails.setAchievementsAmount(mAchsAmount);
 
             mGame = new Game();
             mGame.setGameDetails(mGameDetails);

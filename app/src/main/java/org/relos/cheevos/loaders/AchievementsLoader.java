@@ -47,7 +47,6 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
     public Game loadInBackground() {
         // get data in the background
         try {
-            mGame.setGameDetails(new GameDetails());
 
             Document doc = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
@@ -69,13 +68,11 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
                     String gamerScore = root.select("td.ac4 strong").get(i).text();
                     String image = "";
                     String description = "";
-                    String itemPageUrl = "";
 
                     // check for secret achievement list
                     if (i < mAchDescSize) {
                         image = root.select("td.ac1 a img").get(i).attr("abs:src");
                         description = root.select("td.ac3").get(mAchDescCounter).text();
-                        itemPageUrl = root.select("td.ac1 a.link_ach").get(i).attr("abs:href");
                     } else if (title.equals("Secret Achievement")) {
                         image = root.select("td.ac1 img").get(i).attr("abs:src");
                         description = "Continue playing to unlock this secret achievement.";
@@ -96,33 +93,35 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
                     mGame.getAchievements().add(ach);
                 }
 
-                // get game cover url
-                String mGameCoverUrl = gameInfoData.select("td[width=125] img").get(0).attr("abs:src");
-
-                // add game info items
-                //mGameInfo.add(mGameTitle);
-                //mGameInfo.add(mGameCoverUrl);
-                //mGameInfo.add(mGameGuide);
-                //mGameInfo.add(mScreensPageUrl);
-
                 // get game info details
+                String developer = gameInfoData.select("a[title]").get(0).text();
+                String publisher = gameInfoData.select("a[title]").get(1).text();
+                String publisher2 = gameInfoData.select("a[title]").get(2).text();
+                String publisher3 = (gameInfoData.select("a[title]").get(3).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
+                String publisher4 = (gameInfoData.select("a[title]").get(4).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
+                String publisher5 = (gameInfoData.select("a[title]").get(5).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
+                String publisher6= (gameInfoData.select("a[title]").get(6).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
+
+                mGame.getGameDetails().setDevelopers(new String[] { developer });
+                mGame.getGameDetails().setPublishers(new String[] { publisher });
+
                 for (int i = 0; i < gameInfoData.select("a[title]").size(); i++) {
                     // check for multiple game genre
                     //if (mGameInfo.size() == 7) {
-                    //    mGameInfo.set(6, (mGameInfo.get(6) + " / " + gameInfoData.select("a[title]").get(i).text()));
+                    //    gameInfoData.set(6, (mGameInfo.get(6) + " / " + gameInfoData.select("a[title]").get(i).text()));
                     //} else {
-                    //    mGameInfo.add(gameInfoData.select("a[title]").get(i).text());
+                    //    gameInfoData.add(gameInfoData.select("a[title]").get(i).text());
                     //}
                 }
 
                 // get game released dates
                 for (int i = 0; i < gameInfoData.select("img[width=16]").size(); i++) {
                     if (gameInfoData.select("img[width=16]").get(i).attr("alt").equals("US")) {
-                        //mGameInfo.add("US:" + gameInfoData.select("img[alt=US]").get(0).nextSibling());
+                        mGame.getGameDetails().setUsaRelease(gameInfoData.select("img[alt=US]").get(0).nextSibling().toString().trim());
                     } else if (gameInfoData.select("img[width=16]").get(i).attr("alt").equals("Europe")) {
-                        //mGameInfo.add("Europe:" + gameInfoData.select("img[alt=Europe]").get(0).nextSibling());
+                        mGame.getGameDetails().setEuRelease(gameInfoData.select("img[alt=Europe]").get(0).nextSibling().toString().trim());
                     } else if (gameInfoData.select("img[width=16]").get(i).attr("alt").equals("Japan")) {
-                        //mGameInfo.add("Japan:" + gameInfoData.select("img[alt=Japan]").get(0).nextSibling());
+                        mGame.getGameDetails().setJapanRelease(gameInfoData.select("img[alt=Japan]").get(0).nextSibling().toString().trim());
                     }
                 }
 

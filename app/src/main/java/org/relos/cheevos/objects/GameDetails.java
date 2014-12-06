@@ -6,7 +6,7 @@ public class GameDetails {
     private String coverUrl;
     private String icoUrl;
     private String title;
-    private String achievementsAmount;
+    private int achievementsAmount;
     private String achievementsPageUrl;
     private String usaRelease;
     private String euRelease;
@@ -41,11 +41,11 @@ public class GameDetails {
         this.title = title;
     }
 
-    public String getAchievementsAmount() {
+    public int getAchievementsAmount() {
         return achievementsAmount;
     }
 
-    public void setAchievementsAmount(String achievementsAmount) {
+    public void setAchievementsAmount(int achievementsAmount) {
         this.achievementsAmount = achievementsAmount;
     }
 

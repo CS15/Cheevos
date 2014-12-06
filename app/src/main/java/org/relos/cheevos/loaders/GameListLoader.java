@@ -94,7 +94,7 @@ public class GameListLoader extends AsyncTaskLoader<List<GameDetails>> {
                         game.setCoverUrl(cover);
                         game.setIcoUrl(ico);
                         game.setTitle(title);
-                        game.setAchievementsAmount(achsAmount);
+                        game.setAchievementsAmount(Integer.parseInt(achsAmount));
                         game.setGamerscore(Integer.parseInt(gamerscore));
                         game.setAchievementsPageUrl(achsUrl);
 
@@ -126,7 +126,7 @@ public class GameListLoader extends AsyncTaskLoader<List<GameDetails>> {
                         game.setCoverUrl(cover);
                         game.setIcoUrl(ico);
                         game.setTitle(title);
-                        game.setAchievementsAmount(achsAmount);
+                        game.setAchievementsAmount(Integer.parseInt(achsAmount));
                         game.setGamerscore(Integer.parseInt(gamerscore));
                         game.setAchievementsPageUrl(achsUrl);
 

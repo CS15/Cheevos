@@ -81,7 +81,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<GameDeta
                     GameDetails game = new GameDetails();
                     game.setCoverUrl(imageUrl);
                     game.setTitle(title);
-                    game.setAchievementsAmount(achAmount);
+                    game.setAchievementsAmount(Integer.parseInt(achAmount));
                     game.setAchievementsPageUrl(itemPageUrl);
                     mList.add(game);
                 }
