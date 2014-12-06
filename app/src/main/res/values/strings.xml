@@ -28,5 +28,6 @@
     <string name="la_title">Latest Achievements</string>
     <string name="browse">Browse</string>
     <string name="game_details">Game Details</string>
+    <string name="push_to_parse">Push to Parse</string>
 
 </resources>

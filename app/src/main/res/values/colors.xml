@@ -6,6 +6,7 @@
     <color name="primary_accent_color">#81C784</color>
     <color name="drawer_background">#222</color>
     <color name="drawer_background_pressed">#444</color>
+    <color name="color_overlay_black">#ee107c10</color>
     <color name="light_gray">#dddddd</color>
 
 </resources>

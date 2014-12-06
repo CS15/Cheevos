@@ -11,10 +11,9 @@ public class GameDetails {
     private String usaRelease;
     private String euRelease;
     private String japanRelease;
-    private String[] developers;
+    private String developers;
+    private String publishers;
     private String[] genre;
-    private String[] publishers;
-    private double hddRequiered;
     private int gamerscore;
 
     public int getId() {
@@ -81,11 +80,11 @@ public class GameDetails {
         this.japanRelease = japanRelease;
     }
 
-    public String[] getDevelopers() {
+    public String getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(String[] developers) {
+    public void setDevelopers(String developers) {
         this.developers = developers;
     }
 
@@ -97,20 +96,12 @@ public class GameDetails {
         this.genre = genre;
     }
 
-    public String[] getPublishers() {
+    public String getPublishers() {
         return publishers;
     }
 
-    public void setPublishers(String[] publishers) {
+    public void setPublishers(String publishers) {
         this.publishers = publishers;
-    }
-
-    public double getHddRequiered() {
-        return hddRequiered;
-    }
-
-    public void setHddRequiered(double hddRequiered) {
-        this.hddRequiered = hddRequiered;
     }
 
     public int getGamerscore() {

@@ -7,12 +7,14 @@ import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.relos.cheevos.objects.Achievement;
 import org.relos.cheevos.objects.Game;
 import org.relos.cheevos.objects.GameDetails;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AchievementsLoader extends AsyncTaskLoader<Game> {
@@ -22,6 +24,21 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
     private String mExMessage;
     private final String BASE_URL;
     private final int GAME_ID;
+
+    private enum Genre {
+        ACTION,
+        ADVENTURE,
+        CARD_AND_BOARD,
+        FIGHTING,
+        FITNESS,
+        PUZZLE_AND_WORD,
+        RPG,
+        SHMUP,
+        SHOOTER,
+        SPORT,
+        SPORT_AND_FITNESS,
+        STRATEGY,
+    }
 
     public AchievementsLoader(Context context, Game game, String url, int gameId) {
         super(context);
@@ -96,23 +113,21 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
                 // get game info details
                 String developer = gameInfoData.select("a[title]").get(0).text();
                 String publisher = gameInfoData.select("a[title]").get(1).text();
-                String publisher2 = gameInfoData.select("a[title]").get(2).text();
-                String publisher3 = (gameInfoData.select("a[title]").get(3).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
-                String publisher4 = (gameInfoData.select("a[title]").get(4).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
-                String publisher5 = (gameInfoData.select("a[title]").get(5).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
-                String publisher6= (gameInfoData.select("a[title]").get(6).text() != null) ? gameInfoData.select("a[title]").get(3).text() : "";
 
-                mGame.getGameDetails().setDevelopers(new String[] { developer });
-                mGame.getGameDetails().setPublishers(new String[] { publisher });
+                mGame.getGameDetails().setDevelopers(developer);
+                mGame.getGameDetails().setPublishers(publisher);
 
-                for (int i = 0; i < gameInfoData.select("a[title]").size(); i++) {
-                    // check for multiple game genre
-                    //if (mGameInfo.size() == 7) {
-                    //    gameInfoData.set(6, (mGameInfo.get(6) + " / " + gameInfoData.select("a[title]").get(i).text()));
-                    //} else {
-                    //    gameInfoData.add(gameInfoData.select("a[title]").get(i).text());
-                    //}
+                ArrayList<String> genres = new ArrayList<String>();
+
+                for (Element genre : gameInfoData.select("a[title]")) {
+                    for (Genre g : Genre.values()) {
+                        if (genre.text().equalsIgnoreCase(g.name().replace("_", " "))) {
+                            genres.add(genre.text());
+                        }
+                    }
                 }
+
+                mGame.getGameDetails().setGenre(genres.toArray(new String[genres.size()]));
 
                 // get game released dates
                 for (int i = 0; i < gameInfoData.select("img[width=16]").size(); i++) {

@@ -17,12 +17,109 @@
             android:background="@android:color/white">
 
             <!-- behind content -->
-            <ListView
-                android:id="@+id/lv_alphabet_content"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/drawer_background"
-                android:choiceMode="singleChoice" />
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_level_1">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp">
+
+                        <com.android.volley.toolbox.NetworkImageView
+                            android:id="@+id/iv_game_details_cover"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/primary_color"
+                            android:scaleType="centerCrop" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/primary_gradient_bottom" />
+
+                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                            android:id="@+id/tv_game_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:paddingLeft="@dimen/padding_level_1"
+                            android:paddingRight="@dimen/padding_level_1"
+                            android:layout_marginBottom="@dimen/margin_level_1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textColor="@android:color/white"
+                            android:maxLines="2"
+                            android:textSize="@dimen/tv_level_3" />
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                            android:id="@+id/tv_developer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_level_1"
+                            android:textColor="@android:color/background_dark"
+                            android:textSize="@dimen/tv_level_5" />
+
+                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                            android:id="@+id/tv_publisher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_level_1"
+                            android:textColor="@android:color/background_dark"
+                            android:textSize="@dimen/tv_level_5" />
+
+                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                            android:id="@+id/tv_genre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_level_1"
+                            android:textColor="@android:color/background_dark"
+                            android:textSize="@dimen/tv_level_5" />
+
+                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                            android:id="@+id/tv_us_release"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_level_1"
+                            android:textColor="@android:color/background_dark"
+                            android:textSize="@dimen/tv_level_5" />
+
+                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                            android:id="@+id/tv_eu_release"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_level_1"
+                            android:textColor="@android:color/background_dark"
+                            android:textSize="@dimen/tv_level_5" />
+
+                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                            android:id="@+id/tv_jp_release"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_level_1"
+                            android:textColor="@android:color/background_dark"
+                            android:textSize="@dimen/tv_level_5" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
 
             <GridView
                 android:id="@+id/lv_content"
@@ -33,8 +130,8 @@
                 android:horizontalSpacing="@dimen/padding_level_1"
                 android:numColumns="1"
                 android:padding="@dimen/padding_level_1"
-                android:stretchMode="columnWidth"
                 android:scrollbars="none"
+                android:stretchMode="columnWidth"
                 android:verticalSpacing="@dimen/padding_level_1" />
 
         </android.support.v4.widget.SlidingPaneLayout>

@@ -7,4 +7,10 @@
         android:title="@string/game_details"
         android:icon="@drawable/ic_action_about"
         android:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_push_to_parse"
+        android:title="@string/push_to_parse"
+        android:icon="@drawable/ic_action_about"
+        android:showAsAction="ifRoom" />
 </menu>

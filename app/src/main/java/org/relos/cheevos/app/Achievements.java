@@ -1,5 +1,6 @@
 package org.relos.cheevos.app;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -12,15 +13,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.relos.cheevos.R;
 import org.relos.cheevos.adapters.AchievementsAdapter;
 import org.relos.cheevos.loaders.AchievementsLoader;
+import org.relos.cheevos.misc.SingletonVolley;
 import org.relos.cheevos.objects.Achievement;
 import org.relos.cheevos.objects.Game;
 import org.relos.cheevos.objects.GameDetails;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
@@ -123,6 +130,38 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         });
     }
 
+    private void displayGameDatails(GameDetails gameDetails) {
+        // views
+        NetworkImageView ivCoverImage = (NetworkImageView) findViewById(R.id.iv_game_details_cover);
+        TextView tvGameTitle = (TextView) findViewById(R.id.tv_game_title);
+        TextView tvDeveloper = (TextView) findViewById(R.id.tv_developer);
+        TextView tvPublisher = (TextView) findViewById(R.id.tv_publisher);
+        TextView tvGenre = (TextView) findViewById(R.id.tv_genre);
+        TextView tvUsDate = (TextView) findViewById(R.id.tv_us_release);
+        TextView tvEuDate = (TextView) findViewById(R.id.tv_eu_release);
+        TextView tvJpDate = (TextView) findViewById(R.id.tv_jp_release);
+
+        // data
+        String title = gameDetails.getTitle();
+        String developer = gameDetails.getDevelopers();
+        String publisher = gameDetails.getPublishers();
+        String genres = Arrays.toString(gameDetails.getGenre()).replace("[", "").replace("]", "");
+        String usa = (gameDetails.getUsaRelease() != null) ? gameDetails.getUsaRelease() : "Unknown";
+        String eu = (gameDetails.getEuRelease() != null) ? gameDetails.getEuRelease() : "Unknown";
+        String japan = (gameDetails.getJapanRelease() != null) ? gameDetails.getJapanRelease() : "Unknown";
+
+        // set data
+        ivCoverImage.setImageUrl(gameDetails.getCoverUrl(), SingletonVolley.getImageLoader());
+
+        tvGameTitle.setText(String.format("%s", title));
+        tvDeveloper.setText(String.format("Developer: %s", developer));
+        tvPublisher.setText(String.format("Publisher: %s", publisher));
+        tvGenre.setText(String.format("Genre: %s", genres));
+        tvUsDate.setText(String.format("USA: %s", usa));
+        tvEuDate.setText(String.format("Europe: %s", eu));
+        tvJpDate.setText(String.format("Japan: %s", japan));
+    }
+
     @Override
     public Loader<Game> onCreateLoader(int i, Bundle bundle) {
         return new AchievementsLoader(this, mGame, mUrl, mGameId);
@@ -133,6 +172,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         mList = games.getAchievements();
         mGameDetails = games.getGameDetails();
         mAdapter.notifyDataSetChanged();
+
+        displayGameDatails(mGameDetails);
     }
 
     @Override
