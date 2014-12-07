@@ -24,7 +24,7 @@
             android:layout_marginBottom="@dimen/margin_level_4"
             android:src="@drawable/logo" />
 
-        <org.relos.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.cheevos.views.MavenProLightBoldTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_5"
@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/white" />
 
-            <org.relos.cheevos.views.MavenProLightBoldTextView
+            <org.cs15.cheevos.views.MavenProLightBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -93,7 +93,7 @@
 
         </LinearLayout>
 
-        <org.relos.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.cheevos.views.MavenProLightBoldTextView
             android:id="@+id/tv_sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -9,8 +9,12 @@
         android:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_push_to_parse"
-        android:title="@string/push_to_parse"
-        android:icon="@drawable/ic_action_about"
-        android:showAsAction="ifRoom" />
+        android:id="@+id/menu_upload_game_details"
+        android:title="@string/upload_game_details"
+        android:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_upload_achievements"
+        android:title="@string/upload_achievements"
+        android:showAsAction="never" />
 </menu>

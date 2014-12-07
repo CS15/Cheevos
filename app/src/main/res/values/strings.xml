@@ -29,5 +29,7 @@
     <string name="browse">Browse</string>
     <string name="game_details">Game Details</string>
     <string name="push_to_parse">Push to Parse</string>
+    <string name="upload_game_details">Upload Game Details</string>
+    <string name="upload_achievements">Upload Achievements</string>
 
 </resources>

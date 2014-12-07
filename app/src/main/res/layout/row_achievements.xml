@@ -31,14 +31,14 @@
         android:paddingLeft="@dimen/padding_level_1"
         android:paddingRight="@dimen/padding_level_1">
 
-        <org.relos.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.cheevos.views.MavenProLightBoldTextView
             android:id="@+id/tv_ach_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_level_5" />
 
-        <org.relos.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.cheevos.views.MavenProLightBoldTextView
             android:id="@+id/tv_ach_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="@dimen/padding_level_3">
 
-    <org.relos.cheevos.views.MavenProLightBoldTextView
+    <org.cs15.cheevos.views.MavenProLightBoldTextView
         android:id="@+id/tv_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

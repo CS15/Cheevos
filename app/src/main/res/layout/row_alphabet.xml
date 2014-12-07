@@ -17,7 +17,7 @@
         android:padding="@dimen/row_padding"
         android:orientation="horizontal">
 
-        <org.relos.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.cheevos.views.MavenProLightBoldTextView
             android:id="@+id/tv_navi_alphabet_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tv_level_2"

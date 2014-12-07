@@ -18,7 +18,7 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
-        <org.relos.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.cheevos.views.MavenProLightBoldTextView
             android:id="@+id/tv_drawer_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

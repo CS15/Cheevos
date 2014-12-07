@@ -21,7 +21,7 @@
             android:layout_marginBottom="@dimen/margin_level_4"
             android:src="@drawable/logo" />
 
-        <org.relos.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.cheevos.views.MavenProLightBoldTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_5"

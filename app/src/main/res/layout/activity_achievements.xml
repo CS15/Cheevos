@@ -44,7 +44,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/primary_gradient_bottom" />
 
-                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                        <org.cs15.cheevos.views.MavenProLightBoldTextView
                             android:id="@+id/tv_game_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                        <org.cs15.cheevos.views.MavenProLightBoldTextView
                             android:id="@+id/tv_developer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                             android:textColor="@android:color/background_dark"
                             android:textSize="@dimen/tv_level_5" />
 
-                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                        <org.cs15.cheevos.views.MavenProLightBoldTextView
                             android:id="@+id/tv_publisher"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                             android:textColor="@android:color/background_dark"
                             android:textSize="@dimen/tv_level_5" />
 
-                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                        <org.cs15.cheevos.views.MavenProLightBoldTextView
                             android:id="@+id/tv_genre"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                             android:textColor="@android:color/background_dark"
                             android:textSize="@dimen/tv_level_5" />
 
-                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                        <org.cs15.cheevos.views.MavenProLightBoldTextView
                             android:id="@+id/tv_us_release"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                             android:textColor="@android:color/background_dark"
                             android:textSize="@dimen/tv_level_5" />
 
-                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                        <org.cs15.cheevos.views.MavenProLightBoldTextView
                             android:id="@+id/tv_eu_release"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                             android:textColor="@android:color/background_dark"
                             android:textSize="@dimen/tv_level_5" />
 
-                        <org.relos.cheevos.views.MavenProLightBoldTextView
+                        <org.cs15.cheevos.views.MavenProLightBoldTextView
                             android:id="@+id/tv_jp_release"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
