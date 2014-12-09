@@ -13,8 +13,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.AchievementsAdapter;
@@ -25,7 +32,6 @@ import org.cs15.xchievements.objects.Game;
 import org.cs15.xchievements.objects.GameDetails;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
@@ -41,7 +47,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private int mAchsAmount;
     private int mGamerscore;
     private int mGameId;
-    private boolean isAnAdmin = true;
+    private boolean isAnAdmin = false;
+    private boolean mIsOnParseGame = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         onGameDetails();
 
         if (getIntent().getExtras() != null) {
+            isAnAdmin = ParseUser.getCurrentUser().getBoolean("isAnAdmin");
+
             mGameId = getIntent().getExtras().getInt("gameId");
             mTitle = getIntent().getExtras().getString("title");
             mUrl = getIntent().getExtras().getString("url");
@@ -67,13 +76,14 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
             getSupportActionBar().setTitle(mTitle);
 
-            mList = new ArrayList<Achievement>();
+            mList = new ArrayList<>();
             mGameDetails = new GameDetails();
             mGameDetails.setTitle(mTitle);
             mGameDetails.setCoverUrl(mCoverUrl);
             mGameDetails.setGamerscore(mGamerscore);
             mGameDetails.setId(mGameId);
             mGameDetails.setAchievementsAmount(mAchsAmount);
+            mGameDetails.setAchievementsPageUrl(mUrl);
 
             mGame = new Game();
             mGame.setGameDetails(mGameDetails);
@@ -91,16 +101,20 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             });
 
             if (isAnAdmin) {
-                startLoader();
+                getData();
             }
         }
     }
 
-    private void startLoader() {
-        if (this.getSupportLoaderManager().getLoader(0) == null) {
-            this.getSupportLoaderManager().initLoader(0, null, this);
+    private void getData() {
+        if (isAnAdmin) {
+            if (this.getSupportLoaderManager().getLoader(0) == null) {
+                this.getSupportLoaderManager().initLoader(0, null, this);
+            } else {
+                this.getSupportLoaderManager().restartLoader(0, null, this);
+            }
         } else {
-            this.getSupportLoaderManager().restartLoader(0, null, this);
+            getFromParse();
         }
     }
 
@@ -143,10 +157,10 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         String title = gameDetails.getTitle();
         String developer = (gameDetails.getDevelopers() != null) ? gameDetails.getDevelopers() : "N/A";
         String publisher = (gameDetails.getPublishers() != null) ? gameDetails.getPublishers() : "N/A";
-        String genres = Arrays.toString(gameDetails.getGenre()).replace("[", "").replace("]", "");
-        String usa = (gameDetails.getUsaRelease() != null) ? gameDetails.getUsaRelease() : "N/A";
-        String eu = (gameDetails.getEuRelease() != null) ? gameDetails.getEuRelease() : "N/A";
-        String japan = (gameDetails.getJapanRelease() != null) ? gameDetails.getJapanRelease() : "N/A";
+        String genres = gameDetails.getGenre();
+        String usa = gameDetails.getUsaRelease();
+        String eu = gameDetails.getEuRelease();
+        String japan = gameDetails.getJapanRelease();
 
         // set data
         ivCoverImage.setImageUrl(gameDetails.getCoverUrl(), SingletonVolley.getImageLoader());
@@ -172,6 +186,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         mAdapter.notifyDataSetChanged();
 
         displayGameDetails(mGameDetails);
+
+        Toast.makeText(Achievements.this, "Loaded From Page!", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -206,9 +222,94 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                     mSlidingPane.closePane();
                 }
                 break;
+
+            case R.id.menu_upload_game_details:
+                saveGameDetails();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getFromParse() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Games");
+        query.whereEqualTo("gameId", mGameDetails.getId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> data, ParseException e) {
+                if (e == null) {
+                    if (data.size() > 0) {
+                        // set data data
+                        for (ParseObject game : data) {
+                            mGameDetails.setId(game.getInt("gameId"));
+                            mGameDetails.setParseId(game.getObjectId());
+                            mGameDetails.setTitle(game.getString("title"));
+                            mGameDetails.setCoverUrl(game.getString("coverUrl"));
+                            mGameDetails.setAchievementsAmount(game.getInt("achsAmount"));
+                            mGameDetails.setGamerscore(game.getInt("gamerscore"));
+                            mGameDetails.setDevelopers(game.getString("developer"));
+                            mGameDetails.setPublishers(game.getString("publisher"));
+                            mGameDetails.setGenre(game.getString("genre"));
+                            mGameDetails.setUsaRelease(game.getString("usaRelease"));
+                            mGameDetails.setEuRelease(game.getString("euRelease"));
+                            mGameDetails.setJapanRelease(game.getString("japanRelease"));
+                        }
+
+                        displayGameDetails(mGameDetails);
+
+                        Toast.makeText(Achievements.this, "Loaded From Parse!", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(Achievements.this, "Game already exist.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(Achievements.this, "Error getting the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void saveGameDetails() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Games");
+        query.whereEqualTo("gameId", mGameDetails.getId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> data, ParseException e) {
+                if (e == null) {
+                    if (data.size() == 0) {
+                        // upload game data
+                        //ParseObject user = ParseObject.createWithoutData("_User", ParseUser.getCurrentUser().getObjectId());
+
+                        ParseObject game = new ParseObject("Games");
+                        //game.put("createdBy", user);
+                        game.put("gameId", mGameDetails.getId());
+                        game.put("title", mGameDetails.getTitle());
+                        game.put("coverUrl", mGameDetails.getCoverUrl());
+                        game.put("achsAmount", mGameDetails.getAchievementsAmount());
+                        game.put("gamerscore", mGameDetails.getGamerscore());
+                        game.put("achsUrl", mGameDetails.getAchievementsPageUrl());
+                        game.put("developer", mGameDetails.getDevelopers());
+                        game.put("publisher", mGameDetails.getPublishers());
+                        game.put("genre", mGameDetails.getGenre());
+                        game.put("usaRelease", mGameDetails.getUsaRelease());
+                        game.put("euRelease", mGameDetails.getEuRelease());
+                        game.put("japanRelease", mGameDetails.getJapanRelease());
+                        game.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Toast.makeText(Achievements.this, "Successfully uploaded to parse.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(Achievements.this, "Error saving the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    } else {
+                        Toast.makeText(Achievements.this, "Game already exist.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(Achievements.this, "Error getting the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override

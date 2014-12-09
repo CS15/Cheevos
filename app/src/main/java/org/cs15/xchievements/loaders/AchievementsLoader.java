@@ -14,6 +14,7 @@ import org.cs15.xchievements.objects.Game;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AchievementsLoader extends AsyncTaskLoader<Game> {
     // fields
@@ -126,7 +127,7 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
                     }
                 }
 
-                mGame.getGameDetails().setGenre(genres.toArray(new String[genres.size()]));
+                mGame.getGameDetails().setGenre(Arrays.toString(genres.toArray()).replace("[", "").replace("]", ""));
 
                 // get game released dates
                 for (int i = 0; i < gameInfoData.select("img[width=16]").size(); i++) {
@@ -138,6 +139,14 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
                         mGame.getGameDetails().setJapanRelease(gameInfoData.select("img[alt=Japan]").get(0).nextSibling().toString().trim());
                     }
                 }
+
+                String usa = mGame.getGameDetails().getUsaRelease();
+                String eu = mGame.getGameDetails().getEuRelease();
+                String jp = mGame.getGameDetails().getJapanRelease();
+
+                mGame.getGameDetails().setUsaRelease((usa != null) ? usa : "N/A");
+                mGame.getGameDetails().setEuRelease((eu != null) ? eu : "N/A");
+                mGame.getGameDetails().setJapanRelease((jp != null) ? jp : "N/A");
 
             }
 

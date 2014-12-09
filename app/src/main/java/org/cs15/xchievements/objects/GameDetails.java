@@ -3,6 +3,7 @@ package org.cs15.xchievements.objects;
 public class GameDetails {
     // properties
     private int id;
+    private String parseId;
     private String coverUrl;
     private String icoUrl;
     private String title;
@@ -13,7 +14,7 @@ public class GameDetails {
     private String japanRelease;
     private String developers;
     private String publishers;
-    private String[] genre;
+    private String genre;
     private int gamerscore;
 
     public int getId() {
@@ -88,11 +89,11 @@ public class GameDetails {
         this.developers = developers;
     }
 
-    public String[] getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(String[] genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -118,5 +119,13 @@ public class GameDetails {
 
     public void setIcoUrl(String icoUrl) {
         this.icoUrl = icoUrl;
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 }
