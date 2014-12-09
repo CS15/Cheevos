@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.cs15.cheevos.views.ScrollviewForList xmlns:android="http://schemas.android.com/apk/res/android"
+<org.cs15.xchievements.views.ScrollviewForList xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
-            <org.cs15.cheevos.views.MavenProLightBoldTextView
+            <org.cs15.xchievements.views.MavenProLightBoldTextView
                 android:id="@+id/tv_latest_image_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_height="@dimen/divider"
             android:background="@android:color/white" />
 
-        <org.cs15.cheevos.views.ListViewScrollable
+        <org.cs15.xchievements.views.ListViewScrollable
             android:id="@+id/lv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -52,4 +52,4 @@
 
     </LinearLayout>
 
-</org.cs15.cheevos.views.ScrollviewForList>
+</org.cs15.xchievements.views.ScrollviewForList>

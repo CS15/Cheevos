@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
@@ -21,16 +21,12 @@
             android:layout_marginBottom="@dimen/margin_level_4"
             android:src="@drawable/logo" />
 
-        <org.cs15.cheevos.views.MavenProLightBoldTextView
+        <org.cs15.xchievements.views.MavenProLightBoldTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_5"
             android:gravity="center_horizontal|center_vertical"
-            android:shadowColor="@android:color/darker_gray"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="2"
-            android:text="Cheevos"
+            android:text="@string/app_name"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_level_1" />
 
@@ -38,7 +34,7 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_level_5" />
@@ -48,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_level_2"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_level_5" />
@@ -58,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_level_2"
-            android:hint="Confirm Password"
+            android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_level_5" />
@@ -68,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_level_2"
-            android:hint="Gamertag"
+            android:hint="@string/gamertag"
             android:inputType="text"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_level_5" />

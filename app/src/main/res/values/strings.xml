@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Action bar titles -->
-    <string name="app_name">Cheevos</string>
+    <string name="app_name">Xchievements</string>
     <string name="ab_title_game_list">Xbox Games</string>
     <string name="ab_title_browse">Browse</string>
     <string name="ab_game_details">Game Details</string>
@@ -31,5 +31,7 @@
     <string name="push_to_parse">Push to Parse</string>
     <string name="upload_game_details">Upload Game Details</string>
     <string name="upload_achievements">Upload Achievements</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="gamertag">Gamertag</string>
 
 </resources>

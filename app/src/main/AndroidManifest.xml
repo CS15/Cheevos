@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.cs15.cheevos">
+    package="org.cs15.xchievements">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="org.cs15.cheevos.misc.Singleton"
+        android:name="org.cs15.xchievements.misc.Singleton"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="org.cs15.cheevos.app.MainActivity"
+            android:name="org.cs15.xchievements.app.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name="org.cs15.cheevos.app.GameList"
+            android:name="org.cs15.xchievements.app.GameList"
             android:label="@string/ab_title_game_list"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -36,7 +36,7 @@
         </activity>
 
         <activity
-            android:name="org.cs15.cheevos.app.Achievements"
+            android:name="org.cs15.xchievements.app.Achievements"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
