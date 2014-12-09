@@ -47,8 +47,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private int mAchsAmount;
     private int mGamerscore;
     private int mGameId;
-    private boolean isAnAdmin = false;
-    private boolean mIsOnParseGame = false;
+    private boolean isAnAdmin = (ParseUser.getCurrentUser() != null) ? ParseUser.getCurrentUser().getBoolean("isAnAdmin") : false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +64,6 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         onGameDetails();
 
         if (getIntent().getExtras() != null) {
-            isAnAdmin = ParseUser.getCurrentUser().getBoolean("isAnAdmin");
-
             mGameId = getIntent().getExtras().getInt("gameId");
             mTitle = getIntent().getExtras().getString("title");
             mUrl = getIntent().getExtras().getString("url");
@@ -100,9 +97,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                 }
             });
 
-            if (isAnAdmin) {
-                getData();
-            }
+            getData();
         }
     }
 
@@ -226,15 +221,19 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             case R.id.menu_upload_game_details:
                 saveGameDetails();
                 break;
+
+            case R.id.menu_upload_achievements:
+                saveAchievements();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void getFromParse() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Games");
-        query.whereEqualTo("gameId", mGameDetails.getId());
-        query.findInBackground(new FindCallback<ParseObject>() {
+        ParseQuery<ParseObject> gameDetails = ParseQuery.getQuery("Games");
+        gameDetails.whereEqualTo("gameId", mGameDetails.getId());
+        gameDetails.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> data, ParseException e) {
                 if (e == null) {
                     if (data.size() > 0) {
@@ -259,7 +258,36 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         Toast.makeText(Achievements.this, "Loaded From Parse!", Toast.LENGTH_LONG).show();
 
                     } else {
-                        Toast.makeText(Achievements.this, "Game already exist.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Achievements.this, "Game do not exist.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(Achievements.this, "Error getting the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        ParseQuery<ParseObject> achievements = ParseQuery.getQuery("Achievements");
+        achievements.whereEqualTo("gameId", mGameDetails.getId());
+        achievements.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> data, ParseException e) {
+                if (e == null) {
+                    if (data.size() > 0) {
+                        // set data data
+                        for (ParseObject achievement : data) {
+
+                            Achievement ach = new Achievement();
+                            ach.setGameId(achievement.getInt("gameId"));
+                            ach.setCoverUrl(achievement.getString("coverUrl"));
+                            ach.setTitle(achievement.getString("title"));
+                            ach.setDescription(achievement.getString("description"));
+                            ach.setGamerscore(achievement.getInt("gamerscore"));
+                            mList.add(ach);
+                        }
+
+                        mAdapter.notifyDataSetChanged();
+
+                    } else {
+                        Toast.makeText(Achievements.this, "No achievements found!", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(Achievements.this, "Error getting the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -276,10 +304,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                 if (e == null) {
                     if (data.size() == 0) {
                         // upload game data
-                        //ParseObject user = ParseObject.createWithoutData("_User", ParseUser.getCurrentUser().getObjectId());
-
                         ParseObject game = new ParseObject("Games");
-                        //game.put("createdBy", user);
                         game.put("gameId", mGameDetails.getId());
                         game.put("title", mGameDetails.getTitle());
                         game.put("coverUrl", mGameDetails.getCoverUrl());
@@ -304,6 +329,35 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         });
                     } else {
                         Toast.makeText(Achievements.this, "Game already exist.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(Achievements.this, "Error getting the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void saveAchievements() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
+        query.whereEqualTo("gameId", mGameDetails.getId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> data, ParseException e) {
+                if (e == null) {
+                    if (data.size() == 0) {
+                        // upload game data
+                        for (Achievement ach : mList) {
+                            ParseObject achievement = new ParseObject("Achievements");
+                            achievement.put("gameId", ach.getGameId());
+                            achievement.put("title", ach.getTitle());
+                            achievement.put("coverUrl", ach.getCoverUrl());
+                            achievement.put("description", ach.getDescription());
+                            achievement.put("gamerscore", ach.getGamerscore());
+                            achievement.saveInBackground();
+                        }
+                    } else if (mList.size() > data.size()){
+                        Toast.makeText(Achievements.this, "Need to update achievements", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(Achievements.this, "Achievements up to date", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(Achievements.this, "Error getting the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
