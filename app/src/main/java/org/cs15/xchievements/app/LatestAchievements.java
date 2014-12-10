@@ -46,6 +46,12 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
     private LatestAchievementsAdapter mAdapter;
     private final String BASE_URL = "http://www.xboxachievements.com/archive/achievements/1/";
     private boolean mIsAnAdmin = UserProfile.isAnAdmin();
+    private int mBannerGameId;
+    private String mBannerTitle;
+    private String mBannerAchsUrl;
+    private String mBannerGamerscore;
+    private String mBannerCoverUrl;
+    private String mBannerAchsAmount;
 
     @Nullable
     @Override
@@ -73,6 +79,22 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
                 intent.putExtra("achsAmount", mList.get(i).getAchievementsAmount());
                 intent.putExtra("gamerscore", mList.get(i).getGamerscore());
                 intent.putExtra("gameId", mList.get(i).getId());
+                startActivity(intent);
+
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
+            }
+        });
+
+        mIvBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Achievements.class);
+                intent.putExtra("title", mBannerTitle);
+                intent.putExtra("url", mBannerAchsUrl);
+                intent.putExtra("coverUrl", mBannerCoverUrl);
+                intent.putExtra("achsAmount", mBannerAchsAmount);
+                intent.putExtra("gamerscore", mBannerGamerscore);
+                intent.putExtra("gameId", mBannerGameId);
                 startActivity(intent);
 
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
@@ -121,11 +143,20 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
         // get data from database
         ParseQuery<ParseObject> parseObject = ParseQuery.getQuery(className);
         parseObject.orderByDescending("createdAt");
+        parseObject.setLimit(1);
+        parseObject.include("game");
         parseObject.findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> data, ParseException e) {
                 if (e == null) {
+                    mBannerGameId = data.get(0).getParseObject("game").getInt("gameId");
+                    mBannerTitle = data.get(0).getParseObject("game").getString("title");
+                    mBannerCoverUrl = data.get(0).getParseObject("game").getString("coverUrl");
+                    mBannerAchsAmount = data.get(0).getParseObject("game").getString("achsAmount");
+                    mBannerGamerscore = data.get(0).getParseObject("game").getString("gamerscore");
+                    mBannerAchsUrl = data.get(0).getParseObject("game").getString("achsUrl");
+
                     mIvBanner.setImageUrl(data.get(0).getString("imageUrl"), SingletonVolley.getImageLoader());
-                    mTvTitle.setText(data.get(0).getString("gameTitle"));
+                    mTvTitle.setText(mBannerTitle);
 
                     // animation
                     ObjectAnimator.ofFloat(mTvTitle, "translationY", 200, 0).setDuration(1000).start();

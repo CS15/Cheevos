@@ -146,4 +146,6 @@ public class GameDetails {
     public void setSummary(String summary) {
         this.summary = summary;
     }
+
+
 }

@@ -10,6 +10,7 @@
 
     <!-- Alphabet arrays -->
     <string-array name="slide_menu_alphabet">
+        <item>All</item>
         <item>0&#45;9</item>
         <item>A</item>
         <item>B</item>

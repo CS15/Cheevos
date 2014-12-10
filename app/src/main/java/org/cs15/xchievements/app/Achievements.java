@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -51,6 +52,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private String mTitle;
     private String mUrl;
     private String mCoverUrl;
+    private String mParseGameId;
     private int mAchsAmount;
     private int mGamerscore;
     private int mGameId;
@@ -142,6 +144,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                 getSupportActionBar().setTitle(mTitle);
             }
         });
+
+        mSlidingPane.openPane();
     }
 
     private void displayGameDetails(GameDetails gameDetails) {
@@ -331,12 +335,22 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         game.put("usaRelease", mGameDetails.getUsaRelease());
                         game.put("euRelease", mGameDetails.getEuRelease());
                         game.put("japanRelease", mGameDetails.getJapanRelease());
-                        game.put("summary", mGameDetails.getSummary());
                         game.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if (e == null) {
-                                    Toast.makeText(Achievements.this, "Successfully uploaded to parse.", Toast.LENGTH_LONG).show();
+                                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Games");
+                                    query.whereEqualTo("gameId", mGameDetails.getId());
+                                    query.getFirstInBackground(new GetCallback<ParseObject>() {
+                                        @Override
+                                        public void done(ParseObject parseObject, ParseException e) {
+                                            if (e == null){
+                                                mParseGameId = parseObject.getObjectId();
+
+                                                Toast.makeText(Achievements.this, "Successfully uploaded to parse.", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
                                 } else {
                                     Toast.makeText(Achievements.this, "Error saving the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
@@ -359,9 +373,13 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             public void done(List<ParseObject> data, ParseException e) {
                 if (e == null) {
                     if (data.size() == 0) {
+                        // pointer to game
+                        ParseObject gamePointer = ParseObject.createWithoutData("Games", mParseGameId);
+
                         // upload game data
                         for (Achievement ach : mList) {
                             ParseObject achievement = new ParseObject("Achievements");
+                            achievement.put("game", gamePointer);
                             achievement.put("gameTitle", mGameDetails.getTitle());
                             achievement.put("gameId", ach.getGameId());
                             achievement.put("title", ach.getTitle());
