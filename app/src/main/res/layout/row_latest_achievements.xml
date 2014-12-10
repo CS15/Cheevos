@@ -20,7 +20,7 @@
         android:layout_marginRight="@dimen/margin_level_1"
         android:layout_toRightOf="@+id/iv_ach_cover"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/tv_level_4" />
+        android:textSize="@dimen/tv_level_5" />
 
     <View
         android:id="@+id/v_divider"

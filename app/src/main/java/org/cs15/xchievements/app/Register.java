@@ -59,12 +59,12 @@ public class Register extends Fragment {
                 final String passwordConfirm = etPasswordConfirm.getText().toString();
                 final String gamertag = etGamertag.getText().toString();
 
-                if (password.equals(passwordConfirm) && password.length() > 5) {
+                if (password.equals(passwordConfirm) && password.length() > 5 && !email.equals("") && !gamertag.equals("")) {
                     registerUser(email, password, gamertag);
                 } else {
                     new AlertDialog.Builder(getActivity())
                             .setTitle("Error")
-                            .setMessage("Password did not matched or was less than 6 characters in length.")
+                            .setMessage("Please fill all fields or check your password")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -116,7 +116,7 @@ public class Register extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Gamertag not found.", Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

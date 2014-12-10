@@ -66,9 +66,17 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<GameDeta
 
                     // check mAchAmount element tag format
                     if (root.select("td[width=442]").get(i).select("p").size() > 0) {
-                        achAmount = root.select("td[width=442]").get(i).select("p").get(0).textNodes().get(0).text();
+                        achAmount = root.select("td[width=442]").get(i).select("p").get(0).textNodes().get(0).text().trim();
+
+                        int space = achAmount.indexOf(" ");
+
+                        achAmount = achAmount.substring(0, space);
                     } else {
-                        achAmount = root.select("td[width=442]").get(i).textNodes().get(0).text();
+                        achAmount = root.select("td[width=442]").get(i).textNodes().get(0).text().trim();
+
+                        int space = achAmount.indexOf(" ");
+
+                        achAmount = achAmount.substring(0, space);
                     }
 
                     // clean title by removing Game and DLC added tags

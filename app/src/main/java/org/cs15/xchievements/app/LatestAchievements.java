@@ -1,6 +1,7 @@
 package org.cs15.xchievements.app;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.LatestAchievementsAdapter;
 import org.cs15.xchievements.loaders.LatestAchievementsLoader;
 import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.UserProfile;
 import org.cs15.xchievements.objects.GameDetails;
 
 import java.util.ArrayList;
@@ -40,9 +42,10 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
     private ListView mLvContent;
     private NetworkImageView mIvBanner;
     private TextView mTvTitle;
-    private ArrayList<GameDetails> mGameList;
+    private ArrayList<GameDetails> mList;
     private LatestAchievementsAdapter mAdapter;
     private final String BASE_URL = "http://www.xboxachievements.com/archive/achievements/1/";
+    private boolean mIsAnAdmin = UserProfile.isAnAdmin();
 
     @Nullable
     @Override
@@ -50,8 +53,8 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
 
         View view = inflater.inflate(R.layout.frag_latest_achievements, container, false);
 
-        mGameList = new ArrayList<GameDetails>();
-        mAdapter = new LatestAchievementsAdapter(getActivity(), mGameList);
+        mList = new ArrayList<GameDetails>();
+        mAdapter = new LatestAchievementsAdapter(getActivity(), mList);
         mIvBanner = (NetworkImageView) view.findViewById(R.id.iv_latest_image);
         mTvTitle = (TextView) view.findViewById(R.id.tv_latest_image_title);
         mLvContent = (ListView) view.findViewById(R.id.lv_content);
@@ -61,10 +64,18 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
 
         mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
 
-                Toast.makeText(getActivity(), mGameList.get(position).getAchievementsPageUrl(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), Achievements.class);
+                intent.putExtra("title", mList.get(i).getTitle());
+                intent.putExtra("url", mList.get(i).getAchievementsPageUrl());
+                intent.putExtra("coverUrl", mList.get(i).getCoverUrl());
+                intent.putExtra("achsAmount", mList.get(i).getAchievementsAmount());
+                intent.putExtra("gamerscore", mList.get(i).getGamerscore());
+                intent.putExtra("gameId", mList.get(i).getId());
+                startActivity(intent);
 
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
             }
         });
 
@@ -75,23 +86,35 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.getLoaderManager().initLoader(0, null, this);
+        getData();
     }
 
     @Override
     public Loader<ArrayList<GameDetails>> onCreateLoader(int i, Bundle bundle) {
-        return new LatestAchievementsLoader(getActivity(), mGameList, BASE_URL);
+        return new LatestAchievementsLoader(getActivity(), mList, BASE_URL);
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<GameDetails>> arrayListLoader, ArrayList<GameDetails> list) {
-        mGameList = list;
+        mList = list;
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<GameDetails>> arrayListLoader) {
 
+    }
+
+    private void getData() {
+        if (mIsAnAdmin) {
+            if (this.getLoaderManager().getLoader(0) == null) {
+                this.getLoaderManager().initLoader(0, null, this);
+            } else {
+                this.getLoaderManager().restartLoader(0, null, this);
+            }
+        } else {
+            getLatestAchs();
+        }
     }
 
     private void getBannerInfo(String className) {
@@ -113,17 +136,27 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
         });
     }
 
-    private void getLatestAchs(String className) {
+    private void getLatestAchs() {
         // get data from database
-        ParseQuery<ParseObject> parseObject = ParseQuery.getQuery(className);
+        ParseQuery<ParseObject> parseObject = ParseQuery.getQuery("Games");
         parseObject.orderByDescending("createdAt");
+        parseObject.setLimit(25);
         parseObject.findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> data, ParseException e) {
                 if (e == null) {
-
+                    for (ParseObject g : data) {
+                        GameDetails game = new GameDetails();
+                        game.setId(g.getInt("gameId"));
+                        game.setCoverUrl(g.getString("coverUrl"));
+                        game.setTitle(g.getString("title"));
+                        game.setAchievementsAmount(g.getInt("achsAmount"));
+                        mList.add(game);
+                    }
                 } else {
-                    Log.e("ParseObject", "Error: " + e.getMessage());
+                    Toast.makeText(getActivity(), "Error loading games: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
+
+                mAdapter.notifyDataSetChanged();
             }
         });
     }

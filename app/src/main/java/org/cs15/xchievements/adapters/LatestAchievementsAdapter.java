@@ -66,7 +66,7 @@ public class LatestAchievementsAdapter extends BaseAdapter {
 
         mViewHolder.mIvCover.setImageUrl(mData.get(position).getCoverUrl(), SingletonVolley.getImageLoader());
         mViewHolder.mTvTitle.setText(mData.get(position).getTitle());
-        mViewHolder.mTvAchAmount.setText(mData.get(position).getAchievementsAmount());
+        mViewHolder.mTvAchAmount.setText(String.format("%s achievements", mData.get(position).getAchievementsAmount()));
 
         // return view
         return view;
