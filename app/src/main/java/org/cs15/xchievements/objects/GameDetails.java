@@ -3,6 +3,7 @@ package org.cs15.xchievements.objects;
 public class GameDetails {
     // properties
     private int id;
+    private String gbGameId;
     private String parseId;
     private String coverUrl;
     private String icoUrl;
@@ -15,6 +16,7 @@ public class GameDetails {
     private String developers;
     private String publishers;
     private String genre;
+    private String summary;
     private int gamerscore;
 
     public int getId() {
@@ -127,5 +129,21 @@ public class GameDetails {
 
     public void setParseId(String parseId) {
         this.parseId = parseId;
+    }
+
+    public String getGbGameId() {
+        return gbGameId;
+    }
+
+    public void setGbGameId(String gbGameId) {
+        this.gbGameId = gbGameId;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }

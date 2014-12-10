@@ -9,6 +9,11 @@
         android:showAsAction="always" />
 
     <item
+        android:id="@+id/menu_screenshots"
+        android:title="@string/screenshots"
+        android:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_upload_game_details"
         android:title="@string/upload_game_details"
         android:showAsAction="never" />

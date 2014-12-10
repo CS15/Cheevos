@@ -15,12 +15,16 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.cs15.xchievements.R;
@@ -31,6 +35,8 @@ import org.cs15.xchievements.misc.UserProfile;
 import org.cs15.xchievements.objects.Achievement;
 import org.cs15.xchievements.objects.Game;
 import org.cs15.xchievements.objects.GameDetails;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +154,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         TextView tvUsDate = (TextView) findViewById(R.id.tv_us_release);
         TextView tvEuDate = (TextView) findViewById(R.id.tv_eu_release);
         TextView tvJpDate = (TextView) findViewById(R.id.tv_jp_release);
+        TextView tvSummary = (TextView) findViewById(R.id.tv_summary);
 
         // data
         String title = gameDetails.getTitle();
@@ -157,6 +164,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         String usa = gameDetails.getUsaRelease();
         String eu = gameDetails.getEuRelease();
         String japan = gameDetails.getJapanRelease();
+        String summary = (gameDetails.getSummary() != null) ? gameDetails.getSummary() : "N/A";
 
         // set data
         ivCoverImage.setImageUrl(gameDetails.getCoverUrl(), SingletonVolley.getImageLoader());
@@ -168,6 +176,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         tvUsDate.setText(String.format("USA: %s", usa));
         tvEuDate.setText(String.format("Europe: %s", eu));
         tvJpDate.setText(String.format("Japan: %s", japan));
+        tvSummary.setText(String.format("%s", summary));
     }
 
     @Override
@@ -217,6 +226,10 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                 } else {
                     mSlidingPane.closePane();
                 }
+
+                break;
+
+            case R.id.menu_screenshots:
                 break;
 
             case R.id.menu_upload_game_details:
@@ -241,6 +254,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         // set data data
                         for (ParseObject game : data) {
                             mGameDetails.setId(game.getInt("gameId"));
+                            mGameDetails.setGbGameId(game.getString("gbGameId"));
                             mGameDetails.setParseId(game.getObjectId());
                             mGameDetails.setTitle(game.getString("title"));
                             mGameDetails.setCoverUrl(game.getString("coverUrl"));
@@ -255,6 +269,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         }
 
                         displayGameDetails(mGameDetails);
+                        getGameSummary(mGameDetails.getGbGameId());
 
                     } else {
                         Toast.makeText(Achievements.this, "Game details do not exist.", Toast.LENGTH_LONG).show();
@@ -316,6 +331,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         game.put("usaRelease", mGameDetails.getUsaRelease());
                         game.put("euRelease", mGameDetails.getEuRelease());
                         game.put("japanRelease", mGameDetails.getJapanRelease());
+                        game.put("summary", mGameDetails.getSummary());
                         game.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
@@ -354,7 +370,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                             achievement.put("gamerscore", ach.getGamerscore());
                             achievement.saveInBackground();
                         }
-                    } else if (mList.size() > data.size()){
+                    } else if (mList.size() > data.size()) {
                         Toast.makeText(Achievements.this, "Need to update achievements", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(Achievements.this, "Achievements up to date", Toast.LENGTH_LONG).show();
@@ -364,6 +380,35 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                 }
             }
         });
+    }
+
+    private void getGameSummary(String gbGameId) {
+
+        String url = "http://www.giantbomb.com/api/game/3030-" + gbGameId + "/?api_key=" + getResources().getString(R.string.gb_api) + "&format=json&field_list=id,name,deck";
+
+        RequestQueue queue = SingletonVolley.getRequestQueque();
+
+        JsonObjectRequest request = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> (){
+                    @Override
+                    public void onResponse(JSONObject data) {
+                        try {
+                            mGameDetails.setSummary(data.getJSONObject("results").getString("deck"));
+                            displayGameDetails(mGameDetails);
+                        } catch (JSONException e) {
+                            Toast.makeText(Achievements.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(Achievements.this, "Error: " + volleyError, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        queue.add(request);
     }
 
     @Override
