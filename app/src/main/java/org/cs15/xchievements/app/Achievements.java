@@ -1,5 +1,6 @@
 package org.cs15.xchievements.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -145,7 +146,6 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             }
         });
 
-        mSlidingPane.openPane();
     }
 
     private void displayGameDetails(GameDetails gameDetails) {
@@ -234,6 +234,13 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                 break;
 
             case R.id.menu_screenshots:
+                Intent intent = new Intent(Achievements.this, Screenshots.class);
+                intent.putExtra("gbGameId", mGameDetails.getGbGameId());
+                intent.putExtra("gameTitle", mGameDetails.getTitle());
+                startActivity(intent);
+
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
+
                 break;
 
             case R.id.menu_upload_game_details:

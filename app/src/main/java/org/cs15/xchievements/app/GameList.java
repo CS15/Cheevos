@@ -140,8 +140,6 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
                 getSupportActionBar().setTitle(R.string.ab_title_game_list);
             }
         });
-
-        mSlidingPane.openPane();
     }
 
     @Override
