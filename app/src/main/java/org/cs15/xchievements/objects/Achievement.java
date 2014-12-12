@@ -8,6 +8,7 @@ public class Achievement {
     private String title;
     private String Description;
     private int gamerscore;
+    private int commentsCount;
 
     public int getGameId() {
         return gameId;
@@ -47,5 +48,13 @@ public class Achievement {
 
     public void setGamerscore(int gamerscore) {
         this.gamerscore = gamerscore;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
     }
 }

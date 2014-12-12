@@ -56,6 +56,7 @@ public class AchievementsAdapter extends BaseAdapter {
             mViewHolder.mIvCover = (NetworkImageView) view.findViewById(R.id.iv_ach_cover);
             mViewHolder.mTvTitle = (TextView) view.findViewById(R.id.tv_ach_title);
             mViewHolder.mTvDesc = (TextView) view.findViewById(R.id.tv_ach_subtitle);
+            mViewHolder.mTvCommentsCount = (TextView) view.findViewById(R.id.tv_comment_counts);
 
             // set tag
             view.setTag(mViewHolder);
@@ -66,6 +67,7 @@ public class AchievementsAdapter extends BaseAdapter {
         mViewHolder.mIvCover.setImageUrl(mList.get(position).getCoverUrl(), SingletonVolley.getImageLoader());
         mViewHolder.mTvTitle.setText(mList.get(position).getTitle());
         mViewHolder.mTvDesc.setText(mList.get(position).getDescription());
+        mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getCommentsCount()));
 
         // return view
         return view;
@@ -75,5 +77,6 @@ public class AchievementsAdapter extends BaseAdapter {
         NetworkImageView mIvCover;
         TextView mTvTitle;
         TextView mTvDesc;
+        TextView mTvCommentsCount;
     }
 }

@@ -20,6 +20,19 @@
         android:layout_alignParentStart="true"
         android:background="@drawable/primary_gradient_bottom" />
 
+    <org.cs15.xchievements.views.MavenProLightBoldTextView
+        android:id="@+id/tv_comment_counts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/tv_level_5"
+        android:layout_marginTop="@dimen/margin_level_1"
+        android:layout_marginRight="@dimen/margin_level_1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

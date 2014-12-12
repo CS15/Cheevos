@@ -217,6 +217,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                             ach.setTitle(achievement.getString("title"));
                             ach.setDescription(achievement.getString("description"));
                             ach.setGamerscore(achievement.getInt("gamerscore"));
+                            ach.setCommentsCount(achievement.getInt("commentCounts"));
                             mList.add(ach);
                         }
 
@@ -244,13 +245,13 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                     public void onResponse(JSONObject data) {
                         try {
                             JSONObject obj = data.getJSONObject("results");
-                            String cover = (obj.getJSONObject("image").getString("super_url")) != null ? obj.getJSONObject("image").getString("super_url") : "N/A";
-                            String title = (obj.getString("name") != null) ? obj.getString("name") : "N/A";
-                            String summary = (obj.getString("deck") != null) ? obj.getString("deck") : "N/A";
-                            String developer = (obj.getJSONArray("developers") != null) ? obj.getJSONArray("developers").getJSONObject(0).getString("name") : "N/A";
-                            String date = (obj.getString("original_release_date") != null) ? obj.getString("original_release_date") : "N/A";
-                            String publisher = "N/A";
-                            String genres = "N/A";
+                            String cover = (!obj.isNull("image")) ? obj.getJSONObject("image").getString("super_url") : "N/A";
+                            String title = (!obj.isNull("name")) ? obj.getString("name") : "N/A";
+                            String summary = (!obj.isNull("deck")) ? obj.getString("deck") : "N/A";
+                            String developer = (!obj.isNull("developers")) ? obj.getJSONArray("developers").getJSONObject(0).getString("name") : "N/A";
+                            String date = (!obj.isNull("original_release_date")) ? obj.getString("original_release_date") : "N/A";
+                            String publisher = "";
+                            String genres = "";
 
                             if (obj.getJSONArray("publishers") != null) {
                                 for (int i = 0; i < obj.getJSONArray("publishers").length(); i++) {
@@ -261,6 +262,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
                                     publisher += obj.getJSONArray("publishers").getJSONObject(i).getString("name");
                                 }
+                            } else {
+                                publisher = "N/A";
                             }
 
                             if (obj.getJSONArray("genres") != null) {
@@ -272,6 +275,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
                                     genres += obj.getJSONArray("genres").getJSONObject(i).getString("name");
                                 }
+                            } else {
+                                genres = "N/A";
                             }
 
                             mGameDetails.setTitle(title);
