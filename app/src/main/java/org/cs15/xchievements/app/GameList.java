@@ -72,7 +72,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
                     getData();
                 } else {
                     String alphabetCode = (mAlphabetTitles[position].equals("0-9")) ? "-" : mAlphabetTitles[position].toLowerCase();
-                    getFromParse(alphabetCode);
+                    getDataFromParse(alphabetCode);
                 }
 
                 mAlphabetMenu.setItemChecked(position, true);
@@ -113,7 +113,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
                 this.getSupportLoaderManager().restartLoader(0, null, this);
             }
         } else {
-            getFromParse("all");
+            getDataFromParse("all");
         }
     }
 
@@ -187,7 +187,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
         return super.onOptionsItemSelected(item);
     }
 
-    private void getFromParse(String alphabetLetter) {
+    private void getDataFromParse(String alphabetLetter) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Games");
         if (!alphabetLetter.equals("all")) {
             query.whereStartsWith("title", alphabetLetter.toUpperCase());

@@ -100,22 +100,6 @@
                             android:textColor="@android:color/background_dark"
                             android:textSize="@dimen/tv_level_5" />
 
-                        <org.cs15.xchievements.views.MavenProLightBoldTextView
-                            android:id="@+id/tv_eu_release"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_level_1"
-                            android:textColor="@android:color/background_dark"
-                            android:textSize="@dimen/tv_level_5" />
-
-                        <org.cs15.xchievements.views.MavenProLightBoldTextView
-                            android:id="@+id/tv_jp_release"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_level_1"
-                            android:textColor="@android:color/background_dark"
-                            android:textSize="@dimen/tv_level_5" />
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divider"
