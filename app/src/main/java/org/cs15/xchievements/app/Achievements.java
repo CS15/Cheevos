@@ -244,30 +244,34 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                     public void onResponse(JSONObject data) {
                         try {
                             JSONObject obj = data.getJSONObject("results");
-                            String title = obj.getString("name");
-                            String summary = obj.getString("deck");
-                            String developer = obj.getJSONArray("developers").getJSONObject(0).getString("name");
-                            String date = obj.getString("original_release_date");
-                            String cover = obj.getJSONObject("image").getString("super_url");
-                            String publisher = "";
-                            String genres = "";
+                            String cover = (obj.getJSONObject("image").getString("super_url")) != null ? obj.getJSONObject("image").getString("super_url") : "N/A";
+                            String title = (obj.getString("name") != null) ? obj.getString("name") : "N/A";
+                            String summary = (obj.getString("deck") != null) ? obj.getString("deck") : "N/A";
+                            String developer = (obj.getJSONArray("developers") != null) ? obj.getJSONArray("developers").getJSONObject(0).getString("name") : "N/A";
+                            String date = (obj.getString("original_release_date") != null) ? obj.getString("original_release_date") : "N/A";
+                            String publisher = "N/A";
+                            String genres = "N/A";
 
-                            for (int i = 0; i < obj.getJSONArray("publishers").length(); i++) {
-                                if (i < obj.getJSONArray("publishers").length() - 1) {
-                                    publisher += obj.getJSONArray("publishers").getJSONObject(i).getString("name") + ", ";
-                                    continue;
+                            if (obj.getJSONArray("publishers") != null) {
+                                for (int i = 0; i < obj.getJSONArray("publishers").length(); i++) {
+                                    if (i < obj.getJSONArray("publishers").length() - 1) {
+                                        publisher += obj.getJSONArray("publishers").getJSONObject(i).getString("name") + ", ";
+                                        continue;
+                                    }
+
+                                    publisher += obj.getJSONArray("publishers").getJSONObject(i).getString("name");
                                 }
-
-                                publisher += obj.getJSONArray("publishers").getJSONObject(i).getString("name");
                             }
 
-                            for (int i = 0; i < obj.getJSONArray("genres").length(); i++) {
-                                if (i < obj.getJSONArray("genres").length() - 1) {
-                                    genres += obj.getJSONArray("genres").getJSONObject(i).getString("name") + ", ";
-                                    continue;
-                                }
+                            if (obj.getJSONArray("genres") != null) {
+                                for (int i = 0; i < obj.getJSONArray("genres").length(); i++) {
+                                    if (i < obj.getJSONArray("genres").length() - 1) {
+                                        genres += obj.getJSONArray("genres").getJSONObject(i).getString("name") + ", ";
+                                        continue;
+                                    }
 
-                                genres += obj.getJSONArray("genres").getJSONObject(i).getString("name");
+                                    genres += obj.getJSONArray("genres").getJSONObject(i).getString("name");
+                                }
                             }
 
                             mGameDetails.setTitle(title);
