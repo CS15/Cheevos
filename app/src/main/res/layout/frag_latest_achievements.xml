@@ -14,7 +14,7 @@
         <RelativeLayout
             android:id="@+id/rl_banner"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/ach_image_size"
             android:layout_gravity="center_horizontal"
             android:background="@color/primary_color">
 

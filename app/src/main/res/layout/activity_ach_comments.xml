@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <org.cs15.xchievements.views.ScrollviewForList
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_ach"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ach_image_size"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/primary_color">
+
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/iv_ach_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ach_image_size"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/primary_gradient_bottom" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/padding_level_1"
+                    android:paddingLeft="@dimen/padding_level_1"
+                    android:paddingRight="@dimen/padding_level_1">
+
+                    <org.cs15.xchievements.views.MavenProLightBoldTextView
+                        android:id="@+id/tv_ach_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/tv_level_5" />
+
+                    <org.cs15.xchievements.views.MavenProLightBoldTextView
+                        android:id="@+id/tv_ach_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/light_gray"
+                        android:textSize="@dimen/tv_level_6" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@android:color/white" />
+
+            <org.cs15.xchievements.views.ListViewScrollable
+                android:id="@+id/lv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="@dimen/divider" />
+
+        </LinearLayout>
+
+    </org.cs15.xchievements.views.ScrollviewForList>
+
+</LinearLayout>

@@ -7,7 +7,7 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/iv_screenshot"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/iv_ach_image"
+        android:layout_height="@dimen/ach_image_size"
         android:layout_marginBottom="@dimen/padding_level_1"
         android:background="@color/primary_color"
         android:scaleType="centerCrop" />

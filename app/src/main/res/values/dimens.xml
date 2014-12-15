@@ -22,8 +22,11 @@
     <dimen name="actionbar_textsize">30sp</dimen>
 
     <!-- Image Sizes -->
-    <dimen name="iv_avatar">96dp</dimen>
-    <dimen name="iv_game_list">150dp</dimen>
+    <dimen name="avatar_image">96dp</dimen>
+    <dimen name="game_list_size">150dp</dimen>
+    <dimen name="ach_image_size">200dp</dimen>
+    <dimen name="user_avatar_size">48dp</dimen>
+
 
     <!-- TextView Sizes -->
     <dimen name="tv_level_1">45sp</dimen>
@@ -60,5 +63,4 @@
 
     <!-- misc -->
     <dimen name="spl_offset">100dp</dimen>
-    <dimen name="iv_ach_image">200dp</dimen>
 </resources>

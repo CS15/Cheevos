@@ -36,5 +36,6 @@
     <string name="gamertag">Gamertag</string>
     <string name="screenshots">Screenshots</string>
     <string name="game_summary">Game Summary</string>
+    <string name="add_comment">Add Comment</string>
 
 </resources>

@@ -102,7 +102,16 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(Achievements.this, AchComments.class);
+                    intent.putExtra("coverUrl", mList.get(i).getCoverUrl());
+                    intent.putExtra("title", mList.get(i).getTitle());
+                    intent.putExtra("subtitle", mList.get(i).getDescription());
+                    intent.putExtra("gamerscore", mList.get(i).getGamerscore());
+                    intent.putExtra("gameTitle", mGameDetails.getTitle());
+                    intent.putExtra("achId", mList.get(i).getParseId());
+                    startActivity(intent);
 
+                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
                 }
             });
 
@@ -218,6 +227,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                             ach.setDescription(achievement.getString("description"));
                             ach.setGamerscore(achievement.getInt("gamerscore"));
                             ach.setCommentsCount(achievement.getInt("commentCounts"));
+                            ach.setParseId(achievement.getObjectId());
                             mList.add(ach);
                         }
 

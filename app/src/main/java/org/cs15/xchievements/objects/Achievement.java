@@ -9,6 +9,7 @@ public class Achievement {
     private String Description;
     private int gamerscore;
     private int commentsCount;
+    private String parseId;
 
     public int getGameId() {
         return gameId;
@@ -56,5 +57,13 @@ public class Achievement {
 
     public void setCommentsCount(int commentsCount) {
         this.commentsCount = commentsCount;
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 }

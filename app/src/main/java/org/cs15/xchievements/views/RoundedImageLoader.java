@@ -31,7 +31,7 @@ public class RoundedImageLoader extends NetworkImageView {
     @Override
     public void setImageBitmap(Bitmap bitmap) {
         if (bitmap != null) {
-            super.setImageBitmap(HelperClass.getCircleImage(bitmap, getResources().getColor(R.color.primary_color), 5));
+            super.setImageBitmap(HelperClass.getCircleImage(bitmap, getResources().getColor(android.R.color.transparent), 1));
         } else {
             super.setImageBitmap(bitmap);
         }
