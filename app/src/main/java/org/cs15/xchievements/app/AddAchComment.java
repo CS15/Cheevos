@@ -20,6 +20,7 @@ import org.cs15.xchievements.R;
 
 public class AddAchComment extends ActionBarActivity {
     private String mParseAchId;
+    private EditText mEtComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +38,24 @@ public class AddAchComment extends ActionBarActivity {
             mParseAchId = getIntent().getExtras().getString("parseAchId");
 
             final Button btSubmit = (Button) findViewById(R.id.bt_submit);
+            mEtComment = (EditText) findViewById(R.id.et_comment);
 
             btSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    btSubmit.setEnabled(false);
-                    btSubmit.setClickable(false);
+                    if (!mEtComment.getText().toString().equals("")) {
+                        btSubmit.setEnabled(false);
+                        btSubmit.setClickable(false);
 
-                    addCommentToParse();
+                        addCommentToParse();
+                    }
                 }
             });
         }
     }
 
     private void addCommentToParse() {
-        EditText etComment = (EditText) findViewById(R.id.et_comment);
+
 
         ParseObject user = ParseObject.createWithoutData("_User", ParseUser.getCurrentUser().getObjectId());
         ParseObject ach = ParseObject.createWithoutData("Achievements", mParseAchId);
@@ -60,11 +64,14 @@ public class AddAchComment extends ActionBarActivity {
         obj.put("user", user);
         obj.put("achievement", ach);
         obj.put("achievementId", mParseAchId);
-        obj.put("comment", etComment.getText().toString());
+        obj.put("comment", mEtComment.getText().toString());
         obj.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
+
+                    ParseUser.getCurrentUser().increment("postCount");
+                    ParseUser.getCurrentUser().saveInBackground();
 
                     // update counter
                     ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Achievements");

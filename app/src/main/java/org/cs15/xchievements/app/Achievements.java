@@ -250,7 +250,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         RequestQueue queue = SingletonVolley.getRequestQueque();
 
         JsonObjectRequest request = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject> (){
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject data) {
                         try {
@@ -338,7 +338,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                                     query.getFirstInBackground(new GetCallback<ParseObject>() {
                                         @Override
                                         public void done(ParseObject parseObject, ParseException e) {
-                                            if (e == null){
+                                            if (e == null) {
                                                 mParseGameId = parseObject.getObjectId();
 
                                                 Toast.makeText(Achievements.this, "Successfully uploaded to parse.", Toast.LENGTH_LONG).show();

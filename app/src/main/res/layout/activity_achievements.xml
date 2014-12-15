@@ -113,7 +113,7 @@
                             android:layout_marginTop="@dimen/margin_level_1"
                             android:textColor="@android:color/background_dark"
                             android:textSize="@dimen/tv_level_5"
-                            android:text="@string/game_summary"/>
+                            android:text="@string/game_summary" />
 
                         <org.cs15.xchievements.views.MavenProLightBoldTextView
                             android:id="@+id/tv_summary"

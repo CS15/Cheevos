@@ -4,10 +4,10 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.widget.Toast;
 
+import org.cs15.xchievements.objects.GameDetails;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.cs15.xchievements.objects.GameDetails;
 
 import java.net.URL;
 import java.util.ArrayList;

@@ -99,6 +99,7 @@ public class Register extends Fragment {
                 user.setEmail(email);
                 user.put("gamertag", gamertag);
                 user.put("xboxId", response);
+                user.put("isAnAdmin", false);
 
                 user.signUpInBackground(new SignUpCallback() {
                     public void done(ParseException e) {

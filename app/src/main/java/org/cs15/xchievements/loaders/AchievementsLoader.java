@@ -5,16 +5,13 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.cs15.xchievements.objects.Achievement;
 import org.cs15.xchievements.objects.Game;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class AchievementsLoader extends AsyncTaskLoader<Game> {
     // fields

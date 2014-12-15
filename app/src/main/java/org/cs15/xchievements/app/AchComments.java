@@ -1,7 +1,5 @@
 package org.cs15.xchievements.app;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,12 +8,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -25,7 +21,6 @@ import com.parse.ParseUser;
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.AchCommentsAdapter;
 import org.cs15.xchievements.misc.SingletonVolley;
-import org.cs15.xchievements.views.ScrollviewForList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +30,6 @@ public class AchComments extends ActionBarActivity {
     private TextView mTvAchTitle;
     private TextView mTvAchSubTitle;
     private ListView mLvContent;
-    private FloatingActionButton mFab;
     private List<ParseObject> mList;
     private AchCommentsAdapter mAdapter;
     private String mCoverUrl;
@@ -81,7 +75,7 @@ public class AchComments extends ActionBarActivity {
         }
     }
 
-    private void getDataFromParse(){
+    private void getDataFromParse() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
         query.include("achievement");
         query.include("user");
