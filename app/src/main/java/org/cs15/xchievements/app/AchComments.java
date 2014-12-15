@@ -2,6 +2,7 @@ package org.cs15.xchievements.app;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -105,6 +106,13 @@ public class AchComments extends ActionBarActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        getDataFromParse();
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.menu_add_comment).setVisible(ParseUser.getCurrentUser() != null);
         return super.onPrepareOptionsMenu(menu);
@@ -127,17 +135,12 @@ public class AchComments extends ActionBarActivity {
                 break;
 
             case R.id.menu_add_comment:
-                // let user know to login
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Enter comment");
-                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+                Intent intent = new Intent(AchComments.this, AddAchComment.class);
+                intent.putExtra("parseAchId", mAchParseId);
 
-                // show dialog
-                builder.show();
+                startActivity(intent);
+
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
                 break;
         }
 

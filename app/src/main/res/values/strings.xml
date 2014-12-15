@@ -37,5 +37,7 @@
     <string name="screenshots">Screenshots</string>
     <string name="game_summary">Game Summary</string>
     <string name="add_comment">Add Comment</string>
+    <string name="submit">Submit</string>
+    <string name="enter_comment">Enter comment</string>
 
 </resources>

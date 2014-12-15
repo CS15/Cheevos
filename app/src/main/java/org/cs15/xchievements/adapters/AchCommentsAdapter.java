@@ -6,32 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.SingletonVolley;
 import org.cs15.xchievements.views.RoundedImageLoader;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AchCommentsAdapter extends BaseAdapter {
     // instance variables
