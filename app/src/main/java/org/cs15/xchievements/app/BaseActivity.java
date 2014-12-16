@@ -35,6 +35,7 @@ public class BaseActivity extends ActionBarActivity {
     private final String STATE_SELECTED_POSITION = "Current_position";
     private String[] mDrawerTitles;
     private boolean mUserLearnedDrawer;
+    private boolean displayMenu;
     private int mCurrentSelectedPosition = 1;
     private ActionBarDrawerToggle mDrawerToggle;
     private Fragment mFrag;
@@ -77,6 +78,8 @@ public class BaseActivity extends ActionBarActivity {
                 selectItem(position);
             }
         });
+
+        showOrHideMenu(true);
     }
 
     private void selectItem(int position) {
@@ -118,14 +121,21 @@ public class BaseActivity extends ActionBarActivity {
 
         // close navigation menu
         closeDrawer();
+
+        showOrHideMenu(true);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_login).setVisible(displayMenu && ParseUser.getCurrentUser() == null);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = new MenuInflater(this);
         inflater.inflate(R.menu.main, menu);
-
-        menu.findItem(R.id.menu_login).setVisible(ParseUser.getCurrentUser() == null);
 
         return true;
     }
@@ -141,6 +151,7 @@ public class BaseActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.menu_login:
                 frag = new Login();
+                showOrHideMenu(false);
                 break;
         }
 
@@ -173,6 +184,8 @@ public class BaseActivity extends ActionBarActivity {
             return;
         }
 
+        showOrHideMenu(true);
+
         super.onBackPressed();
     }
 
@@ -182,5 +195,10 @@ public class BaseActivity extends ActionBarActivity {
 
     private void openDrawer() {
         mDrawerLayout.openDrawer(Gravity.START);
+    }
+
+    private void showOrHideMenu(boolean display) {
+        displayMenu = display;
+        supportInvalidateOptionsMenu();
     }
 }

@@ -6,6 +6,7 @@
         android:id="@+id/menu_game_details"
         android:title="@string/game_details"
         android:icon="@drawable/ic_action_about"
+        android:visible="true"
         android:showAsAction="always" />
 
     <item

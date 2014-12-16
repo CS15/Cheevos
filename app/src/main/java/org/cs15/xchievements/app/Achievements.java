@@ -56,7 +56,6 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private int mAchsAmount;
     private int mGamerscore;
     private int mGameId;
-    private boolean isAnAdmin = UserProfile.isAnAdmin();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +72,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         onGameDetails();
 
         if (getIntent().getExtras() != null) {
+
             mGameId = getIntent().getExtras().getInt("gameId");
             mTitle = getIntent().getExtras().getString("title");
             mUrl = getIntent().getExtras().getString("url");
@@ -120,7 +120,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     }
 
     private void getData() {
-        if (isAnAdmin) {
+        if (UserProfile.isAnAdmin()) {
             if (this.getSupportLoaderManager().getLoader(0) == null) {
                 this.getSupportLoaderManager().initLoader(0, null, this);
             } else {
@@ -145,12 +145,14 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             public void onPanelOpened(View view) {
                 // set actionbar title
                 getSupportActionBar().setTitle(R.string.ab_game_details);
+                supportInvalidateOptionsMenu();
             }
 
             @Override
             public void onPanelClosed(View view) {
                 // set actionbar title
                 getSupportActionBar().setTitle(mTitle);
+                supportInvalidateOptionsMenu();
             }
         });
     }
@@ -417,12 +419,25 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_upload_game_details).setVisible(UserProfile.isAnAdmin());
+        menu.findItem(R.id.menu_upload_achievements).setVisible(UserProfile.isAnAdmin());
+
+        if (!mSlidingPane.isOpen()) {
+            menu.findItem(R.id.menu_game_details).setIcon(R.drawable.ic_action_about);
+        } else {
+            menu.findItem(R.id.menu_game_details).setIcon(R.drawable.ic_action_ach_logo);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = new MenuInflater(this);
         inflater.inflate(R.menu.menu_achievements, menu);
 
-        menu.findItem(R.id.menu_upload_game_details).setVisible(isAnAdmin);
-        menu.findItem(R.id.menu_upload_achievements).setVisible(isAnAdmin);
+        menu.findItem(R.id.menu_game_details).setIcon(R.drawable.ic_action_about);
 
         return super.onCreateOptionsMenu(menu);
     }

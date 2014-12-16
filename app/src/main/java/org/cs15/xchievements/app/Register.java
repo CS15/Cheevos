@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -78,6 +80,22 @@ public class Register extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(false);
+
+        getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.findItem(R.id.menu_login).setVisible(false);
+
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
     private void registerUser(String email, String password, String gamertag) {
         getXboxId(email, password, gamertag);
     }
@@ -100,6 +118,7 @@ public class Register extends Fragment {
                 user.put("gamertag", gamertag);
                 user.put("xboxId", response);
                 user.put("isAnAdmin", false);
+                user.put("postCount", 0);
 
                 user.signUpInBackground(new SignUpCallback() {
                     public void done(ParseException e) {
