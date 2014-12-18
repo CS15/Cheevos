@@ -39,7 +39,9 @@ import org.cs15.xchievements.objects.GameDetails;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
@@ -172,7 +174,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         String developer = (gameDetails.getDevelopers() != null) ? gameDetails.getDevelopers() : "N/A";
         String publisher = (gameDetails.getPublishers() != null) ? gameDetails.getPublishers() : "N/A";
         String genres = gameDetails.getGenre();
-        String usa = gameDetails.getUsaRelease();
+        String usa = (gameDetails.getUsaRelease() != null) ? new SimpleDateFormat("MMM dd, yyyy").format(new Date(gameDetails.getUsaRelease().replace("-", "/"))) : "N/A";
         String summary = (gameDetails.getSummary() != null) ? gameDetails.getSummary() : "N/A";
 
         // set data
@@ -182,7 +184,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         tvDeveloper.setText(String.format("Developer: %s", developer));
         tvPublisher.setText(String.format("Publisher: %s", publisher));
         tvGenre.setText(String.format("Genre: %s", genres));
-        tvUsDate.setText(String.format("USA: %s", usa));
+        tvUsDate.setText(String.format("Original Release Date: %s", usa));
         tvSummary.setText(String.format("%s", summary));
     }
 
@@ -365,28 +367,76 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private void saveAchievements() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
         query.whereEqualTo("gameId", mGameDetails.getId());
+        query.include("game");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> data, ParseException e) {
+
+                int updatedCounter = 0;
+
                 if (e == null) {
                     if (data.size() == 0) {
                         // pointer to game
                         ParseObject gamePointer = ParseObject.createWithoutData("Games", mParseGameId);
 
-                        // upload game data
-                        for (Achievement ach : mList) {
+                        // upload achievements
+                        for (int i = 0; i < mList.size(); i++) {
+                            updatedCounter++;
+                            final int finalI = i;
+                            final int finalUpdatedCounter = updatedCounter;
+
                             ParseObject achievement = new ParseObject("Achievements");
                             achievement.put("game", gamePointer);
                             achievement.put("gameTitle", mGameDetails.getTitle());
-                            achievement.put("gameId", ach.getGameId());
-                            achievement.put("title", ach.getTitle());
+                            achievement.put("gameId", mList.get(i).getGameId());
+                            achievement.put("title", mList.get(i).getTitle());
                             achievement.put("commentCounts", 0);
-                            achievement.put("coverUrl", ach.getCoverUrl());
-                            achievement.put("description", ach.getDescription());
-                            achievement.put("gamerscore", ach.getGamerscore());
-                            achievement.saveInBackground();
+                            achievement.put("coverUrl", mList.get(i).getCoverUrl());
+                            achievement.put("description", mList.get(i).getDescription());
+                            achievement.put("gamerscore", mList.get(i).getGamerscore());
+                            achievement.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (finalI == mList.size() - 1){
+                                        Toast.makeText(Achievements.this, "Successfully uploaded " + finalUpdatedCounter + " Achievements!", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
                         }
                     } else if (mList.size() > data.size()) {
-                        Toast.makeText(Achievements.this, "Need to update achievements", Toast.LENGTH_LONG).show();
+                        // get game parse id
+                        mParseGameId = data.get(0).getParseObject("game").getObjectId();
+
+                        // pointer to game
+                        ParseObject gamePointer = ParseObject.createWithoutData("Games", mParseGameId);
+
+                        // update achievements
+                        for (int i = data.size(); i < mList.size(); i++) {
+                            updatedCounter++;
+                            final int finalI = i;
+                            final int finalUpdatedCounter = updatedCounter;
+
+                            ParseObject achievement = new ParseObject("Achievements");
+                            achievement.put("game", gamePointer);
+                            achievement.put("gameTitle", mGameDetails.getTitle());
+                            achievement.put("gameId", mList.get(i).getGameId());
+                            achievement.put("title", mList.get(i).getTitle());
+                            achievement.put("commentCounts", 0);
+                            achievement.put("coverUrl", mList.get(i).getCoverUrl());
+                            achievement.put("description", mList.get(i).getDescription());
+                            achievement.put("gamerscore", mList.get(i).getGamerscore());
+                            achievement.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (finalI == mList.size() - 1){
+                                        Toast.makeText(Achievements.this, "Successfully updated " + finalUpdatedCounter + " Achievements!", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                        }
+
+                        data.get(0).getParseObject("game").put("achsAmount", data.get(0).getParseObject("game").getInt("achsAmount") + updatedCounter);
+                        data.get(0).saveInBackground();
+
                     } else {
                         Toast.makeText(Achievements.this, "Achievements up to date", Toast.LENGTH_LONG).show();
                     }

@@ -40,5 +40,8 @@
     <string name="submit">Submit</string>
     <string name="enter_comment">Enter comment</string>
     <string name="achievements">Achievements</string>
+    <string name="update">Update</string>
+    <string name="dialog_update_apk_message">Update now and enjoy the newest features!</string>
+    <string name="dialog_update_apk_title">New update available</string>
 
 </resources>

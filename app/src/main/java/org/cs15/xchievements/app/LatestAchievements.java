@@ -1,8 +1,14 @@
 package org.cs15.xchievements.app;
 
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -18,7 +24,9 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -29,6 +37,10 @@ import org.cs15.xchievements.misc.SingletonVolley;
 import org.cs15.xchievements.misc.UserProfile;
 import org.cs15.xchievements.objects.GameDetails;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +79,7 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
         mLvContent.setAdapter(mAdapter);
 
         getBannerInfo("Screenshots");
+        getApkVersionCode("Apks");
 
         mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -190,5 +203,90 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
                 mAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private void getApkVersionCode(String className) {
+        // get data from database
+        ParseQuery<ParseObject> parseObject = ParseQuery.getQuery(className);
+        parseObject.orderByDescending("createdAt");
+        parseObject.setLimit(1);
+        parseObject.findInBackground(new FindCallback<ParseObject>() {
+            public void done(final List<ParseObject> data, ParseException e) {
+                if (e == null) {
+                    try {
+                        int apkVersionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
+
+                        if (apkVersionCode < data.get(0).getInt("versionCode")) {
+                            getApk(data.get(0));
+                        }
+
+                    } catch (PackageManager.NameNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    Log.e("ParseObject", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void getApk(final ParseObject parseObject) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.dialog_update_apk_message);
+        builder.setIcon(R.drawable.ic_app_logo);
+        builder.setTitle(R.string.dialog_update_apk_title);
+        builder.setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Downloading...");
+                progressDialog.setMessage("Please wait.");
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.show();
+
+                ParseFile apk = (ParseFile) parseObject.get("apk");
+                apk.getDataInBackground(new GetDataCallback() {
+                    public void done(byte[] data, ParseException e) {
+                        if (e == null) {
+                            try {
+                                String path = Environment.getExternalStorageDirectory() + "/Download/xchievement-v" + parseObject.getString("apkVersion") + ".apk";
+
+                                File file = new File(path);
+                                file.getParentFile().mkdirs();
+                                file.createNewFile();
+
+                                BufferedOutputStream objectOut = new BufferedOutputStream(new FileOutputStream(file));
+
+                                objectOut.write(data);
+
+                                objectOut.close();
+
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(new File(path)), "application/vnd.android.package-archive");
+
+                                getActivity().startActivity(intent);
+
+                                progressDialog.dismiss();
+
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+
+                        }
+                    }
+                });
+            }
+        });
+
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 }
