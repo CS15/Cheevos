@@ -208,7 +208,7 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
     private void getApkVersionCode(String className) {
         // get data from database
         ParseQuery<ParseObject> parseObject = ParseQuery.getQuery(className);
-        parseObject.orderByDescending("createdAt");
+        parseObject.orderByDescending("updatedAt");
         parseObject.setLimit(1);
         parseObject.findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> data, ParseException e) {

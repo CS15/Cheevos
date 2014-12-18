@@ -15,6 +15,7 @@
     <string name="parse_app_id">CSvImUmlTzE75oxhXCseP2Au8pcSjEkzmm08QuRz</string>
     <string name="parse_secret_id">4anBWvIMSu9k36nb2D6vIc0uc8oBwNwRUQDxAgHT</string>
     <string name="gb_api">60a1d643b4a4ad1ad1b424a040cbf3e8b5393e41</string>
+    <string name="ytv_api">AIzaSyC-W-RE3trkKpogcglhy4Mw0LUpEOp85sk</string>
 
     <!-- misc -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -43,5 +44,6 @@
     <string name="update">Update</string>
     <string name="dialog_update_apk_message">Update now and enjoy the newest features!</string>
     <string name="dialog_update_apk_title">New update available</string>
+    <string name="add_to_fave">Add to Favorites</string>
 
 </resources>

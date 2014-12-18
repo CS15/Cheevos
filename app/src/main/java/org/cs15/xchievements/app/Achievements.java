@@ -26,6 +26,8 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.cs15.xchievements.R;
@@ -46,6 +48,7 @@ import java.util.List;
 
 public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
     private List<Achievement> mList;
+    private ParseObject parseGame;
     private GameDetails mGameDetails;
     private Game mGame;
     private SlidingPaneLayout mSlidingPane;
@@ -55,6 +58,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private String mUrl;
     private String mCoverUrl;
     private String mParseGameId;
+    private boolean mIsFavorite;
     private int mAchsAmount;
     private int mGamerscore;
     private int mGameId;
@@ -202,9 +206,11 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                             mGameDetails.setParseId(game.getObjectId());
                             mGameDetails.setAchievementsAmount(game.getInt("achsAmount"));
                             mGameDetails.setGamerscore(game.getInt("gamerscore"));
+                            parseGame = game;
                         }
 
                         getDataFromGB(mGameDetails.getGbGameId());
+                        isFavorite();
 
                     } else {
                         Toast.makeText(Achievements.this, "Game details do not exist.", Toast.LENGTH_LONG).show();
@@ -396,7 +402,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                             achievement.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    if (finalI == mList.size() - 1){
+                                    if (finalI == mList.size() - 1) {
                                         Toast.makeText(Achievements.this, "Successfully uploaded " + finalUpdatedCounter + " Achievements!", Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -427,7 +433,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                             achievement.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    if (finalI == mList.size() - 1){
+                                    if (finalI == mList.size() - 1) {
                                         Toast.makeText(Achievements.this, "Successfully updated " + finalUpdatedCounter + " Achievements!", Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -442,6 +448,40 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                     }
                 } else {
                     Toast.makeText(Achievements.this, "Error getting the object: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void addToFavorites() {
+        ParseRelation<ParseObject> relation = UserProfile.getCurrentUser().getRelation("favorites");
+
+        if (!mIsFavorite) {
+            relation.add(parseGame);
+
+            UserProfile.getCurrentUser().saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    mIsFavorite = true;
+                    supportInvalidateOptionsMenu();
+
+                    Toast.makeText(Achievements.this, "Successfully added to favorites!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    private void isFavorite() {
+        ParseQuery<ParseObject> relation = UserProfile.getCurrentUser().getRelation("favorites").getQuery();
+        relation.whereEqualTo("objectId", mGameDetails.getParseId());
+        relation.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    mIsFavorite = parseObjects.size() == 1;
+                    supportInvalidateOptionsMenu();
+                } else {
+                    Toast.makeText(Achievements.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -472,6 +512,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.menu_upload_game_details).setVisible(UserProfile.isAnAdmin());
         menu.findItem(R.id.menu_upload_achievements).setVisible(UserProfile.isAnAdmin());
+        menu.findItem(R.id.menu_add_to_fave).setVisible(!mIsFavorite && UserProfile.getCurrentUser() != null);
 
         if (!mSlidingPane.isOpen()) {
             menu.findItem(R.id.menu_game_details).setIcon(R.drawable.ic_action_about);
@@ -518,6 +559,10 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
 
+                break;
+
+            case R.id.menu_add_to_fave:
+                addToFavorites();
                 break;
 
             case R.id.menu_upload_game_details:
