@@ -33,7 +33,7 @@ import com.parse.ParseQuery;
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.LatestAchievementsAdapter;
 import org.cs15.xchievements.loaders.LatestAchievementsLoader;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.misc.UserProfile;
 import org.cs15.xchievements.objects.GameDetails;
 
@@ -168,7 +168,7 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
                     mBannerGamerscore = data.get(0).getParseObject("game").getString("gamerscore");
                     mBannerAchsUrl = data.get(0).getParseObject("game").getString("achsUrl");
 
-                    mIvBanner.setImageUrl(data.get(0).getString("imageUrl"), SingletonVolley.getImageLoader());
+                    mIvBanner.setImageUrl(data.get(0).getString("imageUrl"), Singleton.getImageLoader());
                     mTvTitle.setText(mBannerTitle);
 
                     // animation

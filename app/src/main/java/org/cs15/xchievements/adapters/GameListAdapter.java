@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.objects.GameDetails;
 
 import java.util.List;
@@ -63,7 +63,7 @@ public class GameListAdapter extends BaseAdapter {
         }
 
         // set titles
-        mViewHolder.mIvCover.setImageUrl(mList.get(i).getCoverUrl(), SingletonVolley.getImageLoader());
+        mViewHolder.mIvCover.setImageUrl(mList.get(i).getCoverUrl(), Singleton.getImageLoader());
         mViewHolder.mTvTitle.setText(mList.get(i).getTitle());
         mViewHolder.mTvSubTitle.setText(String.format("%s Achievements", mList.get(i).getAchievementsAmount()));
 

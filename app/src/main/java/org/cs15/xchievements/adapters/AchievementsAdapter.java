@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.objects.Achievement;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class AchievementsAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        mViewHolder.mIvCover.setImageUrl(mList.get(position).getCoverUrl(), SingletonVolley.getImageLoader());
+        mViewHolder.mIvCover.setImageUrl(mList.get(position).getCoverUrl(), Singleton.getImageLoader());
         mViewHolder.mTvTitle.setText(mList.get(position).getTitle());
         mViewHolder.mTvDesc.setText(mList.get(position).getDescription());
         mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getCommentsCount()));

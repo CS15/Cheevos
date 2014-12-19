@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class ScreenshotsAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        mViewHolder.mIvCover.setImageUrl(mList.get(position), SingletonVolley.getImageLoader());
+        mViewHolder.mIvCover.setImageUrl(mList.get(position), Singleton.getImageLoader());
 
         // return view
         return view;

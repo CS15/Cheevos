@@ -28,7 +28,7 @@ import com.parse.SignUpCallback;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.misc.HelperClass;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,7 +104,7 @@ public class Register extends Fragment {
 
         String url = "https://xboxapi.com/v2/xuid/" + gamertag;
 
-        RequestQueue queue = SingletonVolley.getRequestQueque();
+        RequestQueue queue = Singleton.getRequestQueque();
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 

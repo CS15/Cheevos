@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.objects.GameDetails;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class LatestAchievementsAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        mViewHolder.mIvCover.setImageUrl(mData.get(position).getCoverUrl(), SingletonVolley.getImageLoader());
+        mViewHolder.mIvCover.setImageUrl(mData.get(position).getCoverUrl(), Singleton.getImageLoader());
         mViewHolder.mTvTitle.setText(mData.get(position).getTitle());
         mViewHolder.mTvAchAmount.setText(String.format("%s achievements", mData.get(position).getAchievementsAmount()));
 

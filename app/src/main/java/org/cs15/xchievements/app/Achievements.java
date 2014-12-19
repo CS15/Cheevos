@@ -27,13 +27,12 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.AchievementsAdapter;
 import org.cs15.xchievements.loaders.AchievementsLoader;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.misc.UserProfile;
 import org.cs15.xchievements.objects.Achievement;
 import org.cs15.xchievements.objects.Game;
@@ -182,7 +181,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         String summary = (gameDetails.getSummary() != null) ? gameDetails.getSummary() : "N/A";
 
         // set data
-        ivCoverImage.setImageUrl(gameDetails.getCoverUrl(), SingletonVolley.getImageLoader());
+        ivCoverImage.setImageUrl(gameDetails.getCoverUrl(), Singleton.getImageLoader());
 
         tvGameTitle.setText(String.format("%s", title));
         tvDeveloper.setText(String.format("Developer: %s", developer));
@@ -210,7 +209,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         }
 
                         getDataFromGB(mGameDetails.getGbGameId());
-                        isFavorite();
+
+                        if (UserProfile.getCurrentUser() != null) isFavorite();
 
                     } else {
                         Toast.makeText(Achievements.this, "Game details do not exist.", Toast.LENGTH_LONG).show();
@@ -257,7 +257,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
         String url = "http://www.giantbomb.com/api/game/3030-" + gbGameId + "/?api_key=" + getResources().getString(R.string.gb_api) + "&format=json&field_list=name,image,deck,original_release_date,developers,publishers,genres";
 
-        RequestQueue queue = SingletonVolley.getRequestQueque();
+        RequestQueue queue = Singleton.getRequestQueque();
 
         JsonObjectRequest request = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {

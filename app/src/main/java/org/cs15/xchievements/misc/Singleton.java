@@ -1,26 +1,46 @@
 package org.cs15.xchievements.misc;
 
-import android.app.Application;
+import android.content.Context;
 
-import com.parse.Parse;
-
-import org.cs15.xchievements.R;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 
 /**
- * Instantiate all singleton classes
+ * Singleton Volley
  * <p/>
  * Created by Christian (ReloS) Soler on 11/26/2014.
  */
-public class Singleton extends Application {
+public class Singleton {
+    // instances
+    private static RequestQueue mRequestQueque;
+    private static ImageLoader mImageLoader;
+    private static BitmapLruCache mBitmapLruCache;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    private Singleton() {
+    }
 
-        // instantiate singleton volley
-        SingletonVolley.instantiate(this);
+    static void instantiate(Context context) {
+        mBitmapLruCache = new BitmapLruCache();
+        mRequestQueque = Volley.newRequestQueue(context);
+        mImageLoader = new ImageLoader(mRequestQueque, mBitmapLruCache);
+    }
 
-        // instantiate parse sdk
-        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_secret_id));
+    public static ImageLoader getImageLoader() {
+        if (mImageLoader != null) return mImageLoader;
+
+        throw new IllegalStateException("ImageLoader not instantiated");
+    }
+
+    public static RequestQueue getRequestQueque() {
+        if (mRequestQueque != null) return mRequestQueque;
+
+        throw new IllegalStateException("RequestQueue not instantiated");
+    }
+
+    public static BitmapLruCache getBitmapLruCache() {
+        if (mBitmapLruCache != null) return mBitmapLruCache;
+
+        throw new IllegalStateException("BitmapLruCache not instantiated");
     }
 }

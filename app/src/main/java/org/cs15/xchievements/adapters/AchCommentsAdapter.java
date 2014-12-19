@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.parse.ParseObject;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.views.RoundedImageLoader;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class AchCommentsAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        mViewHolder.mIvUserAvatar.setImageUrl(mData.get(position).getParseObject("user").getString("gamerpic"), SingletonVolley.getImageLoader());
+        mViewHolder.mIvUserAvatar.setImageUrl(mData.get(position).getParseObject("user").getString("gamerpic"), Singleton.getImageLoader());
         mViewHolder.mTvUsername.setText(mData.get(position).getParseObject("user").getString("gamertag"));
         mViewHolder.mTvComment.setText(mData.get(position).getString("comment"));
 

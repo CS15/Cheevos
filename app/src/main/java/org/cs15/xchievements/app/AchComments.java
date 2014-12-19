@@ -20,7 +20,7 @@ import com.parse.ParseUser;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.AchCommentsAdapter;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class AchComments extends ActionBarActivity {
             getSupportActionBar().setTitle(mGameTitle);
 
             mIvAch = (NetworkImageView) findViewById(R.id.iv_ach_image);
-            mIvAch.setImageUrl(mCoverUrl, SingletonVolley.getImageLoader());
+            mIvAch.setImageUrl(mCoverUrl, Singleton.getImageLoader());
 
             mTvAchTitle = (TextView) findViewById(R.id.tv_ach_title);
             mTvAchTitle.setText(mTitle);

@@ -19,7 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.ScreenshotsAdapter;
-import org.cs15.xchievements.misc.SingletonVolley;
+import org.cs15.xchievements.misc.Singleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,7 +73,7 @@ public class Screenshots extends ActionBarActivity {
 
         String url = "http://www.giantbomb.com/api/game/3030-" + mGameId + "/?api_key=" + getResources().getString(R.string.gb_api) + "&format=json&field_list=images";
 
-        RequestQueue queue = SingletonVolley.getRequestQueque();
+        RequestQueue queue = Singleton.getRequestQueque();
 
         JsonObjectRequest request = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
