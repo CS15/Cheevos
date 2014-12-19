@@ -183,7 +183,7 @@ public class LatestAchievements extends Fragment implements LoaderManager.Loader
     private void getLatestAchs() {
         // get data from database
         ParseQuery<ParseObject> parseObject = ParseQuery.getQuery("Games");
-        parseObject.orderByDescending("createdAt");
+        parseObject.orderByDescending("updatedAt");
         parseObject.setLimit(25);
         parseObject.findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> data, ParseException e) {

@@ -1,9 +1,14 @@
 package org.cs15.xchievements.app;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,10 +24,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.adapters.NavigationDrawerAdapter;
+import org.cs15.xchievements.misc.UserProfile;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Drawer navigation
@@ -89,10 +103,26 @@ public class BaseActivity extends ActionBarActivity {
         // navigation menu item click
         switch (position) {
             case 0:
-                mFrag = new LatestAchievements();
-                fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                fragTrans.replace(R.id.container, mFrag);
-                fragTrans.commit();
+                if (UserProfile.getCurrentUser() != null) {
+                    mFrag = new Favorites();
+                    fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                    fragTrans.replace(R.id.container, mFrag);
+                    fragTrans.commit();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.not_logged_in);
+                    builder.setIcon(R.drawable.ic_app_logo);
+                    builder.setTitle(R.string.not_logged_in_title);
+                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    });
+
+                    builder.create();
+                    builder.show();
+                }
+
                 break;
             case 1:
                 mFrag = new LatestAchievements();

@@ -468,6 +468,18 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                     Toast.makeText(Achievements.this, "Successfully added to favorites!", Toast.LENGTH_LONG).show();
                 }
             });
+        } else {
+            relation.remove(parseGame);
+
+            UserProfile.getCurrentUser().saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    mIsFavorite = false;
+                    supportInvalidateOptionsMenu();
+
+                    Toast.makeText(Achievements.this, "Successfully removed to favorites!", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
@@ -512,12 +524,23 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.menu_upload_game_details).setVisible(UserProfile.isAnAdmin());
         menu.findItem(R.id.menu_upload_achievements).setVisible(UserProfile.isAnAdmin());
-        menu.findItem(R.id.menu_add_to_fave).setVisible(!mIsFavorite && UserProfile.getCurrentUser() != null);
 
         if (!mSlidingPane.isOpen()) {
             menu.findItem(R.id.menu_game_details).setIcon(R.drawable.ic_action_about);
         } else {
             menu.findItem(R.id.menu_game_details).setIcon(R.drawable.ic_action_ach_logo);
+        }
+
+        if (UserProfile.getCurrentUser() != null) {
+            menu.findItem(R.id.menu_add_to_fave).setVisible(true);
+
+            if (mIsFavorite) {
+                menu.findItem(R.id.menu_add_to_fave).setIcon(R.drawable.ic_action_toggle_star);
+                menu.findItem(R.id.menu_add_to_fave).setTitle("Remove from Favorites");
+            } else {
+                menu.findItem(R.id.menu_add_to_fave).setIcon(R.drawable.ic_action_toggle_star_outline);
+                menu.findItem(R.id.menu_add_to_fave).setTitle("Add to Favorites");
+            }
         }
 
         return super.onPrepareOptionsMenu(menu);

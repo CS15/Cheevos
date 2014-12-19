@@ -13,6 +13,7 @@
         android:id="@+id/menu_add_to_fave"
         android:title="@string/add_to_fave"
         android:icon="@drawable/ic_action_toggle_star_outline"
+        android:visible="false"
         android:showAsAction="always" />
 
     <item
