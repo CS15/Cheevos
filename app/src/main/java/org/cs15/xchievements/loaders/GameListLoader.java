@@ -15,11 +15,11 @@ import java.net.URL;
 import java.util.List;
 
 public class GameListLoader extends AsyncTaskLoader<List<GameDetails>> {
+    private final String BASE_URL;
     // fields
     private Context mContext;
     private List<GameDetails> mList;
     private String mExMessage;
-    private final String BASE_URL;
 
     public GameListLoader(Context context, List<GameDetails> list, String url) {
         super(context);

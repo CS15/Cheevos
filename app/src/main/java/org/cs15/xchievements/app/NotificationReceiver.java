@@ -7,14 +7,12 @@ import android.util.Log;
 import com.parse.ParsePushBroadcastReceiver;
 
 public class NotificationReceiver extends ParsePushBroadcastReceiver {
-    private static final String TAG = "MyCustomReceiver";
 
     @Override
     public void onPushOpen(Context context, Intent intent) {
-        Log.e("Push", "Clicked");
-        Intent i = new Intent(context, MainActivity.class);
-        i.putExtras(intent.getExtras());
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(i);
+        Intent intent1 = new Intent(context, MainActivity.class);
+        intent1.putExtras(intent.getExtras());
+        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

@@ -14,16 +14,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
-
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import android.widget.Toast;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.adapters.AlphabetAdapter;
 import org.cs15.xchievements.adapters.GameListAdapter;
 import org.cs15.xchievements.loaders.GameListLoader;
+import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.UserProfile;
 import org.cs15.xchievements.objects.GameDetails;
 
@@ -72,7 +70,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
                     getData();
                 } else {
                     String alphabetCode = (mAlphabetTitles[position].equals("0-9")) ? "-" : mAlphabetTitles[position].toLowerCase();
-                    getDataFromParse(alphabetCode);
+                    getGameList(alphabetCode);
                 }
 
                 mAlphabetMenu.setItemChecked(position, true);
@@ -80,7 +78,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
             }
         });
 
-        mList = new ArrayList<GameDetails>();
+        mList = new ArrayList<>();
 
         mAdapter = new GameListAdapter(mList, this);
 
@@ -113,7 +111,7 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
                 this.getSupportLoaderManager().restartLoader(0, null, this);
             }
         } else {
-            getDataFromParse("all");
+            getGameList("all");
         }
     }
 
@@ -187,29 +185,17 @@ public class GameList extends ActionBarActivity implements LoaderManager.LoaderC
         return super.onOptionsItemSelected(item);
     }
 
-    private void getDataFromParse(String alphabetLetter) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Games");
-        if (!alphabetLetter.equals("all")) {
-            query.whereStartsWith("title", alphabetLetter.toUpperCase());
-        }
-        query.orderByAscending("title");
-        query.findInBackground(new FindCallback<ParseObject>() {
+    private void getGameList(String alphabetLetter) {
+        new Database().getGameList(alphabetLetter, mList, new Database.IGameList() {
             @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null) {
-                    for (ParseObject obj : parseObjects) {
-                        GameDetails game = new GameDetails();
-                        game.setId(obj.getInt("gameId"));
-                        game.setCoverUrl(obj.getString("coverUrl"));
-                        game.setTitle(obj.getString("title"));
-                        game.setAchievementsAmount(obj.getInt("achsAmount"));
-                        game.setGamerscore(obj.getInt("gamerscore"));
-                        game.setAchievementsPageUrl(obj.getString("achsUrl"));
-                        mList.add(game);
-                    }
+            public void onSuccess(List<GameDetails> list) {
+                mList = list;
+                mAdapter.notifyDataSetChanged();
+            }
 
-                    mAdapter.notifyDataSetInvalidated();
-                }
+            @Override
+            public void onError(String error) {
+                HelperClass.toast(GameList.this, error);
             }
         });
     }

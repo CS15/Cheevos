@@ -14,28 +14,12 @@ import org.jsoup.select.Elements;
 import java.net.URL;
 
 public class AchievementsLoader extends AsyncTaskLoader<Game> {
+    private final String BASE_URL;
+    private final int GAME_ID;
     // fields
     private Context mContext;
     private Game mGame;
     private String mExMessage;
-    private final String BASE_URL;
-    private final int GAME_ID;
-
-    private enum Genre {
-        ACTION,
-        ADVENTURE,
-        CARD_AND_BOARD,
-        FIGHTING,
-        FITNESS,
-        PUZZLE_AND_WORD,
-        RPG,
-        SHMUP,
-        SHOOTER,
-        SPORT,
-        SPORT_AND_FITNESS,
-        STRATEGY,
-        RACING
-    }
 
     public AchievementsLoader(Context context, Game game, String url, int gameId) {
         super(context);
@@ -164,5 +148,21 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
         } else {
             Toast.makeText(mContext, mExMessage, Toast.LENGTH_LONG).show();
         }
+    }
+
+    private enum Genre {
+        ACTION,
+        ADVENTURE,
+        CARD_AND_BOARD,
+        FIGHTING,
+        FITNESS,
+        PUZZLE_AND_WORD,
+        RPG,
+        SHMUP,
+        SHOOTER,
+        SPORT,
+        SPORT_AND_FITNESS,
+        STRATEGY,
+        RACING
     }
 }

@@ -4,30 +4,30 @@
 
     <item
         android:id="@+id/menu_game_details"
-        android:title="@string/game_details"
         android:icon="@drawable/ic_action_about"
-        android:visible="true"
-        android:showAsAction="always" />
+        android:showAsAction="always"
+        android:title="@string/game_details"
+        android:visible="true" />
 
     <item
         android:id="@+id/menu_add_to_fave"
-        android:title="@string/add_to_fave"
         android:icon="@drawable/ic_action_toggle_star_outline"
-        android:visible="false"
-        android:showAsAction="always" />
+        android:showAsAction="always"
+        android:title="@string/add_to_fave"
+        android:visible="false" />
 
     <item
         android:id="@+id/menu_screenshots"
-        android:title="@string/screenshots"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/screenshots" />
 
     <item
         android:id="@+id/menu_upload_game_details"
-        android:title="@string/upload_game_details"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/upload_game_details" />
 
     <item
         android:id="@+id/menu_upload_achievements"
-        android:title="@string/upload_achievements"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/upload_achievements" />
 </menu>

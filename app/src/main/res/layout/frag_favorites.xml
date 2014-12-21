@@ -25,9 +25,9 @@
             android:id="@+id/lv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/white"
             android:divider="@android:color/darker_gray"
-            android:dividerHeight="@dimen/divider"
-            android:background="@android:color/white" />
+            android:dividerHeight="@dimen/divider" />
 
     </LinearLayout>
 

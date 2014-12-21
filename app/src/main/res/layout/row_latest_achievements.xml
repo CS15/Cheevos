@@ -35,10 +35,10 @@
         android:id="@+id/tv_game_ach_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/v_divider"
         android:layout_marginLeft="@dimen/margin_level_1"
         android:layout_marginRight="@dimen/margin_level_1"
         android:layout_toRightOf="@+id/iv_ach_cover"
-        android:layout_below="@+id/v_divider"
         android:textColor="@android:color/black"
         android:textSize="@dimen/tv_level_5" />
 

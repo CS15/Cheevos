@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/menu_browse"
-        android:title="@string/browse"
-        android:showAsAction="always" />
+        android:showAsAction="always"
+        android:title="@string/browse" />
 </menu>

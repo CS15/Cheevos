@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;

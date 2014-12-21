@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.parse.ParseUser;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.misc.HelperClass;
+import org.cs15.xchievements.misc.UserProfile;
 
 /**
  * Fragment for settings
@@ -24,14 +26,14 @@ public class Settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_settings, container, false);
 
-        if (ParseUser.getCurrentUser() != null) {
+        if (UserProfile.getCurrentUser() != null) {
             view.findViewById(R.id.v_first).setVisibility(View.VISIBLE);
             TextView tvLogout = (TextView) view.findViewById(R.id.tv_logout);
             tvLogout.setVisibility(View.VISIBLE);
             tvLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ParseUser.logOut();
+                    new Database().logout();
 
                     HelperClass.reloadActivity(getActivity());
                 }

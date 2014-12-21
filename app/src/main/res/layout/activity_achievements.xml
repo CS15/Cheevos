@@ -109,11 +109,11 @@
                         <org.cs15.xchievements.views.MavenProLightBoldTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal|center_vertical"
                             android:layout_marginTop="@dimen/margin_level_1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:text="@string/game_summary"
                             android:textColor="@android:color/background_dark"
-                            android:textSize="@dimen/tv_level_5"
-                            android:text="@string/game_summary" />
+                            android:textSize="@dimen/tv_level_5" />
 
                         <org.cs15.xchievements.views.MavenProLightBoldTextView
                             android:id="@+id/tv_summary"
@@ -135,9 +135,9 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:gravity="center"
-                android:scrollbars="none"
+                android:paddingBottom="@dimen/padding_level_0"
                 android:paddingTop="@dimen/padding_level_0"
-                android:paddingBottom="@dimen/padding_level_0" />
+                android:scrollbars="none" />
 
         </android.support.v4.widget.SlidingPaneLayout>
 

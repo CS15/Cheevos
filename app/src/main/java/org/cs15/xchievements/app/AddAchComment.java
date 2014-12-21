@@ -17,6 +17,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.misc.HelperClass;
 
 public class AddAchComment extends ActionBarActivity {
     private String mParseAchId;
@@ -55,43 +57,15 @@ public class AddAchComment extends ActionBarActivity {
     }
 
     private void addCommentToParse() {
-
-
-        ParseObject user = ParseObject.createWithoutData("_User", ParseUser.getCurrentUser().getObjectId());
-        ParseObject ach = ParseObject.createWithoutData("Achievements", mParseAchId);
-
-        ParseObject obj = new ParseObject("Comments");
-        obj.put("user", user);
-        obj.put("achievement", ach);
-        obj.put("achievementId", mParseAchId);
-        obj.put("comment", mEtComment.getText().toString());
-        obj.saveInBackground(new SaveCallback() {
+        new Database().addAchComment(mParseAchId, mEtComment.getText().toString(), new Database.IAddComment() {
             @Override
-            public void done(ParseException e) {
-                if (e == null) {
+            public void onSuccess(String message) {
+                HelperClass.toast(AddAchComment.this, message);
+            }
 
-                    ParseUser.getCurrentUser().increment("postCount");
-                    ParseUser.getCurrentUser().saveInBackground();
-
-                    // update counter
-                    ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Achievements");
-                    parseQuery.getInBackground(mParseAchId, new GetCallback<ParseObject>() {
-                        public void done(ParseObject parseObject, ParseException e) {
-                            if (e == null) {
-                                parseObject.increment("commentCounts");
-
-                                parseObject.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        Toast.makeText(AddAchComment.this, "Successfully added comment", Toast.LENGTH_LONG).show();
-
-                                        onBackPressed();
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
+            @Override
+            public void onError(String error) {
+                HelperClass.toast(AddAchComment.this, error);
             }
         });
     }

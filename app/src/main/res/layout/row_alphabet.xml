@@ -14,15 +14,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/row_padding"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/row_padding">
 
         <org.cs15.xchievements.views.MavenProLightBoldTextView
             android:id="@+id/tv_navi_alphabet_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tv_level_2"
-            android:gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="-15dp"
+            android:gravity="center_vertical|center_horizontal"
             android:singleLine="true"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_level_5" />

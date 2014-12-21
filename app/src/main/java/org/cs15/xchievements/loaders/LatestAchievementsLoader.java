@@ -18,10 +18,10 @@ import java.util.ArrayList;
  * Created by Christian Soler on 11/28/14.
  */
 public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<GameDetails>> {
+    private final String BASE_URL;
     // instance
     private Context mContext;
     private ArrayList<GameDetails> mList;
-    private final String BASE_URL;
     private String mExMessage;
 
     public LatestAchievementsLoader(Context context, ArrayList<GameDetails> list, String url) {

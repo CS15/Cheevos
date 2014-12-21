@@ -18,7 +18,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.adapters.ScreenshotsAdapter;
+import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.Singleton;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,44 +67,19 @@ public class Screenshots extends ActionBarActivity {
                 }
             });
 
-            getData();
+            new Database(this).getGameImages(mGameId, mList, new Database.IGameImages() {
+                @Override
+                public void onSuccess(List<String> list) {
+                    mList = list;
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onError(String error) {
+                    HelperClass.toast(Screenshots.this, error);
+                }
+            });
         }
-    }
-
-    private void getData() {
-
-        String url = "http://www.giantbomb.com/api/game/3030-" + mGameId + "/?api_key=" + getResources().getString(R.string.gb_api) + "&format=json&field_list=images";
-
-        RequestQueue queue = Singleton.getRequestQueque();
-
-        JsonObjectRequest request = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject data) {
-                        try {
-                            int size = data.getJSONObject("results").getJSONArray("images").length();
-
-                            for (int i = 0; i < size; i++) {
-                                mList.add(data.getJSONObject("results").getJSONArray("images").getJSONObject(i).getString("super_url"));
-                            }
-
-                            mAdapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-                            Toast.makeText(Screenshots.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(Screenshots.this, "Error: " + volleyError, Toast.LENGTH_LONG).show();
-            }
-        });
-
-        request.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(request);
     }
 
     @Override

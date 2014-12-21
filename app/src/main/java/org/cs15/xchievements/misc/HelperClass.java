@@ -16,6 +16,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.ViewConfiguration;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.cs15.xchievements.views.ActionBarFont;
 
@@ -157,7 +158,7 @@ public class HelperClass {
      *
      * @param imageView The ImageView to convert to GrayScale.
      */
-    public static void toGrayScale(ImageView imageView){
+    public static void toGrayScale(ImageView imageView) {
         float[] colorMatrix = {
                 0.33f, 0.33f, 0.33f, 0, 0, //red
                 0.33f, 0.33f, 0.33f, 0, 0, //green
@@ -169,8 +170,7 @@ public class HelperClass {
         imageView.setColorFilter(colorFilter);
     }
 
-    public static Bitmap toGrayscale(Bitmap bmpOriginal)
-    {
+    public static Bitmap toGrayscale(Bitmap bmpOriginal) {
         int width, height;
         height = bmpOriginal.getHeight();
         width = bmpOriginal.getWidth();
@@ -184,6 +184,14 @@ public class HelperClass {
         paint.setColorFilter(f);
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
+    }
+
+    public static void toast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void toast(Context context, String message, int length) {
+        Toast.makeText(context, message, length).show();
     }
 
 }

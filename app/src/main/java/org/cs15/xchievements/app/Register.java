@@ -27,6 +27,7 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.Singleton;
 
@@ -62,7 +63,18 @@ public class Register extends Fragment {
                 final String gamertag = etGamertag.getText().toString();
 
                 if (password.equals(passwordConfirm) && password.length() > 5 && !email.equals("") && !gamertag.equals("")) {
-                    registerUser(email, password, gamertag);
+                    new Database().register(email, password, gamertag, new Database.IRegister() {
+                        @Override
+                        public void onSuccess(String message) {
+                            HelperClass.toast(getActivity(), message);
+                            HelperClass.reloadActivity(getActivity());
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            HelperClass.toast(getActivity(), error);
+                        }
+                    });
                 } else {
                     new AlertDialog.Builder(getActivity())
                             .setTitle("Error")
@@ -89,65 +101,9 @@ public class Register extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.menu_login).setVisible(false);
 
-        super.onCreateOptionsMenu(menu,inflater);
-    }
-
-    private void registerUser(String email, String password, String gamertag) {
-        getXboxId(email, password, gamertag);
-    }
-
-    private void getXboxId(final String email, final String password, final String gamertag) {
-
-        String url = "https://xboxapi.com/v2/xuid/" + gamertag;
-
-        RequestQueue queue = Singleton.getRequestQueque();
-
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-
-                ParseUser user = new ParseUser();
-                user.setUsername(email);
-                user.setPassword(password);
-                user.setEmail(email);
-                user.put("gamertag", gamertag);
-                user.put("xboxId", response);
-                user.put("isAnAdmin", false);
-                user.put("postCount", 0);
-
-                user.signUpInBackground(new SignUpCallback() {
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Toast.makeText(getActivity(), "Successfully register and logged in", Toast.LENGTH_LONG).show();
-
-                            HelperClass.reloadActivity(getActivity());
-                        } else {
-                            // log error
-                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Gamertag not found.", Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-AUTH", "c298a7edee735d5559a219b0020a60fb9bb657dc");
-                return params;
-            }
-        };
-
-        request.setRetryPolicy(new DefaultRetryPolicy(20000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(request);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

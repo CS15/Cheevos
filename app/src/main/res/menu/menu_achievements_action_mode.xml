@@ -4,9 +4,9 @@
 
     <item
         android:id="@+id/menu_mark_completed"
-        android:title="@string/mark_completed"
         android:icon="@drawable/ic_action_toggle_check_box"
-        android:visible="true"
-        android:showAsAction="always" />
+        android:showAsAction="always"
+        android:title="@string/mark_completed"
+        android:visible="true" />
 
 </menu>

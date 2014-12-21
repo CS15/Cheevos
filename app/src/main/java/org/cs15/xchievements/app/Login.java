@@ -19,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.misc.HelperClass;
 
 /**
@@ -47,7 +48,18 @@ public class Login extends Fragment {
                 String password = etPassword.getText().toString();
 
                 if (!email.isEmpty() && !password.isEmpty() && password.length() > 5) {
-                    login(email, password);
+                    new Database().login(email, password, new Database.ILogin() {
+                        @Override
+                        public void onSuccess(String message) {
+                            HelperClass.toast(getActivity(), message);
+                            HelperClass.reloadActivity(getActivity());
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            HelperClass.toast(getActivity(), error);
+                        }
+                    });
                 } else {
                     new AlertDialog.Builder(getActivity())
                             .setTitle("Error")
@@ -77,21 +89,5 @@ public class Login extends Fragment {
 
         // return view
         return view;
-    }
-
-    private void login(String email, String password) {
-        ParseUser.logInInBackground(email, password, new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-
-                    Toast.makeText(getActivity(), "Successfully logged in", Toast.LENGTH_LONG).show();
-
-                    HelperClass.reloadActivity(getActivity());
-                } else {
-                    // log error
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 }

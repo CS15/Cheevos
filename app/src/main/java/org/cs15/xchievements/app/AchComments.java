@@ -19,7 +19,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.adapters.AchCommentsAdapter;
+import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.Singleton;
 
 import java.util.ArrayList;
@@ -62,6 +64,8 @@ public class AchComments extends ActionBarActivity {
 
             getSupportActionBar().setTitle(mGameTitle);
 
+            mList = new ArrayList<>();
+
             mIvAch = (NetworkImageView) findViewById(R.id.iv_ach_image);
             mIvAch.setImageUrl(mCoverUrl, Singleton.getImageLoader());
 
@@ -76,25 +80,18 @@ public class AchComments extends ActionBarActivity {
     }
 
     private void getDataFromParse() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
-        query.include("achievement");
-        query.include("user");
-        query.whereEqualTo("achievementId", mAchParseId);
-        query.orderByDescending("createdAt");
-        query.findInBackground(new FindCallback<ParseObject>() {
+        new Database().getAchComments(mAchParseId, new Database.IAchComments() {
             @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null) {
-                    mList = new ArrayList<>();
+            public void onSuccess(List<ParseObject> data) {
+                mAdapter = new AchCommentsAdapter(AchComments.this, data);
 
-                    mAdapter = new AchCommentsAdapter(AchComments.this, parseObjects);
+                mLvContent = (ListView) findViewById(R.id.lv_content);
+                mLvContent.setAdapter(mAdapter);
+            }
 
-                    mLvContent = (ListView) findViewById(R.id.lv_content);
-                    mLvContent.setAdapter(mAdapter);
-
-                } else {
-                    Toast.makeText(AchComments.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
+            @Override
+            public void onError(String error) {
+                HelperClass.toast(AchComments.this, error);
             }
         });
     }

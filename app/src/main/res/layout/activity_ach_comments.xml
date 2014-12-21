@@ -10,8 +10,8 @@
     <org.cs15.xchievements.views.ScrollviewForList
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
