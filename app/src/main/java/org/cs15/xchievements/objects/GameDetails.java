@@ -1,5 +1,7 @@
 package org.cs15.xchievements.objects;
 
+import com.parse.ParseObject;
+
 public class GameDetails {
     // properties
     private int id;
@@ -18,6 +20,15 @@ public class GameDetails {
     private String genre;
     private String summary;
     private int gamerscore;
+    private ParseObject game;
+
+    public ParseObject getGame() {
+        return game;
+    }
+
+    public void setGame(ParseObject game) {
+        this.game = game;
+    }
 
     public int getId() {
         return id;

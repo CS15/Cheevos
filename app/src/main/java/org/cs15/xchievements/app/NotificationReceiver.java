@@ -2,7 +2,6 @@ package org.cs15.xchievements.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.parse.ParsePushBroadcastReceiver;
 

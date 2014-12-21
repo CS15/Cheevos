@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.parse.ParseUser;
-
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.misc.HelperClass;

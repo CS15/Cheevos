@@ -9,21 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.adapters.ScreenshotsAdapter;
 import org.cs15.xchievements.misc.HelperClass;
-import org.cs15.xchievements.misc.Singleton;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
