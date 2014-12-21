@@ -53,6 +53,7 @@ public class AddAchComment extends ActionBarActivity {
             @Override
             public void onSuccess(String message) {
                 HelperClass.toast(AddAchComment.this, message);
+                onBackPressed();
             }
 
             @Override
