@@ -129,18 +129,15 @@
 
             </ScrollView>
 
-            <GridView
+            <ListView
                 android:id="@+id/lv_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:gravity="center"
-                android:horizontalSpacing="@dimen/padding_level_1"
-                android:numColumns="1"
-                android:padding="@dimen/padding_level_1"
                 android:scrollbars="none"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="@dimen/padding_level_1" />
+                android:paddingTop="@dimen/padding_level_0"
+                android:paddingBottom="@dimen/padding_level_0" />
 
         </android.support.v4.widget.SlidingPaneLayout>
 

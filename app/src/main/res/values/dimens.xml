@@ -40,6 +40,7 @@
     <dimen name="divider">1dp</dimen>
 
     <!-- Padding -->
+    <dimen name="padding_level_0">4dp</dimen>
     <dimen name="padding_level_1">8dp</dimen>
     <dimen name="padding_level_2">16dp</dimen>
     <dimen name="padding_level_3">24dp</dimen>

@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -12,6 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.ViewConfiguration;
+import android.widget.ImageView;
 
 import org.cs15.xchievements.views.ActionBarFont;
 
@@ -146,6 +150,40 @@ public class HelperClass {
         // reload activity
         activity.finish();
         activity.startActivity(activity.getIntent());
+    }
+
+    /**
+     * Convert image view to gray scale.
+     *
+     * @param imageView The ImageView to convert to GrayScale.
+     */
+    public static void toGrayScale(ImageView imageView){
+        float[] colorMatrix = {
+                0.33f, 0.33f, 0.33f, 0, 0, //red
+                0.33f, 0.33f, 0.33f, 0, 0, //green
+                0.33f, 0.33f, 0.33f, 0, 0, //blue
+                0, 0, 0, 1, 0    //alpha
+        };
+
+        ColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+        imageView.setColorFilter(colorFilter);
+    }
+
+    public static Bitmap toGrayscale(Bitmap bmpOriginal)
+    {
+        int width, height;
+        height = bmpOriginal.getHeight();
+        width = bmpOriginal.getWidth();
+
+        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        Canvas c = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(f);
+        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        return bmpGrayscale;
     }
 
 }

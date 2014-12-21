@@ -6,6 +6,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.widget.ListViewCompat;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +55,9 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
     private Game mGame;
     private SlidingPaneLayout mSlidingPane;
     private AchievementsAdapter mAdapter;
-    private GridView mLvContent;
+    private ActionMode mActionMode;
+    private ActionModeCallback mActionModeCallback;
+    private ListView mLvContent;
     private String mTitle;
     private String mUrl;
     private String mCoverUrl;
@@ -102,21 +107,38 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
             mAdapter = new AchievementsAdapter(mList, this);
 
-            mLvContent = (GridView) findViewById(R.id.lv_content);
+            mLvContent = (ListView) findViewById(R.id.lv_content);
             mLvContent.setAdapter(mAdapter);
+            mLvContent.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    mLvContent.setChoiceMode(ListViewCompat.CHOICE_MODE_MULTIPLE);
+                    mLvContent.setItemChecked(position, true);
+
+                    if (mActionMode == null) {
+                        mActionModeCallback = new ActionModeCallback();
+                        mActionMode = startSupportActionMode(mActionModeCallback);
+                    }
+
+                    return true;
+                }
+            });
+
             mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(Achievements.this, AchComments.class);
-                    intent.putExtra("coverUrl", mList.get(i).getCoverUrl());
-                    intent.putExtra("title", mList.get(i).getTitle());
-                    intent.putExtra("subtitle", mList.get(i).getDescription());
-                    intent.putExtra("gamerscore", mList.get(i).getGamerscore());
-                    intent.putExtra("gameTitle", mGameDetails.getTitle());
-                    intent.putExtra("achId", mList.get(i).getParseId());
-                    startActivity(intent);
+                    if (mActionMode == null) {
+                        Intent intent = new Intent(Achievements.this, AchComments.class);
+                        intent.putExtra("coverUrl", mList.get(i).getCoverUrl());
+                        intent.putExtra("title", mList.get(i).getTitle());
+                        intent.putExtra("subtitle", mList.get(i).getDescription());
+                        intent.putExtra("gamerscore", mList.get(i).getGamerscore());
+                        intent.putExtra("gameTitle", mGameDetails.getTitle());
+                        intent.putExtra("achId", mList.get(i).getParseId());
+                        startActivity(intent);
 
-                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
+                        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
+                    }
                 }
             });
 
@@ -609,6 +631,63 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             overridePendingTransition(R.anim.anim_null, R.anim.anim_slide_out_right);
         } else {
             mSlidingPane.closePane();
+        }
+    }
+
+    private final class ActionModeCallback implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            MenuInflater inflater = actionMode.getMenuInflater();
+            inflater.inflate(R.menu.menu_achievements_action_mode, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            // Respond to clicks on the actions in the CAB
+            switch (menuItem.getItemId()) {
+                // remove items
+                case R.id.menu_mark_completed:
+                    // remove items
+                    for (int i = mAdapter.getCount(); i >= 0; i--) {
+                        if (mLvContent.getCheckedItemPositions().get(i)) {
+                            mList.remove(i);
+                        }
+                    }
+
+                    // update list
+                    mAdapter.notifyDataSetChanged();
+
+                    // Action picked, so close the CAB
+                    actionMode.finish();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            // Here you can make any necessary updates to the activity when
+            // the CAB is removed. By default, selected items are deselected/unchecked.
+            for (int i = 0; i < mAdapter.getCount(); i++) {
+                mLvContent.setItemChecked(i, false);
+            }
+
+            // set ActionMode to null
+            if (actionMode == mActionMode) {
+                mActionMode = null;
+            }
+
+            // set choice mode to single
+            mLvContent.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
     }
 }
