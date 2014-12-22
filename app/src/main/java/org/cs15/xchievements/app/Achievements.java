@@ -19,6 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
@@ -425,6 +430,17 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                     for (int i = mAdapter.getCount(); i >= 0; i--) {
                         if (mLvContent.getCheckedItemPositions().get(i)) {
                             mList.remove(i);
+
+                            final ParseRelation<ParseObject> relation = UserProfile.getCurrentUser().getRelation("achsCompleted");
+
+                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
+                            query.getInBackground(mList.get(i).getParseId(), new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject parseObject, ParseException e) {
+                                    relation.add(parseObject);
+                                    UserProfile.getCurrentUser().saveInBackground();
+                                }
+                            });
                         }
                     }
 

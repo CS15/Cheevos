@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/activated_item"
     android:paddingBottom="@dimen/padding_level_0"
     android:paddingLeft="@dimen/padding_level_1"
     android:paddingRight="@dimen/padding_level_1"

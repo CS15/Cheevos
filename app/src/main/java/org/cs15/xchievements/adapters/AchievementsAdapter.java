@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.cs15.xchievements.R;
+import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.objects.Achievement;
 
@@ -68,6 +69,8 @@ public class AchievementsAdapter extends BaseAdapter {
         mViewHolder.mTvTitle.setText(mList.get(position).getTitle());
         mViewHolder.mTvDesc.setText(mList.get(position).getDescription());
         mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getCommentsCount()));
+
+        HelperClass.toGrayScale(mViewHolder.mIvCover);
 
         // return view
         return view;
