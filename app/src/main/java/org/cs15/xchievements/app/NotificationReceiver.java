@@ -12,6 +12,6 @@ public class NotificationReceiver extends ParsePushBroadcastReceiver {
         Intent intent1 = new Intent(context, MainActivity.class);
         intent1.putExtras(intent.getExtras());
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        context.startActivity(intent1);
     }
 }
