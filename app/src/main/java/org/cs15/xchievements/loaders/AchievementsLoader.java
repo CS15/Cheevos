@@ -113,7 +113,7 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
                 // get game released dates
 //                for (int i = 0; i < gameInfoData.select("img[width=16]").size(); i++) {
 //                    if (gameInfoData.select("img[width=16]").get(i).attr("alt").equals("US")) {
-//                        mGame.getGameDetails().setUsaRelease(gameInfoData.select("img[alt=US]").get(0).nextSibling().toString().trim());
+//                        mGame.getGameDetails().setOriginalUsaReleasedDate(gameInfoData.select("img[alt=US]").get(0).nextSibling().toString().trim());
 //                    } else if (gameInfoData.select("img[width=16]").get(i).attr("alt").equals("Europe")) {
 //                        mGame.getGameDetails().setEuRelease(gameInfoData.select("img[alt=Europe]").get(0).nextSibling().toString().trim());
 //                    } else if (gameInfoData.select("img[width=16]").get(i).attr("alt").equals("Japan")) {
@@ -121,11 +121,11 @@ public class AchievementsLoader extends AsyncTaskLoader<Game> {
 //                    }
 //                }
 
-//                String usa = mGame.getGameDetails().getUsaRelease();
+//                String usa = mGame.getGameDetails().getOriginalUsaReleasedDate();
 //                String eu = mGame.getGameDetails().getEuRelease();
 //                String jp = mGame.getGameDetails().getJapanRelease();
 //
-//                mGame.getGameDetails().setUsaRelease((usa != null) ? usa : "N/A");
+//                mGame.getGameDetails().setOriginalUsaReleasedDate((usa != null) ? usa : "N/A");
 //                mGame.getGameDetails().setEuRelease((eu != null) ? eu : "N/A");
 //                mGame.getGameDetails().setJapanRelease((jp != null) ? jp : "N/A");
 

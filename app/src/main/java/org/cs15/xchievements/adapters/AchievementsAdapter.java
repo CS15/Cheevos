@@ -70,7 +70,7 @@ public class AchievementsAdapter extends BaseAdapter {
         mViewHolder.mTvDesc.setText(mList.get(position).getDescription());
         mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getCommentsCount()));
 
-        HelperClass.toGrayScale(mViewHolder.mIvCover);
+        //HelperClass.toGrayScale(mViewHolder.mIvCover);
 
         // return view
         return view;

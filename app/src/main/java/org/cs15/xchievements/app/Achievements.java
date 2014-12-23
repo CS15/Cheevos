@@ -39,7 +39,6 @@ import org.cs15.xchievements.objects.GameDetails;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
@@ -192,7 +191,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         String developer = (gameDetails.getDevelopers() != null) ? gameDetails.getDevelopers() : "N/A";
         String publisher = (gameDetails.getPublishers() != null) ? gameDetails.getPublishers() : "N/A";
         String genres = gameDetails.getGenre();
-        String usa = (gameDetails.getUsaRelease() != null) ? new SimpleDateFormat("MMM dd, yyyy").format(new Date(gameDetails.getUsaRelease().replace("-", "/"))) : "N/A";
+        String originalUsaDate = gameDetails.getOriginalUsaReleasedDate();
         String summary = (gameDetails.getSummary() != null) ? gameDetails.getSummary() : "N/A";
 
         // set data
@@ -202,7 +201,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         tvDeveloper.setText(String.format("Developer: %s", developer));
         tvPublisher.setText(String.format("Publisher: %s", publisher));
         tvGenre.setText(String.format("Genre: %s", genres));
-        tvUsDate.setText(String.format("Original Release Date: %s", usa));
+        tvUsDate.setText(String.format("Original Release Date: %s", originalUsaDate));
         tvSummary.setText(String.format("%s", summary));
     }
 

@@ -12,9 +12,7 @@ public class GameDetails {
     private String title;
     private int achievementsAmount;
     private String achievementsPageUrl;
-    private String usaRelease;
-    private String euRelease;
-    private String japanRelease;
+    private String originalUsaReleasedDate;
     private String developers;
     private String publishers;
     private String genre;
@@ -70,28 +68,12 @@ public class GameDetails {
         this.achievementsPageUrl = achievementsPageUrl;
     }
 
-    public String getUsaRelease() {
-        return usaRelease;
+    public String getOriginalUsaReleasedDate() {
+        return originalUsaReleasedDate;
     }
 
-    public void setUsaRelease(String usaRelease) {
-        this.usaRelease = usaRelease;
-    }
-
-    public String getEuRelease() {
-        return euRelease;
-    }
-
-    public void setEuRelease(String euRelease) {
-        this.euRelease = euRelease;
-    }
-
-    public String getJapanRelease() {
-        return japanRelease;
-    }
-
-    public void setJapanRelease(String japanRelease) {
-        this.japanRelease = japanRelease;
+    public void setOriginalUsaReleasedDate(String originalUsaReleasedDate) {
+        this.originalUsaReleasedDate = originalUsaReleasedDate;
     }
 
     public String getDevelopers() {

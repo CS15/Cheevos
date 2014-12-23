@@ -43,7 +43,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -452,7 +454,7 @@ public class Database {
                             String title = (!obj.isNull("name")) ? obj.getString("name") : "N/A";
                             String summary = (!obj.isNull("deck")) ? obj.getString("deck") : "N/A";
                             String developer = (!obj.isNull("developers")) ? obj.getJSONArray("developers").getJSONObject(0).getString("name") : "N/A";
-                            String date = (!obj.isNull("original_release_date")) ? obj.getString("original_release_date") : "N/A";
+                            String date = (!obj.isNull("original_release_date")) ? new SimpleDateFormat("MMM dd, yyyy").format(new Date(obj.getString("original_release_date").replace("-", "/"))) : "N/A";
                             String publisher = "";
                             String genres = "";
 
@@ -487,7 +489,7 @@ public class Database {
                             gameDetails.setDevelopers(developer);
                             gameDetails.setPublishers(publisher);
                             gameDetails.setGenre(genres);
-                            gameDetails.setUsaRelease(date);
+                            gameDetails.setOriginalUsaReleasedDate(date);
                             gameDetails.setSummary(summary);
 
                             callback.onSuccess(gameDetails);
