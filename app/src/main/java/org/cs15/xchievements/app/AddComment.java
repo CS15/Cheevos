@@ -12,8 +12,9 @@ import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
 import org.cs15.xchievements.misc.HelperClass;
 
-public class AddAchComment extends ActionBarActivity {
+public class AddComment extends ActionBarActivity {
     private String mParseAchId;
+    private String mParseNewsFeedId;
     private EditText mEtComment;
 
     @Override
@@ -30,6 +31,7 @@ public class AddAchComment extends ActionBarActivity {
 
         if (getIntent().getExtras() != null) {
             mParseAchId = getIntent().getExtras().getString("parseAchId");
+            mParseNewsFeedId = getIntent().getExtras().getString("parseNewsFeedId");
 
             final Button btSubmit = (Button) findViewById(R.id.bt_submit);
             mEtComment = (EditText) findViewById(R.id.et_comment);
@@ -49,16 +51,16 @@ public class AddAchComment extends ActionBarActivity {
     }
 
     private void addCommentToParse() {
-        new Database().addAchComment(mParseAchId, mEtComment.getText().toString(), new Database.IAddComment() {
+        new Database().addComment(mParseAchId, mParseNewsFeedId, mEtComment.getText().toString(), new Database.IAddComment() {
             @Override
             public void onSuccess(String message) {
-                HelperClass.toast(AddAchComment.this, message);
+                HelperClass.toast(AddComment.this, message);
                 onBackPressed();
             }
 
             @Override
             public void onError(String error) {
-                HelperClass.toast(AddAchComment.this, error);
+                HelperClass.toast(AddComment.this, error);
             }
         });
     }

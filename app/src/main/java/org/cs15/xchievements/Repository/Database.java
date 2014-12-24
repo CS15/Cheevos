@@ -346,11 +346,13 @@ public class Database {
         });
     }
 
-    public void getAchComments(final String achParseId, final IAchComments callback) {
+    public void getComments(final String achParseId, final String newsFeedId, final IAchComments callback) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
         query.include("achievement");
         query.include("user");
+        query.include("newsFeed");
         query.whereEqualTo("achievementId", achParseId);
+        query.whereEqualTo("newsFeedId", newsFeedId);
         query.orderByDescending("createdAt");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -364,15 +366,22 @@ public class Database {
         });
     }
 
-    public void addAchComment(final String parseAchId, final String comment, final IAddComment callback) {
-        ParseObject user = ParseObject.createWithoutData("_User", ParseUser.getCurrentUser().getObjectId());
-        ParseObject ach = ParseObject.createWithoutData("Achievements", parseAchId);
+    public void addComment(final String parseAchId, final String parseNewsFeedId, final String comment, final IAddComment callback) {
 
         ParseObject obj = new ParseObject("Comments");
-        obj.put("user", user);
-        obj.put("achievement", ach);
-        obj.put("achievementId", parseAchId);
+        obj.put("user", ParseObject.createWithoutData("_User", ParseUser.getCurrentUser().getObjectId()));
         obj.put("comment", comment);
+
+        if (parseAchId != null) {
+            obj.put("achievement", ParseObject.createWithoutData("Achievements", parseAchId));
+            obj.put("achievementId", parseAchId);
+        }
+
+        if (parseNewsFeedId != null ) {
+            obj.put("newsFeed", ParseObject.createWithoutData("NewsFeed", parseNewsFeedId));
+            obj.put("newsFeedId", parseNewsFeedId);
+        }
+
         obj.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -382,27 +391,51 @@ public class Database {
                     ParseUser.getCurrentUser().saveInBackground();
 
                     // update counter
-                    ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Achievements");
-                    parseQuery.getInBackground(parseAchId, new GetCallback<ParseObject>() {
-                        public void done(ParseObject parseObject, ParseException e) {
-                            if (e == null) {
-                                parseObject.increment("commentCounts");
+                    if (parseAchId != null) {
+                        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Achievements");
+                        parseQuery.getInBackground(parseAchId, new GetCallback<ParseObject>() {
+                            public void done(ParseObject parseObject, ParseException e) {
+                                if (e == null) {
+                                    parseObject.increment("commentCounts");
 
-                                parseObject.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        if (e == null) {
-                                            callback.onSuccess("Successfully added comment");
-                                        } else {
-                                            callback.onError(e.getMessage());
+                                    parseObject.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null) {
+                                                callback.onSuccess("Successfully added comment");
+                                            } else {
+                                                callback.onError(e.getMessage());
+                                            }
                                         }
-                                    }
-                                });
-                            } else {
-                                callback.onError(e.getMessage());
+                                    });
+                                } else {
+                                    callback.onError(e.getMessage());
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else if (parseNewsFeedId != null) {
+                        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("NewsFeed");
+                        parseQuery.getInBackground(parseNewsFeedId, new GetCallback<ParseObject>() {
+                            public void done(ParseObject parseObject, ParseException e) {
+                                if (e == null) {
+                                    parseObject.increment("commentCounts");
+
+                                    parseObject.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null) {
+                                                callback.onSuccess("Successfully added comment");
+                                            } else {
+                                                callback.onError(e.getMessage());
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    callback.onError(e.getMessage());
+                                }
+                            }
+                        });
+                    }
                 } else {
                     callback.onError(e.getMessage());
                 }
@@ -720,6 +753,22 @@ public class Database {
         });
     }
 
+    public void getNewsFeed(final INewsFeeds callback) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("NewsFeed");
+        query.orderByDescending("createdAt");
+        query.include("game");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    callback.onSuccess(parseObjects);
+                } else {
+                    callback.onError(e.getMessage());
+                }
+            }
+        });
+    }
+
     /*
      * Database Callbacks
      */
@@ -808,6 +857,11 @@ public class Database {
     public interface ISaveAchievements {
         void onSuccess(String parseGameId, String message);
 
+        void onError(String error);
+    }
+
+    public interface INewsFeeds {
+        void onSuccess(List<ParseObject> data);
         void onError(String error);
     }
 

@@ -16,25 +16,26 @@ import com.parse.ParseUser;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
-import org.cs15.xchievements.adapters.AchCommentsAdapter;
+import org.cs15.xchievements.adapters.CommentsAdapter;
 import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AchComments extends ActionBarActivity {
+public class Comments extends ActionBarActivity {
     private NetworkImageView mIvAch;
     private TextView mTvAchTitle;
     private TextView mTvAchSubTitle;
     private ListView mLvContent;
     private List<ParseObject> mList;
-    private AchCommentsAdapter mAdapter;
+    private CommentsAdapter mAdapter;
     private String mCoverUrl;
     private String mGameTitle;
     private String mTitle;
     private String mSubTitle;
     private String mAchParseId;
+    private String mNewsFeedId;
     private int mGamerscore;
 
 
@@ -57,6 +58,7 @@ public class AchComments extends ActionBarActivity {
             mAchParseId = getIntent().getExtras().getString("achId");
             mGamerscore = getIntent().getExtras().getInt("gamerscore");
             mGameTitle = getIntent().getExtras().getString("gameTitle");
+            mNewsFeedId = getIntent().getExtras().getString("newsFeedId");
 
             getSupportActionBar().setTitle(mGameTitle);
 
@@ -76,10 +78,10 @@ public class AchComments extends ActionBarActivity {
     }
 
     private void getDataFromParse() {
-        new Database().getAchComments(mAchParseId, new Database.IAchComments() {
+        new Database().getComments(mAchParseId, mNewsFeedId, new Database.IAchComments() {
             @Override
             public void onSuccess(List<ParseObject> data) {
-                mAdapter = new AchCommentsAdapter(AchComments.this, data);
+                mAdapter = new CommentsAdapter(Comments.this, data);
 
                 mLvContent = (ListView) findViewById(R.id.lv_content);
                 mLvContent.setAdapter(mAdapter);
@@ -87,7 +89,7 @@ public class AchComments extends ActionBarActivity {
 
             @Override
             public void onError(String error) {
-                HelperClass.toast(AchComments.this, error);
+                HelperClass.toast(Comments.this, error);
             }
         });
     }
@@ -122,8 +124,9 @@ public class AchComments extends ActionBarActivity {
                 break;
 
             case R.id.menu_add_comment:
-                Intent intent = new Intent(AchComments.this, AddAchComment.class);
+                Intent intent = new Intent(Comments.this, AddComment.class);
                 intent.putExtra("parseAchId", mAchParseId);
+                intent.putExtra("parseNewsFeedId", mNewsFeedId);
 
                 startActivity(intent);
 

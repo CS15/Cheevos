@@ -36,9 +36,7 @@ import org.cs15.xchievements.objects.Achievement;
 import org.cs15.xchievements.objects.Game;
 import org.cs15.xchievements.objects.GameDetails;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Achievements extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Game> {
@@ -120,7 +118,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     if (mActionMode == null) {
-                        Intent intent = new Intent(Achievements.this, AchComments.class);
+                        Intent intent = new Intent(Achievements.this, Comments.class);
                         intent.putExtra("coverUrl", mList.get(i).getCoverUrl());
                         intent.putExtra("title", mList.get(i).getTitle());
                         intent.putExtra("subtitle", mList.get(i).getDescription());

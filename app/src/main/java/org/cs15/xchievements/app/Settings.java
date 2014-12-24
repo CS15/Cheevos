@@ -1,5 +1,6 @@
 package org.cs15.xchievements.app;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,22 @@ public class Settings extends Fragment {
                 }
             });
         }
+
+        try {
+            int apkVersionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
+            String apkVersionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+
+            TextView tvVersionName = (TextView) view.findViewById(R.id.tv_version_name);
+            tvVersionName.setText(String.format("App Version: %s", apkVersionName));
+
+            TextView tvVersionCode = (TextView) view.findViewById(R.id.tv_version_code);
+            tvVersionCode.setText(String.format("Build Version: %s", apkVersionCode));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
 
         return view;
     }

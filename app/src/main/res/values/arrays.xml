@@ -3,6 +3,7 @@
     <!-- Drawer arrays -->
     <string-array name="drawer_titles">
         <item>My Favorites</item>
+        <item>News Feed</item>
         <item>Latest Achievements</item>
         <item>Games</item>
         <item>Settings</item>

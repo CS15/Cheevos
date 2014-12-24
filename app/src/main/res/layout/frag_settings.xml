@@ -4,16 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/white"
     android:padding="@dimen/padding_level_3">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_level_1"
+        android:layout_marginTop="@dimen/margin_level_2"
+        android:gravity="center_vertical"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/tv_level_5"
+        android:text="@string/profile"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/section_divider"
+        android:background="@android:color/darker_gray" />
 
     <org.cs15.xchievements.views.MavenProLightBoldTextView
         android:id="@+id/tv_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_level_2"
+        android:layout_marginTop="@dimen/margin_level_2"
         android:gravity="center_vertical"
         android:text="@string/logout"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/tv_level_4"
         android:visibility="gone" />
 
@@ -21,7 +40,54 @@
         android:id="@+id/v_first"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:background="@android:color/white"
+        android:background="@android:color/darker_gray"
         android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_level_1"
+        android:layout_marginTop="@dimen/margin_level_2"
+        android:gravity="center_vertical"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/tv_level_5"
+        android:text="@string/about"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/section_divider"
+        android:background="@android:color/darker_gray" />
+
+    <org.cs15.xchievements.views.MavenProLightBoldTextView
+        android:id="@+id/tv_version_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_level_2"
+        android:layout_marginTop="@dimen/margin_level_2"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/tv_level_4" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@android:color/darker_gray" />
+
+    <org.cs15.xchievements.views.MavenProLightBoldTextView
+        android:id="@+id/tv_version_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_level_2"
+        android:layout_marginTop="@dimen/margin_level_2"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/tv_level_4" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>

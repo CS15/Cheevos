@@ -25,7 +25,9 @@
     <dimen name="avatar_image">96dp</dimen>
     <dimen name="game_list_size">150dp</dimen>
     <dimen name="ach_image_size">200dp</dimen>
+    <dimen name="news_feed_image_size">200dp</dimen>
     <dimen name="user_avatar_size">48dp</dimen>
+    <dimen name="gamerscore_logo_size">16dp</dimen>
 
 
     <!-- TextView Sizes -->
@@ -38,6 +40,7 @@
 
     <!-- Dividers -->
     <dimen name="divider">1dp</dimen>
+    <dimen name="section_divider">2dp</dimen>
 
     <!-- Padding -->
     <dimen name="padding_level_0">4dp</dimen>

@@ -39,7 +39,7 @@ public class BaseActivity extends ActionBarActivity {
     private String[] mDrawerTitles;
     private boolean mUserLearnedDrawer;
     private boolean displayMenu;
-    private int mCurrentSelectedPosition = 1;
+    private int mCurrentSelectedPosition = 2;
     private ActionBarDrawerToggle mDrawerToggle;
     private Fragment mFrag;
     private DrawerLayout mDrawerLayout;
@@ -113,18 +113,28 @@ public class BaseActivity extends ActionBarActivity {
                 }
 
                 break;
+
             case 1:
+                mFrag = new NewsFeed();
+                fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                fragTrans.replace(R.id.container, mFrag);
+                fragTrans.commit();
+                break;
+
+            case 2:
                 mFrag = new LatestAchievements();
                 fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragTrans.replace(R.id.container, mFrag);
                 fragTrans.commit();
                 break;
-            case 2:
+
+            case 3:
                 Intent intent = new Intent(BaseActivity.this, GameList.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
                 break;
-            case 3:
+
+            case 4:
                 mFrag = new Settings();
                 fragTrans.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragTrans.replace(R.id.container, mFrag);

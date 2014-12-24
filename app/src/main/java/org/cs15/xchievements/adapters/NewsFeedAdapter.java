@@ -8,19 +8,19 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.parse.ParseObject;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.Singleton;
 import org.cs15.xchievements.objects.Achievement;
 
 import java.util.List;
 
-public class AchievementsAdapter extends BaseAdapter {
-    private List<Achievement> mList;
+public class NewsFeedAdapter extends BaseAdapter {
+    private List<ParseObject> mList;
     private Context mContext;
 
-    public AchievementsAdapter(List<Achievement> data, Context context) {
+    public NewsFeedAdapter(List<ParseObject> data, Context context) {
         mList = data;
         mContext = context;
     }
@@ -49,7 +49,7 @@ public class AchievementsAdapter extends BaseAdapter {
         if (view == null) {
             // inflate layout
             LayoutInflater viewInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = viewInflater.inflate(R.layout.row_achievements, null);
+            view = viewInflater.inflate(R.layout.row_news_feed, null);
 
             // view holder
             mViewHolder = new ViewHolder();
@@ -58,7 +58,6 @@ public class AchievementsAdapter extends BaseAdapter {
             mViewHolder.mTvTitle = (TextView) view.findViewById(R.id.tv_ach_title);
             mViewHolder.mTvDesc = (TextView) view.findViewById(R.id.tv_ach_subtitle);
             mViewHolder.mTvCommentsCount = (TextView) view.findViewById(R.id.tv_comment_counts);
-            mViewHolder.mTvGamerscore = (TextView) view.findViewById(R.id.tv_gamerscore);
 
             // set tag
             view.setTag(mViewHolder);
@@ -66,13 +65,10 @@ public class AchievementsAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        mViewHolder.mIvCover.setImageUrl(mList.get(position).getCoverUrl(), Singleton.getImageLoader());
-        mViewHolder.mTvTitle.setText(mList.get(position).getTitle());
-        mViewHolder.mTvDesc.setText(mList.get(position).getDescription());
-        mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getCommentsCount()));
-        mViewHolder.mTvGamerscore.setText(String.format("%s", mList.get(position).getGamerscore()));
-
-        //HelperClass.toGrayScale(mViewHolder.mIvCover);
+        mViewHolder.mIvCover.setImageUrl(mList.get(position).getString("imageUrl"), Singleton.getImageLoader());
+        mViewHolder.mTvTitle.setText(mList.get(position).getString("title"));
+        mViewHolder.mTvDesc.setText(mList.get(position).getString("subtitle"));
+        mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getInt("commentCounts")));
 
         // return view
         return view;
@@ -83,6 +79,5 @@ public class AchievementsAdapter extends BaseAdapter {
         TextView mTvTitle;
         TextView mTvDesc;
         TextView mTvCommentsCount;
-        TextView mTvGamerscore;
     }
 }

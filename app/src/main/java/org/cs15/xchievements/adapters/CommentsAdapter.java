@@ -15,12 +15,12 @@ import org.cs15.xchievements.views.RoundedImageLoader;
 
 import java.util.List;
 
-public class AchCommentsAdapter extends BaseAdapter {
+public class CommentsAdapter extends BaseAdapter {
     // instance variables
     private Context mContext;
     private List<ParseObject> mData;
 
-    public AchCommentsAdapter(Context context, List<ParseObject> data) {
+    public CommentsAdapter(Context context, List<ParseObject> data) {
         this.mContext = context;
         this.mData = data;
     }
