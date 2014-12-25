@@ -49,7 +49,7 @@ public class CommentsAdapter extends BaseAdapter {
         if (view == null) {
             // inflate layout
             LayoutInflater viewInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = viewInflater.inflate(R.layout.row_ach_comments, null);
+            view = viewInflater.inflate(R.layout.row_comments, null);
 
             // view holder
             mViewHolder = new ViewHolder();
