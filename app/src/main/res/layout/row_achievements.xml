@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/padding_level_1"
     android:paddingTop="@dimen/padding_level_0">
 
-    <com.android.volley.toolbox.NetworkImageView
+    <org.cs15.xchievements.misc.XchievementsImageLoader
         android:id="@+id/iv_ach_cover"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ach_image_size"

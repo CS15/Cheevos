@@ -1,93 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/white"
-    android:padding="@dimen/padding_level_3">
+    android:padding="@dimen/padding_level_1"
+    android:clipToPadding="false"
+    android:scrollbars="none">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_level_1"
-        android:layout_marginTop="@dimen/margin_level_2"
-        android:gravity="center_vertical"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/tv_level_5"
-        android:text="@string/profile"/>
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/section_divider"
-        android:background="@android:color/darker_gray" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_1"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:gravity="center_vertical"
+            android:text="@string/profile"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tv_level_5"
+            android:textStyle="bold" />
 
-    <org.cs15.xchievements.views.MavenProLightBoldTextView
-        android:id="@+id/tv_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_level_2"
-        android:layout_marginTop="@dimen/margin_level_2"
-        android:gravity="center_vertical"
-        android:text="@string/logout"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/tv_level_4"
-        android:visibility="gone" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/section_divider"
+            android:background="@android:color/darker_gray" />
 
-    <View
-        android:id="@+id/v_first"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@android:color/darker_gray"
-        android:visibility="gone" />
+        <org.cs15.xchievements.views.MavenProLightBoldTextView
+            android:id="@+id/tv_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_2"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:gravity="center_vertical"
+            android:text="@string/logout"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tv_level_4"
+            android:visibility="gone" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_level_1"
-        android:layout_marginTop="@dimen/margin_level_2"
-        android:gravity="center_vertical"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/tv_level_5"
-        android:text="@string/about"/>
+        <View
+            android:id="@+id/v_first"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/section_divider"
-        android:background="@android:color/darker_gray" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_1"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:gravity="center_vertical"
+            android:text="@string/about"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tv_level_5"
+            android:textStyle="bold" />
 
-    <org.cs15.xchievements.views.MavenProLightBoldTextView
-        android:id="@+id/tv_version_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_level_2"
-        android:layout_marginTop="@dimen/margin_level_2"
-        android:gravity="center_vertical"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/tv_level_4" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/section_divider"
+            android:background="@android:color/darker_gray" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@android:color/darker_gray" />
+        <org.cs15.xchievements.views.MavenProLightBoldTextView
+            android:id="@+id/tv_version_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_2"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tv_level_4" />
 
-    <org.cs15.xchievements.views.MavenProLightBoldTextView
-        android:id="@+id/tv_version_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_level_2"
-        android:layout_marginTop="@dimen/margin_level_2"
-        android:gravity="center_vertical"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/tv_level_4" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@android:color/darker_gray" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@android:color/darker_gray" />
+        <org.cs15.xchievements.views.MavenProLightBoldTextView
+            android:id="@+id/tv_version_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_2"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tv_level_4" />
 
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@android:color/darker_gray" />
+
+        <org.cs15.xchievements.views.MavenProLightBoldTextView
+            android:id="@+id/tv_terms_of_use"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_2"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tv_level_4" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
+</ScrollView>

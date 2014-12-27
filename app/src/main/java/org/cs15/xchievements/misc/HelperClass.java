@@ -170,6 +170,18 @@ public class HelperClass {
         imageView.setColorFilter(colorFilter);
     }
 
+    public static void toColorScale(ImageView imageView) {
+        float[] colorMatrix = {
+                0.33f, 0.33f, 0.33f, 0, 100 - 255, //red
+                0.33f, 0.33f, 0.33f, 0, 100 - 255, //green
+                0.33f, 0.33f, 0.33f, 0, 100 - 255, //blue
+                0, 0, 0, 1, 0    //alpha
+        };
+
+        ColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+        imageView.setColorFilter(colorFilter);
+    }
+
     public static Bitmap toGrayscale(Bitmap bmpOriginal) {
         int width, height;
         height = bmpOriginal.getHeight();

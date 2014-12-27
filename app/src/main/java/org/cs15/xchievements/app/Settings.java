@@ -1,6 +1,8 @@
 package org.cs15.xchievements.app;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,6 +50,15 @@ public class Settings extends Fragment {
 
             TextView tvVersionCode = (TextView) view.findViewById(R.id.tv_version_code);
             tvVersionCode.setText(String.format("Build Version: %s", apkVersionCode));
+
+            TextView tvTermsOfUse = (TextView) view.findViewById(R.id.tv_terms_of_use);
+            tvTermsOfUse.setText("Terms of Use");
+            tvTermsOfUse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.xchievements.com/legal")));
+                }
+            });
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

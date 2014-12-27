@@ -24,6 +24,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+import com.parse.SaveCallback;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
@@ -419,34 +420,38 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        public boolean onActionItemClicked(final ActionMode actionMode, MenuItem menuItem) {
             // Respond to clicks on the actions in the CAB
             switch (menuItem.getItemId()) {
                 // remove items
                 case R.id.menu_mark_completed:
+                    List<Achievement> list = new ArrayList<>();
                     // remove items
                     for (int i = mAdapter.getCount(); i >= 0; i--) {
                         if (mLvContent.getCheckedItemPositions().get(i)) {
-                            mList.remove(i);
-
-                            final ParseRelation<ParseObject> relation = UserProfile.getCurrentUser().getRelation("achsCompleted");
-
-                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
-                            query.getInBackground(mList.get(i).getParseId(), new GetCallback<ParseObject>() {
-                                @Override
-                                public void done(ParseObject parseObject, ParseException e) {
-                                    relation.add(parseObject);
-                                    UserProfile.getCurrentUser().saveInBackground();
-                                }
-                            });
+                            list.add(mList.get(i));
                         }
                     }
 
-                    // update list
-                    mAdapter.notifyDataSetChanged();
+                    new Database().addToAchCompleted(list, new Database.IAddAchComplete() {
+                        @Override
+                        public void onSuccess(List<Achievement> data, String message) {
+                            mList = data;
+                            mAdapter = new AchievementsAdapter(mList, Achievements.this);
+                            mLvContent.setAdapter(mAdapter);
 
-                    // Action picked, so close the CAB
-                    actionMode.finish();
+                            // Action picked, so close the CAB
+                            actionMode.finish();
+
+                            HelperClass.toast(Achievements.this, message);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            HelperClass.toast(Achievements.this, error);
+                        }
+                    });
+
                     return true;
 
                 default:

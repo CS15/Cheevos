@@ -10,6 +10,15 @@ public class Achievement {
     private int gamerscore;
     private int commentsCount;
     private String parseId;
+    private boolean isCompleted;
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
 
     public int getGameId() {
         return gameId;
