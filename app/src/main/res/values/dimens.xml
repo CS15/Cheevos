@@ -55,6 +55,7 @@
     <dimen name="padding_level_9">80dp</dimen>
 
     <!-- Margins -->
+    <dimen name="margin_level_0">4dp</dimen>
     <dimen name="margin_level_1">8dp</dimen>
     <dimen name="margin_level_2">16dp</dimen>
     <dimen name="margin_level_3">24dp</dimen>
@@ -67,4 +68,5 @@
 
     <!-- misc -->
     <dimen name="spl_offset">100dp</dimen>
+    <dimen name="done_logo_size">28dp</dimen>
 </resources>

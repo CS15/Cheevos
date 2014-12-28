@@ -256,23 +256,38 @@ public class Database {
 
     public void getFavorites(final ArrayList<GameDetails> list, final IFavorites callback) {
         // get data from database
-        ParseQuery<ParseObject> parseObject = UserProfile.getCurrentUser().getRelation("favorites").getQuery();
-        parseObject.orderByAscending("title");
-        parseObject.findInBackground(new FindCallback<ParseObject>() {
+        ParseQuery<ParseObject> favoritesRelation = UserProfile.getCurrentUser().getRelation("favorites").getQuery();
+        favoritesRelation.orderByAscending("title");
+        favoritesRelation.findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> data, ParseException e) {
                 if (e == null) {
                     list.clear();
 
-                    for (ParseObject g : data) {
-                        GameDetails game = new GameDetails();
-                        game.setId(g.getInt("gameId"));
-                        game.setCoverUrl(g.getString("coverUrl"));
-                        game.setTitle(g.getString("title"));
-                        game.setAchievementsAmount(g.getInt("achsAmount"));
-                        list.add(game);
-                    }
+                    for (int i = 0; i < data.size(); i++) {
+                        final int finalI = i;
+                        ParseQuery<ParseObject> achsCompletedRelation = UserProfile.getCurrentUser().getRelation("achsCompleted").getQuery();
+                        achsCompletedRelation.whereEqualTo("gameId", data.get(i).getInt("gameId"));
+                        achsCompletedRelation.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> parseObjects, ParseException e) {
+                                if (e == null) {
+                                    GameDetails game = new GameDetails();
+                                    game.setId(data.get(finalI).getInt("gameId"));
+                                    game.setCoverUrl(data.get(finalI).getString("coverUrl"));
+                                    game.setTitle(data.get(finalI).getString("title"));
+                                    game.setAchievementsAmount(data.get(finalI).getInt("achsAmount"));
+                                    game.setAchievementsAmountCompleted(parseObjects.size());
+                                    list.add(game);
 
-                    callback.onSuccess(list);
+                                    if (finalI == (data.size() - 1)) {
+                                        callback.onSuccess(list);
+                                    }
+                                } else {
+                                    callback.onError(e.getMessage());
+                                }
+                            }
+                        });
+                    }
                 } else {
                     callback.onError(e.getMessage());
                 }

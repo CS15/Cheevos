@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cs15.xchievements.R;
@@ -54,6 +55,7 @@ public class AchievementsAdapter extends ArrayAdapter {
             mViewHolder = new ViewHolder();
             assert view != null;
             mViewHolder.mIvCover = (XchievementsImageLoader) view.findViewById(R.id.iv_ach_cover);
+            mViewHolder.mIvDone = (ImageView) view.findViewById(R.id.iv_ach_done);
             mViewHolder.mTvTitle = (TextView) view.findViewById(R.id.tv_ach_title);
             mViewHolder.mTvDesc = (TextView) view.findViewById(R.id.tv_ach_subtitle);
             mViewHolder.mTvCommentsCount = (TextView) view.findViewById(R.id.tv_comment_counts);
@@ -71,12 +73,19 @@ public class AchievementsAdapter extends ArrayAdapter {
         mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getCommentsCount()));
         mViewHolder.mTvGamerscore.setText(String.format("%s", mList.get(position).getGamerscore()));
 
+        if(mList.get(position).isCompleted()) {
+            mViewHolder.mIvDone.setImageResource(R.drawable.ic_action_done);
+        } else {
+            mViewHolder.mIvDone.setImageResource(R.drawable.ic_action_undone);
+        }
+
         // return view
         return view;
     }
 
     class ViewHolder {
         XchievementsImageLoader mIvCover;
+        ImageView mIvDone;
         TextView mTvTitle;
         TextView mTvDesc;
         TextView mTvCommentsCount;

@@ -1,5 +1,6 @@
 package org.cs15.xchievements.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.adapters.FavoritesAdapter;
 import org.cs15.xchievements.adapters.LatestAchievementsAdapter;
 import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.objects.GameDetails;
@@ -20,16 +22,15 @@ import java.util.ArrayList;
 
 public class Favorites extends Fragment {
     private ListView mLvContent;
-    private LatestAchievementsAdapter mAdapter;
+    private FavoritesAdapter mAdapter;
     private ArrayList<GameDetails> mList;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_favorites, container, false);
 
         mList = new ArrayList<>();
-        mAdapter = new LatestAchievementsAdapter(getActivity(), mList);
+        mAdapter = new FavoritesAdapter(getActivity(), mList);
         mLvContent = (ListView) view.findViewById(R.id.lv_content);
         mLvContent.setAdapter(mAdapter);
         mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,5 +76,10 @@ public class Favorites extends Fragment {
         super.onResume();
 
         getFavorites();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

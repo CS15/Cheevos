@@ -10,15 +10,24 @@ public class GameDetails {
     private String coverUrl;
     private String icoUrl;
     private String title;
-    private int achievementsAmount;
     private String achievementsPageUrl;
     private String originalUsaReleasedDate;
     private String developers;
     private String publishers;
     private String genre;
     private String summary;
+    private int achievementsAmount;
+    private int achievementsAmountCompleted;
     private int gamerscore;
     private ParseObject game;
+
+    public int getAchievementsAmountCompleted() {
+        return achievementsAmountCompleted;
+    }
+
+    public void setAchievementsAmountCompleted(int achievementsAmountCompleted) {
+        this.achievementsAmountCompleted = achievementsAmountCompleted;
+    }
 
     public ParseObject getGame() {
         return game;
