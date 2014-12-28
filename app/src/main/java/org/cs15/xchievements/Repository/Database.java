@@ -550,36 +550,52 @@ public class Database {
             public void done(final List<ParseObject> data, ParseException e) {
                 if (e == null) {
                     if (data.size() > 0) {
-                        // set data data
+                        if (UserProfile.getCurrentUser() != null) {
 
-                        // get users completed achievements
-                        final ParseQuery<ParseObject> relation = UserProfile.getCurrentUser().getRelation("achsCompleted").getQuery();
-                        relation.whereEqualTo("gameId", gameId);
-                        relation.findInBackground(new FindCallback<ParseObject>() {
-                            @Override
-                            public void done(List<ParseObject> parseObjects, ParseException e) {
-                                for(ParseObject achObj : data){
-                                    Achievement ach = new Achievement();
-                                    ach.setGameId(achObj.getInt("gameId"));
-                                    ach.setCoverUrl(achObj.getString("coverUrl"));
-                                    ach.setTitle(achObj.getString("title"));
-                                    ach.setDescription(achObj.getString("description"));
-                                    ach.setGamerscore(achObj.getInt("gamerscore"));
-                                    ach.setCommentsCount(achObj.getInt("commentCounts"));
-                                    ach.setParseId(achObj.getObjectId());
-                                    ach.setCompleted(false);
+                            // get users completed achievements
+                            final ParseQuery<ParseObject> relation = UserProfile.getCurrentUser().getRelation("achsCompleted").getQuery();
+                            relation.whereEqualTo("gameId", gameId);
+                            relation.findInBackground(new FindCallback<ParseObject>() {
+                                @Override
+                                public void done(List<ParseObject> parseObjects, ParseException e) {
+                                    for(ParseObject achObj : data){
+                                        Achievement ach = new Achievement();
+                                        ach.setGameId(achObj.getInt("gameId"));
+                                        ach.setCoverUrl(achObj.getString("coverUrl"));
+                                        ach.setTitle(achObj.getString("title"));
+                                        ach.setDescription(achObj.getString("description"));
+                                        ach.setGamerscore(achObj.getInt("gamerscore"));
+                                        ach.setCommentsCount(achObj.getInt("commentCounts"));
+                                        ach.setParseId(achObj.getObjectId());
+                                        ach.setCompleted(false);
 
-                                    for(ParseObject obj : parseObjects){
-                                        if(achObj.getObjectId().equals(obj.getObjectId())){
-                                            ach.setCompleted(true);
+                                        for(ParseObject obj : parseObjects){
+                                            if(achObj.getObjectId().equals(obj.getObjectId())){
+                                                ach.setCompleted(true);
+                                            }
                                         }
+
+                                        list.add(ach);
                                     }
 
-                                    list.add(ach);
+                                    callback.onSuccess(list);
                                 }
-                                callback.onSuccess(list);
+                            });
+                        } else {
+                            for(ParseObject achObj : data){
+                                Achievement ach = new Achievement();
+                                ach.setGameId(achObj.getInt("gameId"));
+                                ach.setCoverUrl(achObj.getString("coverUrl"));
+                                ach.setTitle(achObj.getString("title"));
+                                ach.setDescription(achObj.getString("description"));
+                                ach.setGamerscore(achObj.getInt("gamerscore"));
+                                ach.setCommentsCount(achObj.getInt("commentCounts"));
+                                ach.setParseId(achObj.getObjectId());
+                                ach.setCompleted(false);
+                                list.add(ach);
                             }
-                        });
+                            callback.onSuccess(list);
+                        }
                     } else {
                         callback.onError("No achievements founded");
                     }
@@ -783,42 +799,74 @@ public class Database {
         });
     }
 
-    public void addToAchCompleted(final List<Achievement> list, final IAddAchComplete callback){
+    public void addToAchCompleted(final List<Achievement> mainList, final List<Achievement> list, final IAddAchComplete callback){
         final ParseRelation<ParseObject> relation = UserProfile.getCurrentUser().getRelation("achsCompleted");
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
+        query.whereEqualTo("gameId", list.get(0).getGameId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e == null) {
+                    for (ParseObject obj : parseObjects) {
+
+                    }
+
+                    callback.onSuccess(mainList, "Game Achievements size: " + parseObjects.size());
+                } else {
+                    callback.onError(e.getMessage());
+                }
+            }
+        });
 
         for (int i = 0; i < list.size(); i++) {
             final int finalI = i;
 
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
-            query.getInBackground(list.get(i).getParseId(), new GetCallback<ParseObject>() {
-                @Override
-                public void done(ParseObject parseObject, ParseException e) {
-                    relation.add(parseObject);
+//            ParseQuery<ParseObject> query = ParseQuery.getQuery("Achievements");
+//            query.whereEqualTo("gameId", list.get(0).getGameId());
+//            query.findInBackground(new FindCallback<ParseObject>() {
+//                @Override
+//                public void done(List<ParseObject> parseObjects, ParseException e) {
+//                    if(e == null) {
+//
+//                    } else {
+//                        callback.onError(e.getMessage());
+//                    }
+//                }
+//            });
 
-                    UserProfile.getCurrentUser().saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null) {
-                                if (finalI == (list.size() - 1)) {
-                                    getAchievements(list.get(0).getGameId(), new ArrayList<Achievement>(), new IAchievements() {
-                                        @Override
-                                        public void onSuccess(List<Achievement> data) {
-                                            callback.onSuccess(data, "Achievements list updated");
-                                        }
 
-                                        @Override
-                                        public void onError(String error) {
-                                            callback.onError(error);
-                                        }
-                                    });
-                                }
-                            } else {
-                                callback.onError(e.getMessage());
-                            }
-                        }
-                    });
-                }
-            });
+
+
+//            query.getInBackground(list.get(i).getParseId(), new GetCallback<ParseObject>() {
+//                @Override
+//                public void done(ParseObject parseObject, ParseException e) {
+//                    relation.add(parseObject);
+//
+//                    UserProfile.getCurrentUser().saveInBackground(new SaveCallback() {
+//                        @Override
+//                        public void done(ParseException e) {
+//                            if (e == null) {
+//                                if (finalI == (list.size() - 1)) {
+//                                    getAchievements(list.get(0).getGameId(), mainList, new IAchievements() {
+//                                        @Override
+//                                        public void onSuccess(List<Achievement> data) {
+//                                            callback.onSuccess(data, "Achievements list updated");
+//                                        }
+//
+//                                        @Override
+//                                        public void onError(String error) {
+//                                            callback.onError(error);
+//                                        }
+//                                    });
+//                                }
+//                            } else {
+//                                callback.onError(e.getMessage());
+//                            }
+//                        }
+//                    });
+//                }
+//            });
         }
     }
 

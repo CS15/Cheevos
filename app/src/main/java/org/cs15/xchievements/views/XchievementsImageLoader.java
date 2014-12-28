@@ -1,4 +1,4 @@
-package org.cs15.xchievements.misc;
+package org.cs15.xchievements.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.android.volley.toolbox.NetworkImageView;
+
+import org.cs15.xchievements.misc.HelperClass;
 
 public class XchievementsImageLoader extends NetworkImageView {
     private String mUrl;
@@ -122,7 +124,7 @@ public class XchievementsImageLoader extends NetworkImageView {
                             Bitmap bitmap = response.getBitmap();
 
                             if (mIsGrayScale) {
-                                bitmap = HelperClass.toGrayscale(bitmap);
+                                bitmap = HelperClass.toGrayScale(bitmap);
                             }
 
                             setImageBitmap(bitmap);

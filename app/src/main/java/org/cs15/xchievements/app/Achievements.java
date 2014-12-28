@@ -19,12 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseRelation;
-import com.parse.SaveCallback;
 
 import org.cs15.xchievements.R;
 import org.cs15.xchievements.Repository.Database;
@@ -100,20 +94,22 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
             mLvContent = (ListView) findViewById(R.id.lv_content);
             mLvContent.setAdapter(mAdapter);
-            mLvContent.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    mLvContent.setChoiceMode(ListViewCompat.CHOICE_MODE_MULTIPLE);
-                    mLvContent.setItemChecked(position, true);
+            if (UserProfile.getCurrentUser() != null) {
+                mLvContent.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        mLvContent.setChoiceMode(ListViewCompat.CHOICE_MODE_MULTIPLE);
+                        mLvContent.setItemChecked(position, true);
 
-                    if (mActionMode == null) {
-                        mActionModeCallback = new ActionModeCallback();
-                        mActionMode = startSupportActionMode(mActionModeCallback);
+                        if (mActionMode == null) {
+                            mActionModeCallback = new ActionModeCallback();
+                            mActionMode = startSupportActionMode(mActionModeCallback);
+                        }
+
+                        return true;
                     }
-
-                    return true;
-                }
-            });
+                });
+            }
 
             mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -126,6 +122,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         intent.putExtra("gamerscore", mList.get(i).getGamerscore());
                         intent.putExtra("gameTitle", mGameDetails.getTitle());
                         intent.putExtra("achId", mList.get(i).getParseId());
+                        intent.putExtra("isCompleted", mList.get(i).isCompleted());
                         startActivity(intent);
 
                         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_null);
@@ -425,7 +422,8 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
             switch (menuItem.getItemId()) {
                 // remove items
                 case R.id.menu_mark_completed:
-                    List<Achievement> list = new ArrayList<>();
+                    final List<Achievement> list = new ArrayList<>();
+
                     // remove items
                     for (int i = mAdapter.getCount(); i >= 0; i--) {
                         if (mLvContent.getCheckedItemPositions().get(i)) {
@@ -433,22 +431,27 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
                         }
                     }
 
-                    new Database().addToAchCompleted(list, new Database.IAddAchComplete() {
+                    mList.clear();
+
+                    new Database().addToAchCompleted(mList, list, new Database.IAddAchComplete() {
                         @Override
                         public void onSuccess(List<Achievement> data, String message) {
                             mList = data;
+
                             mAdapter = new AchievementsAdapter(mList, Achievements.this);
+
                             mLvContent.setAdapter(mAdapter);
 
-                            // Action picked, so close the CAB
-                            actionMode.finish();
-
                             HelperClass.toast(Achievements.this, message);
+
+                            actionMode.finish();
                         }
 
                         @Override
                         public void onError(String error) {
                             HelperClass.toast(Achievements.this, error);
+
+                            actionMode.finish();
                         }
                     });
 

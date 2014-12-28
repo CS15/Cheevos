@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/padding_level_1"
     android:paddingTop="@dimen/padding_level_0">
 
-    <org.cs15.xchievements.misc.XchievementsImageLoader
+    <org.cs15.xchievements.views.XchievementsImageLoader
         android:id="@+id/iv_ach_cover"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ach_image_size"
@@ -61,7 +61,7 @@
         android:layout_below="@+id/ll_gamerscore"
         android:layout_marginRight="@dimen/margin_level_1"
         android:layout_marginTop="@dimen/margin_level_1"
-        android:textColor="@color/light_gray"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/tv_level_5" />
 
     <LinearLayout

@@ -1,35 +1,25 @@
 package org.cs15.xchievements.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.NetworkImageView;
-import com.squareup.picasso.Picasso;
-
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.misc.Singleton;
-import org.cs15.xchievements.misc.XchievementsImageLoader;
+import org.cs15.xchievements.views.XchievementsImageLoader;
 import org.cs15.xchievements.objects.Achievement;
 
-import java.io.IOException;
 import java.util.List;
 
-public class AchievementsAdapter extends BaseAdapter {
+public class AchievementsAdapter extends ArrayAdapter {
     private List<Achievement> mList;
     private Context mContext;
 
     public AchievementsAdapter(List<Achievement> data, Context context) {
+        super(context, 0, data);
         mList = data;
         mContext = context;
     }

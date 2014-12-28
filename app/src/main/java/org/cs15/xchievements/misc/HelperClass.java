@@ -182,7 +182,7 @@ public class HelperClass {
         imageView.setColorFilter(colorFilter);
     }
 
-    public static Bitmap toGrayscale(Bitmap bmpOriginal) {
+    public static Bitmap toGrayScale(Bitmap bmpOriginal) {
         int width, height;
         height = bmpOriginal.getHeight();
         width = bmpOriginal.getWidth();

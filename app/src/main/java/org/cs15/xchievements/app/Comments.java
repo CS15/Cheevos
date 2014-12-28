@@ -36,6 +36,7 @@ public class Comments extends ActionBarActivity {
     private String mSubTitle;
     private String mAchParseId;
     private String mNewsFeedId;
+    private boolean mIsCompleted;
     private int mGamerscore;
 
 
@@ -59,6 +60,7 @@ public class Comments extends ActionBarActivity {
             mGamerscore = getIntent().getExtras().getInt("gamerscore");
             mGameTitle = getIntent().getExtras().getString("gameTitle");
             mNewsFeedId = getIntent().getExtras().getString("newsFeedId");
+            mIsCompleted = getIntent().getExtras().getBoolean("isCompleted");
 
             getSupportActionBar().setTitle(mGameTitle);
 
@@ -66,6 +68,8 @@ public class Comments extends ActionBarActivity {
 
             mIvAch = (NetworkImageView) findViewById(R.id.iv_ach_image);
             mIvAch.setImageUrl(mCoverUrl, Singleton.getImageLoader());
+
+            if(mIsCompleted) HelperClass.toGrayScale(mIvAch);
 
             mTvAchTitle = (TextView) findViewById(R.id.tv_ach_title);
             mTvAchTitle.setText(mTitle);
