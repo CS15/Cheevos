@@ -9,4 +9,11 @@
         android:title="@string/mark_completed"
         android:visible="true" />
 
+    <item
+        android:id="@+id/menu_mark_remove"
+        android:icon="@drawable/ic_action_delete"
+        android:showAsAction="always"
+        android:title="@string/mark_remove"
+        android:visible="true" />
+
 </menu>

@@ -50,5 +50,6 @@
     <string name="not_logged_in_title">Please login</string>
     <string name="mark_completed">Mark completed</string>
     <string name="about">About</string>
+    <string name="mark_remove">Mark uncompleted</string>
 
 </resources>

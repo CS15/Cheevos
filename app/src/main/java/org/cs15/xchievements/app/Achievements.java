@@ -1,5 +1,6 @@
 package org.cs15.xchievements.app;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -418,22 +419,27 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
         @Override
         public boolean onActionItemClicked(final ActionMode actionMode, MenuItem menuItem) {
-            // Respond to clicks on the actions in the CAB
-            switch (menuItem.getItemId()) {
-                // remove items
-                case R.id.menu_mark_completed:
-                    final List<Achievement> list = new ArrayList<>();
+            final List<Achievement> list = new ArrayList<>();
+            final ProgressDialog progressDialog;
+            progressDialog = new ProgressDialog(Achievements.this);
+            progressDialog.setTitle("Updating...");
+            progressDialog.setMessage("Please wait.");
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
 
-                    // remove items
+            switch (menuItem.getItemId()) {
+
+                // add items
+                case R.id.menu_mark_completed:
+
                     for (int i = mAdapter.getCount(); i >= 0; i--) {
                         if (mLvContent.getCheckedItemPositions().get(i)) {
                             list.add(mList.get(i));
                         }
                     }
 
-                    mList.clear();
-
-                    new Database().addToAchCompleted(mList, list, new Database.IAddAchComplete() {
+                    new Database().addToAchCompleted(mList, list, true, new Database.IAddAchComplete() {
                         @Override
                         public void onSuccess(List<Achievement> data, String message) {
                             mList = data;
@@ -444,12 +450,53 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
 
                             HelperClass.toast(Achievements.this, message);
 
+                            progressDialog.dismiss();
+
                             actionMode.finish();
                         }
 
                         @Override
                         public void onError(String error) {
                             HelperClass.toast(Achievements.this, error);
+
+                            progressDialog.dismiss();
+
+                            actionMode.finish();
+                        }
+                    });
+
+                    return true;
+
+                case R.id.menu_mark_remove:
+
+                    // remove items
+                    for (int i = mAdapter.getCount(); i >= 0; i--) {
+                        if (mLvContent.getCheckedItemPositions().get(i)) {
+                            list.add(mList.get(i));
+                        }
+                    }
+
+                    new Database().addToAchCompleted(mList, list, false, new Database.IAddAchComplete() {
+                        @Override
+                        public void onSuccess(List<Achievement> data, String message) {
+                            mList = data;
+
+                            mAdapter = new AchievementsAdapter(mList, Achievements.this);
+
+                            mLvContent.setAdapter(mAdapter);
+
+                            HelperClass.toast(Achievements.this, message);
+
+                            progressDialog.dismiss();
+
+                            actionMode.finish();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            HelperClass.toast(Achievements.this, error);
+
+                            progressDialog.dismiss();
 
                             actionMode.finish();
                         }
