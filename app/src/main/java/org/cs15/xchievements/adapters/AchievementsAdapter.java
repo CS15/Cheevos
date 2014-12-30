@@ -67,7 +67,8 @@ public class AchievementsAdapter extends ArrayAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        mViewHolder.mIvCover.setImageUrl(mList.get(position).getCoverUrl(), Singleton.getImageLoader(), mList.get(position).isCompleted());
+        mViewHolder.mIvCover.setIsGrayScale(mList.get(position).isCompleted());
+        mViewHolder.mIvCover.setImageUrl(mList.get(position).getCoverUrl(), Singleton.getImageLoader());
         mViewHolder.mTvTitle.setText(mList.get(position).getTitle());
         mViewHolder.mTvDesc.setText(mList.get(position).getDescription());
         mViewHolder.mTvCommentsCount.setText(String.format("(%s)", mList.get(position).getCommentsCount()));

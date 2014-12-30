@@ -13,5 +13,10 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_item</item>
         <item name="actionModeBackground">@color/primary_color</item>
         <item name="actionModeSplitBackground">@color/primary_color</item>
+        <item name="android:popupMenuStyle">@style/AppTheme.PopupTheme</item>
+    </style>
+
+    <style name="AppTheme.PopupTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:popupBackground">@android:color/white</item>
     </style>
 </resources>

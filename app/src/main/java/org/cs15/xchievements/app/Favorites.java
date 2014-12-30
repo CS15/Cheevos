@@ -72,13 +72,6 @@ public class Favorites extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        getFavorites();
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
     }
