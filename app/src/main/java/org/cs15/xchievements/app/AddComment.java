@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.repository.Database;
 import org.cs15.xchievements.misc.HelperClass;
 
 public class AddComment extends ActionBarActivity {

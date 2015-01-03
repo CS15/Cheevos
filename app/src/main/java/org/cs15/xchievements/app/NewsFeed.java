@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.parse.ParseObject;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.repository.Database;
 import org.cs15.xchievements.adapters.NewsFeedAdapter;
 import org.cs15.xchievements.misc.HelperClass;
 

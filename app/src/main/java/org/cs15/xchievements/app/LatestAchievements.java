@@ -18,7 +18,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.parse.ParseObject;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.repository.Database;
 import org.cs15.xchievements.adapters.LatestAchievementsAdapter;
 import org.cs15.xchievements.loaders.LatestAchievementsLoader;
 import org.cs15.xchievements.misc.HelperClass;

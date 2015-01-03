@@ -8,8 +8,8 @@ android {
         applicationId "org.cs15.xchievements"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 16
-        versionName "0.5.1"
+        versionCode 17
+        versionName "0.5.2"
     }
     buildTypes {
         release {
@@ -23,7 +23,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:support-v4:21.0.2'
     compile "com.android.support:appcompat-v7:21.0.+"
     compile 'com.android.support:gridlayout-v7:21.0.+'
     compile 'com.squareup.picasso:picasso:2.4.0'

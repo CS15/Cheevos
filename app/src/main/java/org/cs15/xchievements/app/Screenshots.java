@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.repository.Database;
 import org.cs15.xchievements.adapters.ScreenshotsAdapter;
 import org.cs15.xchievements.misc.HelperClass;
 

@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.repository.Database;
 import org.cs15.xchievements.adapters.AchievementsAdapter;
 import org.cs15.xchievements.loaders.AchievementsLoader;
 import org.cs15.xchievements.misc.HelperClass;
@@ -198,7 +198,7 @@ public class Achievements extends ActionBarActivity implements LoaderManager.Loa
         tvDeveloper.setText(String.format("Developer: %s", developer));
         tvPublisher.setText(String.format("Publisher: %s", publisher));
         tvGenre.setText(String.format("Genre: %s", genres));
-        tvUsDate.setText(String.format("Original Release Date: %s", originalUsaDate));
+        tvUsDate.setText(String.format("Release Date: %s", originalUsaDate));
         tvSummary.setText(String.format("%s", summary));
     }
 

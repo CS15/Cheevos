@@ -16,7 +16,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.repository.Database;
 import org.cs15.xchievements.adapters.AlphabetAdapter;
 import org.cs15.xchievements.adapters.GameListAdapter;
 import org.cs15.xchievements.loaders.GameListLoader;

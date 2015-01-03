@@ -1,6 +1,5 @@
 package org.cs15.xchievements.app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.cs15.xchievements.R;
-import org.cs15.xchievements.Repository.Database;
+import org.cs15.xchievements.repository.Database;
 import org.cs15.xchievements.adapters.FavoritesAdapter;
-import org.cs15.xchievements.adapters.LatestAchievementsAdapter;
 import org.cs15.xchievements.misc.HelperClass;
 import org.cs15.xchievements.objects.GameDetails;
 
