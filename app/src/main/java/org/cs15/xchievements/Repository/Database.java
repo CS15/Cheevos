@@ -1,4 +1,4 @@
-package org.cs15.xchievements.Repository;
+package org.cs15.xchievements.repository;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

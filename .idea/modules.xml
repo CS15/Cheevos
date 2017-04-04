@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cheevos.iml" filepath="$PROJECT_DIR$/Cheevos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Xchievements.iml" filepath="$PROJECT_DIR$/Xchievements.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
-
