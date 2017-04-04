@@ -7,9 +7,6 @@
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/primary_color_dark</item>
         <item name="colorAccent">@color/primary_accent_color</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowActionModeOverlay">true</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_item</item>
         <item name="actionModeBackground">@color/primary_color</item>
         <item name="actionModeSplitBackground">@color/primary_color</item>
@@ -18,5 +15,11 @@
 
     <style name="AppTheme.PopupTheme" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="android:popupBackground">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <!-- Both of these are needed -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>
